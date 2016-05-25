@@ -13,9 +13,17 @@
 
 ## Installation
 
-Manually add `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to your project.
+### Use Cocoapods
 
-I will add support for Cocoapods later.
+Simply add one line to your Podfile:
+
+```
+pod 'CCActivityIndicatorView'
+```
+
+### Manually 
+
+Drag amd drop `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to your project.
 
 
 
@@ -39,42 +47,47 @@ When you want to show the activity indicator view, simply use
 Then when some task has completed,  use
 
 ```objective-c
-[self.myactivityIndicatorView dismiss]
+[self.myactivityIndicatorView dismiss];
 ```
 
 
 
 ## Customisable
 
-* *color*: Set the backgrond color. The default color is black.
+* *color* : Set the backgrond color. The default color is black.
 
 
-* *borderColor*: Set the background border color. The default background color is black.
+* *borderColor* : Set the background border color. The default background color is black.
 
 
-* *alpha*: Set the backgrond alpha. The default value is 0.86.
+* *alpha* : Set the backgrond alpha. The default value is 0.86.
 
 
-* *borderWidth*: Set the backgrond border width. THe default value is 0.
+* *borderWidth* : Set the backgrond border width. THe default value is 0.
 
 
-* *cornerRadius*: Set the background corner radius. The default value is 10.0;
+* *cornerRadius* : Set the background corner radius. The default value is 10.0;
 
 
-* *indicatorColor*: Set the indicator color. The default color is light grey.
+* *indicatorColor* : Set the indicator color. The default color is light grey.
 
 
-* *indicatorBorderColor*: Set the indicator border color. The default color is white.
+* *indicatorBorderColor* : Set the indicator border color. The default color is white.
 
 
-* *isTheOnlyActiveView*: A boolean value indicates whether the ohter UIViews are user-interactable. The default value is YES.
+* *isTheOnlyActiveView* : A boolean value indicates whether the ohter UIViews are user-interactable. The default value is YES.
 
+
+## Requirement
+
+iOS 8.0 or later
 
 
 ## TODO
 
 * More kinds of animation 
-* Support for Cocoapods
+
+
 
 Any Pull Requests are welcome.
 
