@@ -6,9 +6,9 @@
 @interface CCActivityIndicatorView ()
 
 @property (strong, nonatomic) CAReplicatorLayer *replicatorLayer;
-@property (strong, nonatomic) CALayer *dotLayer;
-@property (strong, nonatomic) CABasicAnimation *shrinkAnimation;
+@property (strong, nonatomic) CALayer *indicatorLayer;
 
+@property CCIndicatorType currentTpye;
 @end
 
 @implementation CCActivityIndicatorView
@@ -35,19 +35,32 @@
 }
 
 - (void)setIndicatorColor:(UIColor *)indicatorColor {
-    _dotLayer.backgroundColor = indicatorColor.CGColor;
-}
-
-- (void)setIndicatorBorderColor:(UIColor *)indicatorBorderColor {
-    _dotLayer.borderColor = indicatorBorderColor.CGColor;
+    _indicatorLayer.backgroundColor = indicatorColor.CGColor;
 }
 
 #pragma mark - public methods
+- (id)initWithFrame:(CGRect)frame type:(CCIndicatorType)type {
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        self.isTheOnlyActiveView = YES;
+        self.currentTpye = type;
+        
+        [self addNotificationObserver];
+        
+        [self initializeReplicatorLayer:frame];
+        
+        [self initializeIndicatoeLayer:frame type:type];
+    }
+    
+    return self;
+}
+
 - (void)show {
     if (self.superview) {
         [self.superview bringSubviewToFront:self];
         
-        [self addShrink];
+        [self addAnimation];
         
         if (self.isTheOnlyActiveView) {
             for (UIView *view in self.superview.subviews) {
@@ -76,23 +89,12 @@
 
 #pragma mark - initialization
 - (id)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        self.isTheOnlyActiveView = YES;
-        
-        [self addNotificationObserver];
-        
-        [self initializeReplicatorLayer:frame];
-        
-        [self initializeDot:frame];
-    }
-    
+    self = [self initWithFrame:frame type:CCIndicatorTypeScalingDots];
     return self;
 }
 
 - (void)addNotificationObserver {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addShrink) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAnimation) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)initializeReplicatorLayer:(CGRect)frame {
@@ -101,39 +103,87 @@
     self.replicatorLayer.cornerRadius = 10.0;
     self.replicatorLayer.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.86].CGColor;
     
+    [self.layer addSublayer:self.replicatorLayer];
+}
+
+- (void)initializeIndicatoeLayer:(CGRect)frame type:(CCIndicatorType)type {
+    self.indicatorLayer = [[CALayer alloc] init];
+    
+    switch (type) {
+        case CCIndicatorTypeScalingDots:
+            [self initializeScalingDot:frame];
+            break;
+            
+        case CCIndicatorTypeLeadingDots:
+            
+            break;
+            
+        case CCIndicatorTypeCircle:
+            
+            break;
+            
+        case CCIndicatorTypeArc:
+            
+            break;
+            
+        default:
+            NSLog(@"You are adding unsupproted type.");
+            break;
+    }
+}
+
+- (void)initializeScalingDot:(CGRect)frame {
+    CGFloat width = frame.size.width*14/200;
+    
+    self.indicatorLayer.frame = CGRectMake(0, 0, width, width);
+    self.indicatorLayer.position = CGPointMake(frame.size.width/2, frame.size.height/5);
+    self.indicatorLayer.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
+    self.indicatorLayer.borderColor = [UIColor whiteColor].CGColor;
+    self.indicatorLayer.borderWidth = 1.0;
+    self.indicatorLayer.cornerRadius = 1.5;
+    self.indicatorLayer.transform = CATransform3DMakeScale(0.01, 0.01, 0.01);
+    
     self.replicatorLayer.instanceDelay = DURATION/NUMBER_OF_DOT;
     self.replicatorLayer.instanceCount = NUMBER_OF_DOT;
     CGFloat angle = 2*M_PI/NUMBER_OF_DOT;
     self.replicatorLayer.instanceTransform = CATransform3DMakeRotation(angle, 0.0, 0.0, 0.1);
     
-    [self.layer addSublayer:self.replicatorLayer];
+    [self.replicatorLayer addSublayer:self.indicatorLayer];
 }
 
-- (void)initializeDot:(CGRect)frame {
-    CGFloat width = frame.size.width*14/200;
-    
-    self.dotLayer = [[CALayer alloc] init];
-    self.dotLayer.frame = CGRectMake(0, 0, width, width);
-    self.dotLayer.position = CGPointMake(frame.size.width/2, frame.size.height/5);
-    self.dotLayer.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1.0].CGColor;
-    self.dotLayer.borderColor = [UIColor whiteColor].CGColor;
-    self.dotLayer.borderWidth = 1.0;
-    self.dotLayer.cornerRadius = 1.5;
-    self.dotLayer.transform = CATransform3DMakeScale(0.01, 0.01, 0.01);
-    
-    [self.replicatorLayer addSublayer:self.dotLayer];
-    
-    self.shrinkAnimation = [[CABasicAnimation alloc] init];
+- (void)addAnimation {
+    switch (self.currentTpye) {
+        case CCIndicatorTypeScalingDots:
+            [self addScaleAnimation];
+            break;
+            
+        case CCIndicatorTypeLeadingDots:
+            
+            break;
+            
+        case CCIndicatorTypeCircle:
+            
+            break;
+            
+        case CCIndicatorTypeArc:
+            
+            break;
+            
+        default:
+            NSLog(@"You are showing unsupported type.");
+            break;
+    }
 }
 
-- (void)addShrink {
-    self.shrinkAnimation.keyPath  = @"transform.scale";
-    self.shrinkAnimation.fromValue = [NSNumber numberWithFloat:1.0];
-    self.shrinkAnimation.toValue = [NSNumber numberWithFloat:0.1];
-    self.shrinkAnimation.duration = DURATION;
-    self.shrinkAnimation.repeatCount = INFINITY;
+- (void)addScaleAnimation {
+    CABasicAnimation *animation = [[CABasicAnimation alloc] init];
+    animation.keyPath  = @"transform.scale";
+    animation.fromValue = [NSNumber numberWithFloat:1.0];
+    animation.toValue = [NSNumber numberWithFloat:0.1];
+    animation.duration = DURATION;
+    animation.repeatCount = INFINITY;
     
-    [self.dotLayer addAnimation:self.shrinkAnimation forKey:nil];
+    [self.indicatorLayer addAnimation:animation forKey:nil];
 }
 
 @end

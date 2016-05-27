@@ -1,8 +1,18 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, CCIndicatorType) {
+    CCIndicatorTypeScalingDots,
+    CCIndicatorTypeLeadingDots,
+    CCIndicatorTypeCircle,
+    CCIndicatorTypeArc
+};
+
+
+
 @interface CCActivityIndicatorView : UIView
 
+#pragma mark - properties
 /**
  *  Set the backgrond color.
     
@@ -46,13 +56,6 @@
 @property (strong, nonatomic) UIColor *indicatorColor;
 
 /**
- *  Set the indicator border color.
- 
-    The default color is white.
- */
-@property (strong, nonatomic) UIColor *indicatorBorderColor;
-
-/**
  *  A boolean value indicates whether the ohter UIViews are user-interactable.
  
     The default value is YES.
@@ -61,6 +64,17 @@
 
 
 
+
+#pragma mark - public methods
+/**
+ *  Convenient initialization
+ *
+ *  @param frame The frame of the indicator view.
+ *  @param type  The type of the indicator view
+ *
+ *  @return A CCActivityIndicatorView with a designated type
+ */
+- (id)initWithFrame:(CGRect)frame type:(CCIndicatorType)type;
 
 /**
  *  Show the view in the screen.
