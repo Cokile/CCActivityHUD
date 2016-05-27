@@ -2,10 +2,13 @@
 
 [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Cokile/CCActivityIndicatorView/blob/master/Licence)
 [![](https://img.shields.io/github/release/Cokile/CCActivityIndicatorView.svg)](https://github.com/Cokile/CCActivityIndicatorView/releases)
+[![](http://img.shields.io/cocoapods/v/CCActivityIndicatorView.svg)](http://cocoapods.org/pods/CCActivityIndicatorView)
 
 
 
-## Capture
+## Captures
+
+<img src=Captures/capture1.gif width=210 height=372>
 
 <img src=Captures/capture1.gif width=210 height=372>
 
@@ -23,11 +26,21 @@ pod 'CCActivityIndicatorView'
 
 ### Manually 
 
-Drag amd drop `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to your project.
+Add  `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to your project.
 
 
 
 ## Easy to use
+
+`CCActivityIndicatorView` now support two types
+
+* CCIndicatorTypeScalingDots
+
+* CCIndicatorTypeLeadingDots
+
+  ​
+
+The default type is `CCIndicatorTypeScalingDots`
 
 ```objective-c
 #import "CCActivityIndicatorView.h"
@@ -35,6 +48,18 @@ Drag amd drop `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to you
 self.myactivityIndicatorView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 60, 120, 120)];
 self.myactivityIndicatorView.isTheOnlyActiveView = NO;
 ```
+
+Or you can specify the type
+
+```objective-c
+// CCActivityIndicatorView with type CCIndicatorTypeScalingDots
+self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
+
+// CCActivityIndicatorView with type CCIndicatorTypeLeadingDots
+self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
+```
+
+
 
 When you want to show the activity indicator view, simply use
 
@@ -72,10 +97,9 @@ Then when some task has completed,  use
 * *indicatorColor* : Set the indicator color. The default color is light grey.
 
 
-* *indicatorBorderColor* : Set the indicator border color. The default color is white.
-
-
 * *isTheOnlyActiveView* : A boolean value indicates whether the ohter UIViews are user-interactable. The default value is YES.
+
+
 
 
 ## Requirement
@@ -83,9 +107,10 @@ Then when some task has completed,  use
 iOS 8.0 or later
 
 
+
 ## TODO
 
-* More kinds of animation 
+* More types of animation 
 
 
 

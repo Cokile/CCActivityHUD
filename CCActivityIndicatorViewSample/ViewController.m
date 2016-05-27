@@ -22,6 +22,10 @@
     
     CGFloat width = self.view.frame.size.width;
     self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120)];
+    
+    //self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
+    //self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
+    
     self.activityView.isTheOnlyActiveView = NO;
 }
 
