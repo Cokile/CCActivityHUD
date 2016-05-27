@@ -9,8 +9,7 @@
 ## Captures
 
 <img src=Captures/capture1.gif width=210 height=372>
-
-<img src=Captures/capture1.gif width=210 height=372>
+<img src=Captures/capture2.gif width=210 height=372>
 
 
 

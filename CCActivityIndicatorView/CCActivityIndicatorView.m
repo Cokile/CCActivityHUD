@@ -119,14 +119,7 @@
         case CCIndicatorTypeLeadingDots:
             [self initializeLeadingDot:frame];
             break;
-            
-        case CCIndicatorTypeCircle:
-            
-            //break;
-            
-        case CCIndicatorTypeArc:
-            
-            //break;
+        
             
         default:
             NSLog(@"You are adding unsupproted type.");
@@ -176,14 +169,7 @@
         case CCIndicatorTypeLeadingDots:
             [self addLeadingAnimation];
             break;
-            
-        case CCIndicatorTypeCircle:
-            
-            //break;
-            
-        case CCIndicatorTypeArc:
-            
-            //break;
+        
             
         default:
             NSLog(@"You are showing unsupported type.");
