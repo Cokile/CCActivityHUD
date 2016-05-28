@@ -10,6 +10,8 @@
 
 <img src=Captures/capture1.gif width=210 height=372>
 <img src=Captures/capture2.gif width=210 height=372>
+<img src=Captures/capture3.gif width=210 height=372>
+<img src=Captures/capture4.gif width=210 height=372>
 
 
 
@@ -31,11 +33,16 @@ Add  `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to your project
 
 ## Easy to use
 
-`CCActivityIndicatorView` now support two types
+`CCActivityIndicatorView` now support four types
 
 * CCIndicatorTypeScalingDots
 
 * CCIndicatorTypeLeadingDots
+
+* CCIndicatorTypeCircle
+
+* CCIndicatorTypeArc
+
 
   ​
 
@@ -56,6 +63,12 @@ self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(wi
 
 // CCActivityIndicatorView with type CCIndicatorTypeLeadingDots
 self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
+
+// CCActivityIndicatorView with type CCIndicatorTypeCircle
+self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeCircle];
+
+// CCActivityIndicatorView with type CCIndicatorTypeArc
+self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeArc];
 ```
 
 
@@ -93,7 +106,7 @@ Then when some task has completed,  use
 * *cornerRadius* : Set the background corner radius. The default value is 10.0;
 
 
-* *indicatorColor* : Set the indicator color. The default color is light grey.
+* *indicatorColor* : Set the indicator color. The default color is white.
 
 
 * *isTheOnlyActiveView* : A boolean value indicates whether the ohter UIViews are user-interactable. The default value is YES.

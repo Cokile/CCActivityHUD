@@ -4,8 +4,8 @@
 typedef NS_ENUM(NSInteger, CCIndicatorType) {
     CCIndicatorTypeScalingDots,
     CCIndicatorTypeLeadingDots,
-    //CCIndicatorTypeCircle,
-    //CCIndicatorTypeArc
+    CCIndicatorTypeCircle,
+    CCIndicatorTypeArc
 };
 
 
