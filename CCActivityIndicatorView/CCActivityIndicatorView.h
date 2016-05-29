@@ -30,21 +30,21 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
 /**
  *  Set the backgrond alpha.
     
-    The default value is 0.86.
+    The default value is 0.7
  */
 @property (nonatomic) CGFloat alpha;
 
 /**
  *  Set the backgrond border width.
  
-    THe default value is 0.
+    THe default value is 0
  */
 @property (nonatomic) CGFloat borderWidth;
 
 /**
  *  Set the background corner radius.
  
-    The default value is 10.0;
+    The default value is 10.0
  */
 @property (nonatomic) CGFloat cornerRadius;
 
@@ -67,12 +67,12 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
 
 #pragma mark - public methods
 /**
- *  Convenient initialization
+ *  Convenient initialization method.
  *
- *  @param frame The frame of the indicator view.
+ *  @param frame The frame of the indicator view. Only supports square frame.
  *  @param type  The type of the indicator view
  *
- *  @return A CCActivityIndicatorView with a designated type
+ *  @return A CCActivityIndicatorView with a designated type.
  */
 - (id)initWithFrame:(CGRect)frame type:(CCIndicatorType)type;
 

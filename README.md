@@ -51,6 +51,7 @@ The default type is `CCIndicatorTypeScalingDots`
 ```objective-c
 #import "CCActivityIndicatorView.h"
 
+// Make sure the frame is square.
 self.myactivityIndicatorView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 60, 120, 120)];
 self.myactivityIndicatorView.isTheOnlyActiveView = NO;
 ```
@@ -58,6 +59,8 @@ self.myactivityIndicatorView.isTheOnlyActiveView = NO;
 Or you can specify the type
 
 ```objective-c
+// Make sure the frame is square.
+
 // CCActivityIndicatorView with type CCIndicatorTypeScalingDots
 self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
 
@@ -81,7 +84,7 @@ When you want to show the activity indicator view, simply use
 [self.myactivityIndicatorView show];
 ```
 
-Then when some task has completed,  use
+Then when some tasks have completed,  use
 
 ```objective-c
 [self.myactivityIndicatorView dismiss];

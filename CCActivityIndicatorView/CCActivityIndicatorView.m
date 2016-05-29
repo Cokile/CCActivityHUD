@@ -17,31 +17,41 @@
 
 #pragma mark - setter
 - (void)setColor:(UIColor *)color {
-    _replicatorLayer.backgroundColor = color.CGColor;
+    if (color.CGColor !=_replicatorLayer.backgroundColor) {
+        _replicatorLayer.backgroundColor = color.CGColor;
+    }
 }
 
 - (void)setBorderColor:(UIColor *)borderColor {
-    _replicatorLayer.borderColor = borderColor.CGColor;
+    if (borderColor.CGColor != _replicatorLayer.borderColor) {
+        _replicatorLayer.borderColor = borderColor.CGColor;
+    }
 }
 
 - (void)setBorderWidth:(CGFloat)borderWidth {
-    _replicatorLayer.borderWidth = borderWidth;
+    if (borderWidth != _replicatorLayer.borderWidth) {
+        _replicatorLayer.borderWidth = borderWidth;
+    }
 }
 
 - (void)setCornerRadius:(CGFloat)cornerRadius {
-    _replicatorLayer.cornerRadius = cornerRadius;
+    if (cornerRadius != _replicatorLayer.cornerRadius) {
+        _replicatorLayer.cornerRadius = cornerRadius;
+    }
 }
 
 - (void)setAlpha:(CGFloat)alpha {
-    _replicatorLayer.opacity = alpha;
+    if (alpha != _replicatorLayer.opacity) {
+        _replicatorLayer.opacity = alpha;
+    }
 }
 
 - (void)setIndicatorColor:(UIColor *)indicatorColor {
-    if (_indicatorLayer) {
+    if (_indicatorLayer && indicatorColor.CGColor != _indicatorLayer.backgroundColor) {
         _indicatorLayer.backgroundColor = indicatorColor.CGColor;
     }
     
-    if (_shapeLayer) {
+    if (_shapeLayer && indicatorColor.CGColor != _shapeLayer.strokeColor) {
         _shapeLayer.strokeColor = indicatorColor.CGColor;
     }
 }
@@ -109,7 +119,7 @@
     self.replicatorLayer = [[CAReplicatorLayer alloc] init];
     self.replicatorLayer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
     self.replicatorLayer.cornerRadius = 10.0;
-    self.replicatorLayer.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.86].CGColor;
+    self.replicatorLayer.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.7].CGColor;
     
     [self.layer addSublayer:self.replicatorLayer];
 }
@@ -146,7 +156,6 @@
     self.indicatorLayer.frame = CGRectMake(0, 0, length, length);
     self.indicatorLayer.position = CGPointMake(frame.size.width/2, frame.size.height/5);
     self.indicatorLayer.backgroundColor = [UIColor whiteColor].CGColor;
-    self.indicatorLayer.borderWidth = 1.0;
     self.indicatorLayer.cornerRadius = length/2;
     self.indicatorLayer.transform = CATransform3DMakeScale(0.01, 0.01, 0.01);
     
@@ -181,7 +190,7 @@
     self.shapeLayer = [[CAShapeLayer alloc] init];
     self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
     self.shapeLayer.strokeColor = [UIColor whiteColor].CGColor;
-    self.shapeLayer.lineWidth = 4.0;
+    self.shapeLayer.lineWidth = frame.size.width/30;
     
     CGFloat radius = frame.size.width/2 - frame.size.width/5;
     CGFloat x = CGRectGetMidX(self.replicatorLayer.frame);
@@ -199,7 +208,7 @@
     self.shapeLayer = [[CAShapeLayer alloc] init];
     self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
     self.shapeLayer.strokeColor = [UIColor whiteColor].CGColor;
-    self.shapeLayer.lineWidth = 5.0;
+    self.shapeLayer.lineWidth = frame.size.width/24;
     
     CGFloat length = frame.size.width/5;
     self.shapeLayer.frame = CGRectMake(length, length, length*3, length*3);
