@@ -38,8 +38,7 @@
 }
 
 - (IBAction)show:(id)sender {
-    [self.view addSubview:self.activityView];
-    [self.activityView show];
+    [self.activityView showInView:self.view];
 }
 
 

@@ -79,9 +79,7 @@ self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(wi
 When you want to show the activity indicator view, simply use
 
 ```objective-c
-// Make sure you have added the activity indicator view as a subview before show it.
-[self.view addSubview:self.myactivityIndicatorView];
-[self.myactivityIndicatorView show];
+[self.myactivityIndicatorView showInView:self.view];
 ```
 
 Then when some tasks have completed,  use

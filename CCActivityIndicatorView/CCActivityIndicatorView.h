@@ -77,11 +77,11 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
 - (id)initWithFrame:(CGRect)frame type:(CCIndicatorType)type;
 
 /**
- *  Show the view in the screen.
- 
-    Note: Make sure the view is moved to superview before calling this method.
+ *  Show the activity indicator.
+ *
+ *  @param view The view to show the activity indicator.
  */
-- (void)show;
+- (void)showInView:(UIView *)view;
 
 /**
  *  Dissmiss the view.

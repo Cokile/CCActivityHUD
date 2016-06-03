@@ -74,7 +74,9 @@
     return self;
 }
 
-- (void)show {
+- (void)showInView:(UIView *)view {
+    [view addSubview:self];
+    
     if (self.superview) {
         [self.superview bringSubviewToFront:self];
         
