@@ -20,15 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGFloat width = self.view.frame.size.width;
-    
-    self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120)];
-    
-    //self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeScalingDots];
-    //self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
-    //self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeCircle];
-    //self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeArc];
-    
+    self.activityView = [CCActivityIndicatorView new];
     self.activityView.isTheOnlyActiveView = NO;
 }
 
@@ -38,9 +30,13 @@
 }
 
 - (IBAction)show:(id)sender {
-    [self.activityView showInView:self.view];
+    [self.activityView show];
+    
+    //[self.activityView showWithType:CCIndicatorTypeScalingDots];
+    //[self.activityView showWithType:CCIndicatorTypeLeadingDots];
+    //[self.activityView showWithType:CCIndicatorTypeCircle];
+    //[self.activityView showWithType:CCIndicatorTypeArc];
 }
-
 
 - (IBAction)dismiss:(id)sender {
     [self.activityView dismiss];

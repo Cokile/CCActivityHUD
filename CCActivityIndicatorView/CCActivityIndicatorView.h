@@ -67,21 +67,16 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
 
 #pragma mark - public methods
 /**
- *  Convenient initialization method.
+ *  Show an activity indicator in the center of the screen with a specific type.
  *
- *  @param frame The frame of the indicator view. Only supports square frame.
- *  @param type  The type of the indicator view
- *
- *  @return A CCActivityIndicatorView with a designated type.
+ *  @param type Type for the activity indicator to be shown.
  */
-- (id)initWithFrame:(CGRect)frame type:(CCIndicatorType)type;
+- (void)showWithType:(CCIndicatorType)type;
 
 /**
- *  Show the activity indicator.
- *
- *  @param view The view to show the activity indicator.
+ *  Show an activity indicator in the center of the screen with the dafault type CCIndicatorTypeScalingDots.
  */
-- (void)showInView:(UIView *)view;
+- (void)show;
 
 /**
  *  Dissmiss the view.

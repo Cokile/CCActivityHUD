@@ -15,7 +15,7 @@
 
 @implementation CCActivityIndicatorView
 
-#pragma mark - setter
+#pragma mark - custom accessors
 - (void)setColor:(UIColor *)color {
     if (color.CGColor !=_replicatorLayer.backgroundColor) {
         _replicatorLayer.backgroundColor = color.CGColor;
@@ -57,30 +57,16 @@
 }
 
 #pragma mark - public methods
-- (id)initWithFrame:(CGRect)frame type:(CCIndicatorType)type {
-    self = [super initWithFrame:frame];
-    
-    if (self) {
-        self.isTheOnlyActiveView = YES;
+- (void)showWithType:(CCIndicatorType)type {
+    if (!self.superview) {
         self.currentTpye = type;
-        
-        [self addNotificationObserver];
-        
-        [self initializeReplicatorLayer:frame];
-        
-        [self initializeIndicatoeLayer:frame type:type];
-    }
-    
-    return self;
-}
-
-- (void)showInView:(UIView *)view {
-    [view addSubview:self];
-    
-    if (self.superview) {
-        [self.superview bringSubviewToFront:self];
+        [self initializeReplicatorLayer:self.frame];
+        [self initializeIndicatoeLayer:self.frame type:type];
         
         [self addAnimation];
+        
+        [[[UIApplication sharedApplication].windows lastObject] addSubview:self];
+        [self.superview bringSubviewToFront:self];
         
         if (self.isTheOnlyActiveView) {
             for (UIView *view in self.superview.subviews) {
@@ -88,6 +74,10 @@
             }
         }
     }
+}
+
+- (void)show {
+    [self showWithType:CCIndicatorTypeScalingDots];
 }
 
 - (void)dismiss {
@@ -108,8 +98,20 @@
 }
 
 #pragma mark - initialization
-- (id)initWithFrame:(CGRect)frame {
-    self = [self initWithFrame:frame type:CCIndicatorTypeScalingDots];
+- (instancetype)init {
+    self = [super init];
+    
+    if (self) {
+        CGRect bounds = [UIScreen mainScreen].bounds;
+        CGFloat boundsWdith = bounds.size.width;
+        CGFloat length = boundsWdith/6;
+        self.frame = CGRectMake(boundsWdith/2-length/2, bounds.size.height/2-length/2, length, length);
+        
+        self.isTheOnlyActiveView = YES;
+        
+        [self addNotificationObserver];
+    }
+    
     return self;
 }
 
@@ -118,15 +120,19 @@
 }
 
 - (void)initializeReplicatorLayer:(CGRect)frame {
-    self.replicatorLayer = [[CAReplicatorLayer alloc] init];
-    self.replicatorLayer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-    self.replicatorLayer.cornerRadius = 10.0;
-    self.replicatorLayer.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.7].CGColor;
-    
-    [self.layer addSublayer:self.replicatorLayer];
+    if (!self.replicatorLayer) {
+        self.replicatorLayer = [[CAReplicatorLayer alloc] init];
+        self.replicatorLayer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        self.replicatorLayer.cornerRadius = 10.0;
+        self.replicatorLayer.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.7].CGColor;
+        
+        [self.layer addSublayer:self.replicatorLayer];
+    }
 }
 
 - (void)initializeIndicatoeLayer:(CGRect)frame type:(CCIndicatorType)type {
+    self.replicatorLayer.sublayers = nil;
+    
     switch (type) {
         case CCIndicatorTypeScalingDots:
             [self initializeScalingDot:frame];
@@ -142,10 +148,6 @@
             
         case CCIndicatorTypeArc:
             [self initializeArc:frame];
-            break;
-            
-        default:
-            NSLog(@"You are adding unsupproted type.");
             break;
     }
 }
@@ -230,23 +232,23 @@
 - (void)addAnimation {
     switch (self.currentTpye) {
         case CCIndicatorTypeScalingDots:
+            [self.indicatorLayer removeAllAnimations];
             [self addScaleAnimation];
             break;
             
         case CCIndicatorTypeLeadingDots:
+            [self.indicatorLayer removeAllAnimations];
             [self addLeadingAnimation];
             break;
-        
+            
         case CCIndicatorTypeCircle:
+            [self.shapeLayer removeAllAnimations];
             [self addCircleAnimation];
             break;
             
         case CCIndicatorTypeArc:
+            [self.shapeLayer removeAllAnimations];
             [self addArcAnimation];
-            break;
-            
-        default:
-            NSLog(@"You are showing unsupported type.");
             break;
     }
 }
@@ -286,25 +288,25 @@
 }
 
 - (void)addCircleAnimation {
-    CABasicAnimation *animationAppear = [[CABasicAnimation alloc] init];
-    animationAppear.keyPath = @"strokeEnd";
-    animationAppear.fromValue = [NSNumber numberWithFloat:0.0];
-    animationAppear.toValue = [NSNumber numberWithFloat:1.0];
-    animationAppear.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    animationAppear.duration = DURATION_BASE*1.8;
+    CABasicAnimation *appearAnimation = [[CABasicAnimation alloc] init];
+    appearAnimation.keyPath = @"strokeEnd";
+    appearAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+    appearAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    appearAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    appearAnimation.duration = DURATION_BASE*1.8;
     
-    CABasicAnimation *animationDisappear = [[CABasicAnimation alloc] init];
-    animationDisappear.keyPath = @"strokeStart";
-    animationDisappear.beginTime = animationAppear.duration;
-    animationDisappear.fromValue = [NSNumber numberWithFloat:0.0];
-    animationDisappear.toValue = [NSNumber numberWithFloat:1.0];
-    animationAppear.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    animationDisappear.duration = DURATION_BASE;
+    CABasicAnimation *disappearAnimation = [[CABasicAnimation alloc] init];
+    disappearAnimation.keyPath = @"strokeStart";
+    disappearAnimation.beginTime = appearAnimation.duration;
+    disappearAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+    disappearAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    appearAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    disappearAnimation.duration = DURATION_BASE;
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.duration = animationAppear.duration+animationDisappear.duration;
+    animationGroup.duration = appearAnimation.duration+disappearAnimation.duration;
     animationGroup.repeatCount = INFINITY;
-    animationGroup.animations = @[animationAppear, animationDisappear];
+    animationGroup.animations = @[appearAnimation, disappearAnimation];
     
     [self.shapeLayer addAnimation:animationGroup forKey:nil];
     

@@ -51,35 +51,26 @@ The default type is `CCIndicatorTypeScalingDots`
 ```objective-c
 #import "CCActivityIndicatorView.h"
 
-// Make sure the frame is square.
-self.myactivityIndicatorView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-60, 60, 120, 120)];
-self.myactivityIndicatorView.isTheOnlyActiveView = NO;
+self.myactivityIndicatorView = [CCActivityIndicatorView new];
+[self.myactivityIndicatorView show];
 ```
 
-Or you can specify the type
+Or you can specify the type to show
 
 ```objective-c
-// Make sure the frame is square.
+self.myactivityIndicatorView = [CCActivityIndicatorView new];
 
 // CCActivityIndicatorView with type CCIndicatorTypeScalingDots
-self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
+[self.myactivityIndicatorView showWithType:CCIndicatorTypeScalingDots];
 
 // CCActivityIndicatorView with type CCIndicatorTypeLeadingDots
-self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeLeadingDots];
+[self.myactivityIndicatorView showWithType:CCIndicatorTypeLeadingDots];
 
 // CCActivityIndicatorView with type CCIndicatorTypeCircle
-self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeCircle];
+[self.myactivityIndicatorView showWithType:CCIndicatorTypeCircle];
 
 // CCActivityIndicatorView with type CCIndicatorTypeArc
-self.activityView = [[CCActivityIndicatorView alloc] initWithFrame:CGRectMake(width/2-60, 60, 120, 120) type:CCIndicatorTypeArc];
-```
-
-
-
-When you want to show the activity indicator view, simply use
-
-```objective-c
-[self.myactivityIndicatorView showInView:self.view];
+[self.myactivityIndicatorView showWithType:CCIndicatorTypeArc];
 ```
 
 Then when some tasks have completed,  use
