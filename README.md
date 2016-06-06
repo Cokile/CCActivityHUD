@@ -83,23 +83,25 @@ Then when some tasks have completed,  use
 
 ## Customisable
 
-* *color* : Set the backgrond color. The default color is black.
+* ~~*color* : Set the backgrond color. The default color is black.~~
 
 
-* *borderColor* : Set the background border color. The default background color is black.
+* ~~*borderColor* : Set the background border color. The default background color is black.~~
 
 
-* *alpha* : Set the backgrond alpha. The default value is 0.86.
+* ~~*alpha* : Set the backgrond alpha. The default value is 0.86.~~
 
 
-* *borderWidth* : Set the backgrond border width. THe default value is 0.
+* ~~*borderWidth* : Set the backgrond border width. THe default value is 0.~~
 
 
-* *cornerRadius* : Set the background corner radius. The default value is 10.0;
+* ~~*cornerRadius* : Set the background corner radius. The default value is 10.0;~~
 
 
-* *indicatorColor* : Set the indicator color. The default color is white.
+* ~~*indicatorColor* : Set the indicator color. The default color is white.~~
 
+
+__NOTE: Properties above are not work in v1.4.0, I am fixing it.__
 
 * *isTheOnlyActiveView* : A boolean value indicates whether the ohter UIViews are user-interactable. The default value is YES.
 
