@@ -8,6 +8,22 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
     CCIndicatorTypeArc
 };
 
+typedef NS_ENUM(NSInteger, CCIndicatorAppearAnimationType) {
+    CCIndicatorAppearAnimationTypeSlideFromTop,
+    CCIndicatorAppearAnimationTypeSlideFromBottom,
+    CCIndicatorAppearAnimationTypeSlideFromLeft,
+    CCIndicatorAppearAnimationTypeSlideFromRight,
+    CCIndicatorAppearAnimationTypeFadeIn
+};
+
+typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
+    CCIndicatorDisappearAnimationTypeSlideToTop,
+    CCIndicatorDisappearAnimationTypeSlideToBottom,
+    CCIndicatorDisappearAnimationTypeSlideToLeft,
+    CCIndicatorDisappearAnimationTypeSlideToRight,
+    CCIndicatorDisappearAnimationTypeFadeOut
+};
+
 
 
 @interface CCActivityIndicatorView : UIView
@@ -18,7 +34,7 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
     
     The default color is black.
  */
-@property (strong, nonatomic) UIColor *color;
+@property (strong, nonatomic) UIColor *backColor;
 
 /**
  *  Set the background border color.
@@ -26,13 +42,6 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
     The default background color is black.
  */
 @property (strong, nonatomic) UIColor *borderColor;
-
-/**
- *  Set the backgrond alpha.
-    
-    The default value is 0.7
- */
-@property (nonatomic) CGFloat alpha;
 
 /**
  *  Set the backgrond border width.
@@ -61,6 +70,16 @@ typedef NS_ENUM(NSInteger, CCIndicatorType) {
     The default value is YES.
  */
 @property (nonatomic) BOOL isTheOnlyActiveView;
+
+/**
+ *  Set the animation about how the activity indicator to appear to the screen.
+ */
+@property CCIndicatorAppearAnimationType appearAnimationType;
+
+/**
+ *  Set the animation about how the activity indicator to disappear from the screen.
+ */
+@property CCIndicatorAppearAnimationType disappearAnimationType;
 
 
 

@@ -31,27 +31,14 @@ Add  `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to your project
 
 
 
-## Easy to use
-
-`CCActivityIndicatorView` now support four types
-
-* CCIndicatorTypeScalingDots
-
-* CCIndicatorTypeLeadingDots
-
-* CCIndicatorTypeCircle
-
-* CCIndicatorTypeArc
-
-
-  ​
-
-The default type is `CCIndicatorTypeScalingDots`
+## Easy to use 
 
 ```objective-c
 #import "CCActivityIndicatorView.h"
 
 self.myactivityIndicatorView = [CCActivityIndicatorView new];
+
+// Show with the default type
 [self.myactivityIndicatorView show];
 ```
 
@@ -83,28 +70,70 @@ Then when some tasks have completed,  use
 
 ## Customisable
 
-* ~~*color* : Set the backgrond color. The default color is black.~~
+###  Public properties
 
+```objective-c
+// Set public properties before showing it.
 
-* ~~*borderColor* : Set the background border color. The default background color is black.~~
+// Set the backgrond color. The default color is black.
+self.myactivityIndicatorView.backColor = <#UIColor#>;
 
+// Set the background border color. The default background color is black.
+self.myactivityIndicatorView.borderColor = <#UIColor#>;
 
-* ~~*alpha* : Set the backgrond alpha. The default value is 0.86.~~
+// Set the backgrond border width. THe default value is 0.
+self.myactivityIndicatorView.borderWidth = <#CGFloat#>;
 
+// Set the background corner radius. The default value is 10.0;
+self.myactivityIndicatorView.cornerRadius = <#CGFloat#>;
 
-* ~~*borderWidth* : Set the backgrond border width. THe default value is 0.~~
+// Set the indicator color. The default color is white.
+self.myactivityIndicatorView.indicatorColor = <#UIColor#>;
 
+// Set the boolean value that indicates whether the ohter UIViews are user-interactable. The default value is YES.
+self.myactivityIndicatorView.isTheOnlyActiveView = <#BOOl#>;
 
-* ~~*cornerRadius* : Set the background corner radius. The default value is 10.0;~~
+// Set the appear animation type.
+self.myactivityIndicatorView.appearAnimationType = <#CCIndicatorAppearAnimationType#>;
 
+//  Set the disappear animation type.
+self.myactivityIndicatorView.disappearAnimationType = <#CCIndicatorDisappearAnimationType#>;
+```
 
-* ~~*indicatorColor* : Set the indicator color. The default color is white.~~
+### Animation Type
 
+#### Indicator animation type
 
-__NOTE: Properties above are not work in v1.4.0, I am fixing it.__
+```objective-c
+typedef NS_ENUM(NSInteger, CCIndicatorType) {
+    CCIndicatorTypeScalingDots, // Default type
+    CCIndicatorTypeLeadingDots,
+    CCIndicatorTypeCircle,
+    CCIndicatorTypeArc
+};
+```
+#### Appear animation type
 
-* *isTheOnlyActiveView* : A boolean value indicates whether the ohter UIViews are user-interactable. The default value is YES.
+```objective-c
+typedef NS_ENUM(NSInteger, CCIndicatorAppearAnimationType) {
+    CCIndicatorAppearAnimationTypeSlideFromTop,
+    CCIndicatorAppearAnimationTypeSlideFromBottom,
+    CCIndicatorAppearAnimationTypeSlideFromLeft,
+    CCIndicatorAppearAnimationTypeSlideFromRight,
+    CCIndicatorAppearAnimationTypeFadeIn // Default type
+};
+```
+#### Disappear animation type
 
+```objective-c
+typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
+    CCIndicatorDisappearAnimationTypeSlideToTop,
+    CCIndicatorDisappearAnimationTypeSlideToBottom,
+    CCIndicatorDisappearAnimationTypeSlideToLeft,
+    CCIndicatorDisappearAnimationTypeSlideToRight,
+    CCIndicatorDisappearAnimationTypeFadeOut // Default type
+};
+```
 
 
 
@@ -116,7 +145,7 @@ iOS 8.0 or later
 
 ## TODO
 
-* More types of animation 
+* More types of animation
 
 
 
