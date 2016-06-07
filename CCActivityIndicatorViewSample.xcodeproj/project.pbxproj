@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B636AE1D1D06A42C001D9B5E /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */; };
+		B636AE1F1D06A669001D9B5E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B636AE1E1D06A669001D9B5E /* ImageIO.framework */; };
+		B636AE241D06AE4F001D9B5E /* test.gif in Resources */ = {isa = PBXBuildFile; fileRef = B636AE231D06AE4F001D9B5E /* test.gif */; };
 		B6BC32D81CF533D90099BA6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32D71CF533D90099BA6F /* main.m */; };
 		B6BC32DB1CF533D90099BA6F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32DA1CF533D90099BA6F /* AppDelegate.m */; };
 		B6BC32DE1CF533D90099BA6F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32DD1CF533D90099BA6F /* ViewController.m */; };
@@ -36,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B636AE1B1D06A42C001D9B5E /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "CCActivityIndicatorView/UIImage+animatedGIF.h"; sourceTree = SOURCE_ROOT; };
+		B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "CCActivityIndicatorView/UIImage+animatedGIF.m"; sourceTree = SOURCE_ROOT; };
+		B636AE1E1D06A669001D9B5E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		B636AE231D06AE4F001D9B5E /* test.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test.gif; sourceTree = "<group>"; };
 		B6BC32D31CF533D90099BA6F /* CCActivityIndicatorViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCActivityIndicatorViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BC32D71CF533D90099BA6F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B6BC32D91CF533D90099BA6F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -61,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B636AE1F1D06A669001D9B5E /* ImageIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,9 +89,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B636AE221D06A9B9001D9B5E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B636AE231D06AE4F001D9B5E /* test.gif */,
+			);
+			name = Resources;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		B6BC32CA1CF533D90099BA6F = {
 			isa = PBXGroup;
 			children = (
+				B636AE1E1D06A669001D9B5E /* ImageIO.framework */,
 				B6BC32D51CF533D90099BA6F /* CCActivityIndicatorViewSample */,
 				B6BC32EF1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests */,
 				B6BC32FA1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests */,
@@ -109,6 +127,7 @@
 				B6BC32DC1CF533D90099BA6F /* ViewController.h */,
 				B6BC32DD1CF533D90099BA6F /* ViewController.m */,
 				B6BC33091CF533F30099BA6F /* Classes */,
+				B636AE221D06A9B9001D9B5E /* Resources */,
 				B6BC32DF1CF533D90099BA6F /* Main.storyboard */,
 				B6BC32E21CF533D90099BA6F /* Assets.xcassets */,
 				B6BC32E41CF533D90099BA6F /* LaunchScreen.storyboard */,
@@ -149,6 +168,8 @@
 			children = (
 				B6BC33161CF577590099BA6F /* CCActivityIndicatorView.h */,
 				B6BC33171CF577590099BA6F /* CCActivityIndicatorView.m */,
+				B636AE1B1D06A42C001D9B5E /* UIImage+animatedGIF.h */,
+				B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -261,6 +282,7 @@
 			files = (
 				B6BC32E61CF533D90099BA6F /* LaunchScreen.storyboard in Resources */,
 				B6BC32E31CF533D90099BA6F /* Assets.xcassets in Resources */,
+				B636AE241D06AE4F001D9B5E /* test.gif in Resources */,
 				B6BC32E11CF533D90099BA6F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -289,6 +311,7 @@
 				B6BC32DE1CF533D90099BA6F /* ViewController.m in Sources */,
 				B6BC32DB1CF533D90099BA6F /* AppDelegate.m in Sources */,
 				B6BC32D81CF533D90099BA6F /* main.m in Sources */,
+				B636AE1D1D06A42C001D9B5E /* UIImage+animatedGIF.m in Sources */,
 				B6BC33181CF577590099BA6F /* CCActivityIndicatorView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

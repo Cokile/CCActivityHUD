@@ -12,8 +12,7 @@
 <img src=Captures/capture2.gif width=210 height=372>
 <img src=Captures/capture3.gif width=210 height=372>
 <img src=Captures/capture4.gif width=210 height=372>
-
-
+<img src=Captures/capture5.gif width=210 height=372>
 
 ## Installation
 
@@ -27,7 +26,9 @@ pod 'CCActivityIndicatorView'
 
 ### Manually 
 
-Add  `CCActivityIndicatorView.h` and `CCActivityIndicatorView.m` to your project.
+Add the .h, .m files in the CCActivityIndicatorView folder to your project.
+
+Add `ImageIO.framework` to your target.
 
 
 
@@ -60,9 +61,18 @@ self.myactivityIndicatorView = [CCActivityIndicatorView new];
 [self.myactivityIndicatorView showWithType:CCIndicatorTypeArc];
 ```
 
-Then when some tasks have completed,  use
+Or you can even use your own GIF file
 
 ```objective-c
+self.myactivityIndicatorView = [CCActivityIndicatorView new];
+
+// Show with GIF
+[self.myactivityIndicatorView showWithGIFName:@"test.gif"];
+```
+
+Then when some tasks have completed,  simply use
+
+```
 [self.myactivityIndicatorView dismiss];
 ```
 
@@ -91,13 +101,16 @@ self.myactivityIndicatorView.cornerRadius = <#CGFloat#>;
 self.myactivityIndicatorView.indicatorColor = <#UIColor#>;
 
 // Set the boolean value that indicates whether the ohter UIViews are user-interactable. The default value is YES.
-self.myactivityIndicatorView.isTheOnlyActiveView = <#BOOl#>;
+self.myactivityIndicatorView.isTheOnlyActiveView = <#BOOL#>;
 
 // Set the appear animation type.
 self.myactivityIndicatorView.appearAnimationType = <#CCIndicatorAppearAnimationType#>;
 
 //  Set the disappear animation type.
 self.myactivityIndicatorView.disappearAnimationType = <#CCIndicatorDisappearAnimationType#>;
+
+// Set the background view type
+self.myactivityIndicatorView.backgroundViewType = <#CCIndicatorBackgroundViewType#>;
 ```
 
 ### Animation Type
@@ -132,6 +145,17 @@ typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
     CCIndicatorDisappearAnimationTypeSlideToLeft,
     CCIndicatorDisappearAnimationTypeSlideToRight,
     CCIndicatorDisappearAnimationTypeFadeOut // Default type
+};
+```
+
+#### Background view type
+
+```objective-c
+typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
+    CCIndicatorBackgroundViewTypeNone,
+    CCIndicatorBackgroundViewTypeBlur,
+    CCIndicatorBackgroundViewTypeTransparent,
+    CCIndicatorBackgroundViewTypeShadow
 };
 ```
 

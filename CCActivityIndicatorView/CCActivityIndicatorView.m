@@ -1,4 +1,5 @@
 #import "CCActivityIndicatorView.h"
+#import "UIImage+animatedGIF.h"
 
 #define NUMBER_OF_SCALE_DOT 15
 #define NUMBER_OF_LEADING_DOT 3
@@ -10,9 +11,11 @@
 @property (strong, nonatomic) CAReplicatorLayer *replicatorLayer;
 @property (strong, nonatomic) CALayer *indicatorCALayer;
 @property (strong, nonatomic) CAShapeLayer *indicatorCAShapeLayer;
-@property (strong, nonatomic) UIColor *updatedColor;
+@property (strong, nonatomic) UIImageView *imageView;
 
+@property (strong, nonatomic) UIColor *updatedColor;
 @property CCIndicatorType currentTpye;
+@property BOOL useGIF;
 
 @end
 
@@ -53,6 +56,7 @@
         [self initializeReplicatorLayer];
         [self initializeIndicatoeLayerWithType:type];
         self.currentTpye = type;
+        self.useGIF = NO;
         
         // chage the indicator color if user do not use the default color
         if (self.indicatorCALayer && self.updatedColor) {
@@ -80,6 +84,33 @@
     [self showWithType:CCIndicatorTypeScalingDots];
 }
 
+- (void)showWithGIFName:(NSString *)GIFName {
+    if (!self.superview) {
+        CGFloat length = self.frame.size.width/5;
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(length, length, length*3, length*3) ];
+        self.imageView.layer.cornerRadius = self.self.cornerRadius;
+        UIImage *gif = [UIImage animatedImageWithAnimatedGIFURL:[[NSBundle mainBundle] URLForResource:GIFName withExtension:nil]];
+        self.imageView.image = gif;
+        
+        [self addSubview:self.imageView];
+        
+        self.useGIF = YES;
+        
+        [self addBackgroundView];
+        
+        [[[UIApplication sharedApplication].windows lastObject] addSubview:self];
+        [self.superview bringSubviewToFront:self];
+        
+        [self addAppearAnimation];
+        
+        if (self.isTheOnlyActiveView) {
+            for (UIView *view in self.superview.subviews) {
+                view.userInteractionEnabled = NO;
+            }
+        }
+    }
+}
+
 - (void)dismiss {
     if (self.superview) {
         [self addDisappearAnimation];
@@ -98,8 +129,12 @@
 }
 
 - (void)removeFromSuperview {
-    if (self.backgroundView != NULL) {
+    if (self.backgroundView != nil) {
         [self.backgroundView removeFromSuperview];
+    }
+    
+    if (self.imageView != nil) {
+        [self.imageView removeFromSuperview];
     }
     
     [super removeFromSuperview];
@@ -301,7 +336,9 @@
     [UIView animateWithDuration:0.35 animations:^{
         self.alpha = originalAlpha;
     } completion:^(BOOL finished) {
-        [self addAnimation];
+        if (finished && !self.useGIF) {
+            [self addAnimation];
+        }
     }];
 }
 
@@ -313,7 +350,7 @@
     [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
-        if (finished) {
+        if (finished && !self.useGIF) {
             [self addAnimation];
         }
     }];
@@ -327,7 +364,7 @@
     [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
-        if (finished) {
+        if (finished && !self.useGIF) {
             [self addAnimation];
         }
     }];
@@ -341,7 +378,7 @@
     [UIView animateWithDuration:0.15 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
-        if (finished) {
+        if (finished && !self.useGIF) {
             [self addAnimation];
         }
     }];
@@ -355,7 +392,7 @@
     [UIView animateWithDuration:0.15 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
-        if (finished) {
+        if (finished && !self.useGIF) {
             [self addAnimation];
         }
     }];

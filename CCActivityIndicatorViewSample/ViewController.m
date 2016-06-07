@@ -29,14 +29,14 @@
     //self.activityView.backColor = [UIColor redColor];
     //self.activityView.indicatorColor = [UIColor blueColor];
     
-    self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromTop;
+    //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromTop;
     //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromBottom;
     //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromLeft;
     //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromRight;
     
     //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToTop;
     //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToBottom;
-    self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToLeft;
+    //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToLeft;
     //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToRight;
     
     //self.activityView.backgroundViewType = CCIndicatorBackgroundViewTypeBlur;
@@ -56,6 +56,8 @@
     //[self.activityView showWithType:CCIndicatorTypeLeadingDots];
     //[self.activityView showWithType:CCIndicatorTypeCircle];
     //[self.activityView showWithType:CCIndicatorTypeArc];
+    
+    //[self.activityView showWithGIFName:@"test.gif"];
 }
 
 - (IBAction)dismiss:(id)sender {

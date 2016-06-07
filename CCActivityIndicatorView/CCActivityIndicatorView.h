@@ -109,6 +109,13 @@ typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
 - (void)show;
 
 /**
+ *  Show with a GIF image.
+ *
+ *  @param GIFName The GIF's name to be shown.
+ */
+- (void)showWithGIFName:(NSString *)GIFName;
+
+/**
  *  Dissmiss the view.
  */
 - (void)dismiss;
