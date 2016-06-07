@@ -24,6 +24,12 @@ typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
     CCIndicatorDisappearAnimationTypeFadeOut
 };
 
+typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
+    CCIndicatorBackgroundViewTypeNone,
+    CCIndicatorBackgroundViewTypeBlur,
+    CCIndicatorBackgroundViewTypeTransparent,
+    CCIndicatorBackgroundViewTypeShadow
+};
 
 
 @interface CCActivityIndicatorView : UIView
@@ -80,6 +86,11 @@ typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
  *  Set the animation about how the activity indicator to disappear from the screen.
  */
 @property CCIndicatorAppearAnimationType disappearAnimationType;
+
+/**
+ *  Set the type of the background view.
+ */
+@property CCIndicatorBackgroundViewType backgroundViewType;
 
 
 

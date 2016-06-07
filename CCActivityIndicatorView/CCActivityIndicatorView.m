@@ -6,6 +6,7 @@
 
 @interface CCActivityIndicatorView ()
 
+@property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) CAReplicatorLayer *replicatorLayer;
 @property (strong, nonatomic) CALayer *indicatorCALayer;
 @property (strong, nonatomic) CAShapeLayer *indicatorCAShapeLayer;
@@ -49,9 +50,6 @@
 #pragma mark - public methods
 - (void)showWithType:(CCIndicatorType)type {
     if (!self.superview) {
-        [[[UIApplication sharedApplication].windows lastObject] addSubview:self];
-        [self.superview bringSubviewToFront:self];
-        
         [self initializeReplicatorLayer];
         [self initializeIndicatoeLayerWithType:type];
         self.currentTpye = type;
@@ -62,6 +60,11 @@
         } else if (self.indicatorCAShapeLayer && self.updatedColor) {
             self.indicatorCAShapeLayer.strokeColor = self.updatedColor.CGColor;
         }
+        
+        [self addBackgroundView];
+        
+        [[[UIApplication sharedApplication].windows lastObject] addSubview:self];
+        [self.superview bringSubviewToFront:self];
         
         [self addAppearAnimation];
         
@@ -94,6 +97,14 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)removeFromSuperview {
+    if (self.backgroundView != NULL) {
+        [self.backgroundView removeFromSuperview];
+    }
+    
+    [super removeFromSuperview];
+}
+
 #pragma mark - initialization
 - (instancetype)init {
     self = [super init];
@@ -111,6 +122,7 @@
     
         self.appearAnimationType = CCIndicatorAppearAnimationTypeFadeIn;
         self.disappearAnimationType = CCIndicatorDisappearAnimationTypeFadeOut;
+        self.backgroundViewType = CCIndicatorBackgroundViewTypeNone;
         
         [self addNotificationObserver];
     }
@@ -210,6 +222,50 @@
     [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
 }
 
+#pragma mark - background view
+- (void)addBackgroundView {
+    switch (self.backgroundViewType) {
+        case CCIndicatorBackgroundViewTypeNone:
+            // do nothing
+            break;
+        
+        case CCIndicatorBackgroundViewTypeBlur:
+            [self addBlurBackgroundView];
+            break;
+            
+        case CCIndicatorBackgroundViewTypeTransparent:
+            [self addTransparentBackgroundView];
+            break;
+            
+        case CCIndicatorBackgroundViewTypeShadow:
+            [self addShadowBackgroundView];
+            break;
+    }
+}
+
+- (void)addBlurBackgroundView {
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    backgroundView.effect = blurEffect;
+    self.backgroundView = backgroundView;
+                              
+    [[[UIApplication sharedApplication].windows lastObject] addSubview:self.backgroundView];
+}
+
+- (void)addTransparentBackgroundView {
+    self.backgroundView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.backgroundView.backgroundColor = [UIColor blackColor];
+    self.backgroundView.alpha = self.alpha-.2>0?self.alpha-.2:0.15;
+    
+    [[[UIApplication sharedApplication].windows lastObject] addSubview:self.backgroundView];
+}
+
+- (void)addShadowBackgroundView {
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowOffset = CGSizeMake(2.0, 2.0);
+    self.layer.shadowOpacity = 0.5;
+}
+
 #pragma mark - appear animation
 - (void)addAppearAnimation {
     switch (self.appearAnimationType) {
@@ -254,7 +310,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(bounds.size.width/2, -length);
     
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished) {
@@ -268,7 +324,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(bounds.size.width/2, bounds.size.height+length);
     
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished) {
@@ -282,7 +338,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(-length, bounds.size.height/2);
     
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.15 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished) {
@@ -296,7 +352,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(bounds.size.width+length, bounds.size.height/2);
     
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.15 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished) {
