@@ -167,6 +167,12 @@ iOS 8.0 or later
 
 
 
+## Acknowledgement
+
+[uiimage-from-animated-gif](https://github.com/mayoff/uiimage-from-animated-gif) : A UIImage category that loads animated GIFs.
+
+
+
 ## TODO
 
 * More types of animation
