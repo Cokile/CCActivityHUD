@@ -58,7 +58,13 @@
         self.currentTpye = type;
         self.useGIF = NO;
         
-        // chage the indicator color if user do not use the default color
+        // change the indicator color if user do not use the default color.
+        // You will confused that why not change the indicator color within the relevant setter,
+        // If so, I need to initialize self.indicatorCALayer or self.indicatorCAShapeLayer in the init method,
+        // However, this will cause a problem (or bug) that the animation not works,
+        // Meanwhile, when user use GIF instead of provided animation types,
+        // the init method will create two useless instances,
+        // since showing GIF not rely on self.indicatorCALayer or self.indicatorCAShapeLayer
         if (self.indicatorCALayer && self.updatedColor) {
             self.indicatorCALayer.backgroundColor = self.updatedColor.CGColor;
         } else if (self.indicatorCAShapeLayer && self.updatedColor) {
@@ -137,6 +143,9 @@
         [self.imageView removeFromSuperview];
     }
     
+    // change the scale to original if the disappear animation is zoom out
+    self.transform = CGAffineTransformIdentity;
+    
     [super removeFromSuperview];
 }
 
@@ -166,6 +175,9 @@
 }
 
 - (void)addNotificationObserver {
+    // The reason for invoking addAnimation when application enter foreground
+    // is that if the application enter background when the activity indicator is animating,
+    // the animation will not work when the application re-enter foreground.
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(addAnimation) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
@@ -242,6 +254,10 @@
     self.indicatorCAShapeLayer.fillColor = [UIColor clearColor].CGColor;
     self.indicatorCAShapeLayer.lineWidth = self.frame.size.width/30;
     
+    // Although animation for circle do not rely on self.replicatorLayer,
+    // I still add it as a sublayer of self.replicatorLayer instead of self.layer,
+    // for more convenient management of layers
+    // when user show other types of indicator with the same CCActivityIndicatorView instance.
     [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
 }
 
@@ -254,6 +270,10 @@
     CGFloat length = self.frame.size.width/5;
     self.indicatorCAShapeLayer.frame = CGRectMake(length, length, length*3, length*3);
     
+    // Although animation for arc do not rely on self.replicatorLayer,
+    // I still add it as a sublayer of self.replicatorLayer instead of self.layer,
+    // for more convenient management of layers
+    // when user show other types of indicator with the same CCActivityIndicatorView instance.
     [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
 }
 
@@ -318,6 +338,10 @@
             
         case CCIndicatorAppearAnimationTypeSlideFromRight:
             [self addSlideFromRightAppearAnimation];
+            break;
+            
+        case CCIndicatorAppearAnimationTypeZoomIn:
+            [self addZoomInAppearAnimation];
             break;
             
         case CCIndicatorAppearAnimationTypeFadeIn:
@@ -395,6 +419,28 @@
         if (finished && !self.useGIF) {
             [self addAnimation];
         }
+    }];
+}
+
+- (void)addZoomInAppearAnimation {
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+    
+    self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
+    [UIView animateWithDuration:0.15 animations:^{
+        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.1 animations:^{
+            self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1 animations:^{
+                self.transform = CGAffineTransformIdentity;
+                
+                if (finished && !self.useGIF) {
+                    [self addAnimation];
+                }
+            }];
+        }];
     }];
 }
 
@@ -529,6 +575,10 @@
             [self addSlideToRightDissappearAnimation];
             break;
             
+        case CCIndicatorDisappearAnimationTypeZoomOut:
+            [self addZoomOutDisappearAnimation];
+            break;
+            
         case CCIndicatorDisappearAnimationTypeFadeOut:
             [self addFadeOutDisappearAnimation];
             break;
@@ -582,6 +632,22 @@
         self.center = CGPointMake(bounds.size.width+length, bounds.size.height/2);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
+    }];
+}
+
+- (void)addZoomOutDisappearAnimation {
+    [UIView animateWithDuration:0.15 animations:^{
+        self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.1 animations:^{
+            self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1 animations:^{
+                self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01);;
+                
+                [self removeFromSuperview];
+            }];
+        }];
     }];
 }
 

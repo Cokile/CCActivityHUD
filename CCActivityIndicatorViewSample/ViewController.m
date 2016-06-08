@@ -33,11 +33,13 @@
     //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromBottom;
     //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromLeft;
     //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromRight;
+    //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeZoomIn;
     
     //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToTop;
     //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToBottom;
     //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToLeft;
     //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToRight;
+    //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeZoomOut;
     
     //self.activityView.backgroundViewType = CCIndicatorBackgroundViewTypeBlur;
     //self.activityView.backgroundViewType = CCIndicatorBackgroundViewTypeTransparent;

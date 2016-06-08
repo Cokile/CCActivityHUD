@@ -13,6 +13,7 @@ typedef NS_ENUM(NSInteger, CCIndicatorAppearAnimationType) {
     CCIndicatorAppearAnimationTypeSlideFromBottom,
     CCIndicatorAppearAnimationTypeSlideFromLeft,
     CCIndicatorAppearAnimationTypeSlideFromRight,
+    CCIndicatorAppearAnimationTypeZoomIn,
     CCIndicatorAppearAnimationTypeFadeIn
 };
 
@@ -21,6 +22,7 @@ typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
     CCIndicatorDisappearAnimationTypeSlideToBottom,
     CCIndicatorDisappearAnimationTypeSlideToLeft,
     CCIndicatorDisappearAnimationTypeSlideToRight,
+    CCIndicatorDisappearAnimationTypeZoomOut,
     CCIndicatorDisappearAnimationTypeFadeOut
 };
 

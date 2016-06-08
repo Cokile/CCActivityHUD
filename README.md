@@ -40,6 +40,7 @@ Add `ImageIO.framework` to your target.
 self.myactivityIndicatorView = [CCActivityIndicatorView new];
 
 // Show with the default type
+// The 1st capture
 [self.myactivityIndicatorView show];
 ```
 
@@ -49,15 +50,19 @@ Or you can specify the type to show
 self.myactivityIndicatorView = [CCActivityIndicatorView new];
 
 // CCActivityIndicatorView with type CCIndicatorTypeScalingDots
+// The 1st capture
 [self.myactivityIndicatorView showWithType:CCIndicatorTypeScalingDots];
 
 // CCActivityIndicatorView with type CCIndicatorTypeLeadingDots
+// The 2nd capture
 [self.myactivityIndicatorView showWithType:CCIndicatorTypeLeadingDots];
 
 // CCActivityIndicatorView with type CCIndicatorTypeCircle
+// The 3rd capture
 [self.myactivityIndicatorView showWithType:CCIndicatorTypeCircle];
 
 // CCActivityIndicatorView with type CCIndicatorTypeArc
+// The 4th capture
 [self.myactivityIndicatorView showWithType:CCIndicatorTypeArc];
 ```
 
@@ -67,6 +72,7 @@ Or you can even use your own GIF file
 self.myactivityIndicatorView = [CCActivityIndicatorView new];
 
 // Show with GIF
+// The 5th capture
 [self.myactivityIndicatorView showWithGIFName:@"test.gif"];
 ```
 
@@ -75,6 +81,12 @@ Then when some tasks have completed,  simply use
 ```
 [self.myactivityIndicatorView dismiss];
 ```
+
+__Note:__
+
+You should not show `CCActivityIndicatorView` within `viewDidLoad`, The Animation will not work!
+
+Instead, show it within `viewWillAppear` or `viewDidAppear`.
 
 
 
@@ -133,6 +145,7 @@ typedef NS_ENUM(NSInteger, CCIndicatorAppearAnimationType) {
     CCIndicatorAppearAnimationTypeSlideFromBottom,
     CCIndicatorAppearAnimationTypeSlideFromLeft,
     CCIndicatorAppearAnimationTypeSlideFromRight,
+    CCIndicatorAppearAnimationTypeZoomIn,
     CCIndicatorAppearAnimationTypeFadeIn // Default type
 };
 ```
@@ -144,6 +157,7 @@ typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
     CCIndicatorDisappearAnimationTypeSlideToBottom,
     CCIndicatorDisappearAnimationTypeSlideToLeft,
     CCIndicatorDisappearAnimationTypeSlideToRight,
+  	CCIndicatorDisappearAnimationTypeZoomOut,
     CCIndicatorDisappearAnimationTypeFadeOut // Default type
 };
 ```
@@ -152,7 +166,7 @@ typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
 
 ```objective-c
 typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
-    CCIndicatorBackgroundViewTypeNone,
+    CCIndicatorBackgroundViewTypeNone, // Default type
     CCIndicatorBackgroundViewTypeBlur,
     CCIndicatorBackgroundViewTypeTransparent,
     CCIndicatorBackgroundViewTypeShadow
