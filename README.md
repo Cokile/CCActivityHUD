@@ -82,6 +82,15 @@ Then when some tasks have completed,  simply use
 [self.myactivityIndicatorView dismiss];
 ```
 
+Or you can display some text before dismiss
+
+```objective-c
+// The 1st capture
+[self.myactivityIndicatorView dismissWithText:@"This is a sample dismiss text" delay:0.5];
+```
+
+
+
 __Note:__
 
 You should not show `CCActivityIndicatorView` within `viewDidLoad`, The Animation will not work!

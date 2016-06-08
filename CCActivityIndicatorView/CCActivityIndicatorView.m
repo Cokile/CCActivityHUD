@@ -50,7 +50,7 @@
         self.updatedColor = indicatorColor;
 }
 
-#pragma mark - public methods
+#pragma mark - public methods - show the view
 - (void)showWithType:(CCIndicatorType)type {
     if (!self.superview) {
         [self initializeReplicatorLayer];
@@ -117,9 +117,34 @@
     }
 }
 
-- (void)dismiss {
+#pragma mark - public methods - dismiss the view
+- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay{
     if (self.superview) {
-        [self addDisappearAnimation];
+        if (text != nil || text.length != 0) {
+            // remove animation or GIF
+            if (self.replicatorLayer != nil) {
+                [self.replicatorLayer removeFromSuperlayer];
+            }
+            if (self.imageView != nil) {
+                [self.imageView removeFromSuperview];
+            }
+            
+            [UIView animateWithDuration:0.3 animations:^{
+                CGRect bounds = [UIScreen mainScreen].bounds;
+                self.frame = CGRectMake(0, 0, bounds.size.width/2.7, 63);
+                self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+            }];
+            
+            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+            textLabel.numberOfLines = 0;
+            textLabel.font = [UIFont systemFontOfSize:15];
+            textLabel.textColor = [self inverseColorFor:self.backgroundColor];
+            textLabel.textAlignment = NSTextAlignmentCenter;
+            textLabel.text = text;
+            [self addSubview:textLabel];
+        }
+        
+        [self addDisappearAnimationWithDelay:delay];
         
         if (self.isTheOnlyActiveView) {
             for (UIView *view in self.superview.subviews) {
@@ -127,6 +152,10 @@
             }
         }
     }
+}
+
+- (void)dismiss {
+    [self dismissWithText:nil delay:0.0];
 }
 
 #pragma mark - life cycle
@@ -145,6 +174,11 @@
     
     // change the scale to original if the disappear animation is zoom out
     self.transform = CGAffineTransformIdentity;
+    
+    CGRect bounds = [UIScreen mainScreen].bounds;
+    CGFloat boundsWdith = bounds.size.width;
+    CGFloat length = boundsWdith/6;
+    self.frame = CGRectMake(-2*length, -2*length, length, length);
     
     [super removeFromSuperview];
 }
@@ -371,7 +405,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(bounds.size.width/2, -length);
     
-    [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
@@ -385,7 +419,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(bounds.size.width/2, bounds.size.height+length);
     
-    [UIView animateWithDuration:0.25 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
@@ -399,7 +433,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(-length, bounds.size.height/2);
     
-    [UIView animateWithDuration:0.15 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
@@ -413,7 +447,7 @@
     CGFloat length = self.frame.size.width;
     self.center = CGPointMake(bounds.size.width+length, bounds.size.height/2);
     
-    [UIView animateWithDuration:0.15 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
@@ -557,38 +591,38 @@
 }
 
 #pragma mark - disappeat animation
-- (void)addDisappearAnimation {
+- (void)addDisappearAnimationWithDelay:(CGFloat)delay {
     switch (self.disappearAnimationType) {
         case CCIndicatorDisappearAnimationTypeSlideToTop:
-            [self addSlideToTopDissappearAnimation];
+            [self addSlideToTopDissappearAnimationWithDelay:delay];
             break;
             
         case CCIndicatorDisappearAnimationTypeSlideToBottom:
-            [self addSlideToBottomDissappearAnimation];
+            [self addSlideToBottomDissappearAnimationWithDelay:delay];
             break;
             
         case CCIndicatorDisappearAnimationTypeSlideToLeft:
-            [self addSlideToLeftDissappearAnimation];
+            [self addSlideToLeftDissappearAnimationWithDelay:delay];
             break;
             
         case CCIndicatorDisappearAnimationTypeSlideToRight:
-            [self addSlideToRightDissappearAnimation];
+            [self addSlideToRightDissappearAnimationWithDelay:delay];
             break;
             
         case CCIndicatorDisappearAnimationTypeZoomOut:
-            [self addZoomOutDisappearAnimation];
+            [self addZoomOutDisappearAnimationWithDelay:delay];
             break;
             
         case CCIndicatorDisappearAnimationTypeFadeOut:
-            [self addFadeOutDisappearAnimation];
+            [self addFadeOutDisappearAnimationWithDelay:delay];
             break;
     }
 }
 
-- (void)addFadeOutDisappearAnimation {
+- (void)addFadeOutDisappearAnimationWithDelay:(CGFloat)delay {
     CGFloat originalAlpha = self.alpha;
     
-    [UIView animateWithDuration:0.35 animations:^{
+    [UIView animateWithDuration:0.35 delay:delay options:kNilOptions  animations:^{
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         self.alpha = originalAlpha;
@@ -596,47 +630,47 @@
     }];
 }
 
-- (void)addSlideToTopDissappearAnimation {
+- (void)addSlideToTopDissappearAnimationWithDelay:(CGFloat)delay {
     CGRect bounds = [UIScreen mainScreen].bounds;
     CGFloat length = self.frame.size.width;
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.25 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, -length);
     } completion:^(BOOL finished) {
          [self removeFromSuperview];
     }];
 }
-- (void)addSlideToBottomDissappearAnimation {
+- (void)addSlideToBottomDissappearAnimationWithDelay:(CGFloat)delay {
     CGRect bounds = [UIScreen mainScreen].bounds;
     CGFloat length = self.frame.size.width;
-    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.25 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width/2, bounds.size.height+length);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
 }
 
-- (void)addSlideToLeftDissappearAnimation {
+- (void)addSlideToLeftDissappearAnimationWithDelay:(CGFloat)delay {
     CGRect bounds = [UIScreen mainScreen].bounds;
     CGFloat length = self.frame.size.width;
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.15 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(-length, bounds.size.height/2);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
 }
 
-- (void)addSlideToRightDissappearAnimation {
+- (void)addSlideToRightDissappearAnimationWithDelay:(CGFloat)delay {
     CGRect bounds = [UIScreen mainScreen].bounds;
     CGFloat length = self.frame.size.width;
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.15 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(bounds.size.width+length, bounds.size.height/2);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
 }
 
-- (void)addZoomOutDisappearAnimation {
-    [UIView animateWithDuration:0.15 animations:^{
+- (void)addZoomOutDisappearAnimationWithDelay:(CGFloat)delay {
+    [UIView animateWithDuration:0.15 delay:delay options:kNilOptions animations:^{
         self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.1, 1.1);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.1 animations:^{
@@ -649,6 +683,13 @@
             }];
         }];
     }];
+}
+
+#pragma helper methods
+- (UIColor *)inverseColorFor:(UIColor *)color {
+    CGFloat r,g,b,a;
+    [color getRed:&r green:&g blue:&b alpha:&a];
+    return [UIColor colorWithRed:1.-r green:1.-g blue:1.-b alpha:a];
 }
 
 @end

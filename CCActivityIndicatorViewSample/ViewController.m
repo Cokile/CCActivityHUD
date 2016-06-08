@@ -64,6 +64,8 @@
 
 - (IBAction)dismiss:(id)sender {
     [self.activityView dismiss];
+    
+    //[self.activityView dismissWithText:@"This is a sample dismiss text" delay:0.5];
 }
 
 @end

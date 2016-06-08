@@ -118,7 +118,15 @@ typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
 - (void)showWithGIFName:(NSString *)GIFName;
 
 /**
- *  Dissmiss the view.
+ *  Display some text before dissmissing the view.
+ *
+ *  @param text The text to be displayed.
+ *  @param delay The amount of time to wait before dismiss the view.
+ */
+- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay;
+
+/**
+ *  Simply dissmiss the view.
  */
 - (void)dismiss;
 
