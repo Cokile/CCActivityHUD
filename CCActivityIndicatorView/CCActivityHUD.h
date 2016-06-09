@@ -1,40 +1,40 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger, CCIndicatorType) {
-    CCIndicatorTypeScalingDots,
-    CCIndicatorTypeLeadingDots,
-    CCIndicatorTypeCircle,
-    CCIndicatorTypeArc
+typedef NS_ENUM(NSInteger, CCActivityHUDIndicatorType) {
+    CCActivityHUDIndicatorTypeScalingDots,
+    CCActivityHUDIndicatorTypeLeadingDots,
+    CCActivityHUDIndicatorTypeCircle,
+    CCActivityHUDIndicatorTypeArc
 };
 
-typedef NS_ENUM(NSInteger, CCIndicatorAppearAnimationType) {
-    CCIndicatorAppearAnimationTypeSlideFromTop,
-    CCIndicatorAppearAnimationTypeSlideFromBottom,
-    CCIndicatorAppearAnimationTypeSlideFromLeft,
-    CCIndicatorAppearAnimationTypeSlideFromRight,
-    CCIndicatorAppearAnimationTypeZoomIn,
-    CCIndicatorAppearAnimationTypeFadeIn
+typedef NS_ENUM(NSInteger, CCActivityHUDAppearAnimationType) {
+    CCActivityHUDAppearAnimationTypeSlideFromTop,
+    CCActivityHUDAppearAnimationTypeSlideFromBottom,
+    CCActivityHUDAppearAnimationTypeSlideFromLeft,
+    CCActivityHUDAppearAnimationTypeSlideFromRight,
+    CCActivityHUDAppearAnimationTypeZoomIn,
+    CCActivityHUDAppearAnimationTypeFadeIn
 };
 
-typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
-    CCIndicatorDisappearAnimationTypeSlideToTop,
-    CCIndicatorDisappearAnimationTypeSlideToBottom,
-    CCIndicatorDisappearAnimationTypeSlideToLeft,
-    CCIndicatorDisappearAnimationTypeSlideToRight,
-    CCIndicatorDisappearAnimationTypeZoomOut,
-    CCIndicatorDisappearAnimationTypeFadeOut
+typedef NS_ENUM(NSInteger, CCActivityHUDDisappearAnimationType) {
+    CCActivityHUDDisappearAnimationTypeSlideToTop,
+    CCActivityHUDDisappearAnimationTypeSlideToBottom,
+    CCActivityHUDDisappearAnimationTypeSlideToLeft,
+    CCActivityHUDDisappearAnimationTypeSlideToRight,
+    CCActivityHUDDisappearAnimationTypeZoomOut,
+    CCActivityHUDDisappearAnimationTypeFadeOut
 };
 
-typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
-    CCIndicatorBackgroundViewTypeNone,
-    CCIndicatorBackgroundViewTypeBlur,
-    CCIndicatorBackgroundViewTypeTransparent,
-    CCIndicatorBackgroundViewTypeShadow
+typedef NS_ENUM(NSInteger, CCActivityHUDBackgroundViewType) {
+    CCActivityHUDBackgroundViewTypeNone,
+    CCActivityHUDBackgroundViewTypeBlur,
+    CCActivityHUDBackgroundViewTypeTransparent,
+    CCActivityHUDBackgroundViewTypeShadow
 };
 
 
-@interface CCActivityIndicatorView : UIView
+@interface CCActivityHUD : UIView
 
 #pragma mark - properties
 /**
@@ -82,17 +82,17 @@ typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
 /**
  *  Set the animation about how the activity indicator to appear to the screen.
  */
-@property CCIndicatorAppearAnimationType appearAnimationType;
+@property CCActivityHUDAppearAnimationType appearAnimationType;
 
 /**
  *  Set the animation about how the activity indicator to disappear from the screen.
  */
-@property CCIndicatorAppearAnimationType disappearAnimationType;
+@property CCActivityHUDAppearAnimationType disappearAnimationType;
 
 /**
  *  Set the type of the background view.
  */
-@property CCIndicatorBackgroundViewType backgroundViewType;
+@property CCActivityHUDBackgroundViewType backgroundViewType;
 
 
 
@@ -103,7 +103,7 @@ typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
  *
  *  @param type Type for the activity indicator to be shown.
  */
-- (void)showWithType:(CCIndicatorType)type;
+- (void)showWithType:(CCActivityHUDIndicatorType)type;
 
 /**
  *  Show an activity indicator in the center of the screen with the dafault type CCIndicatorTypeScalingDots.

@@ -45,10 +45,10 @@
                                 <exclude reference="0ED-Un-7uN"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="vi7-kX-1tQ"/>
                                 <exclude reference="Cuf-jE-lhs"/>
                                 <exclude reference="yJh-Qt-D6V"/>
                                 <exclude reference="WbO-MD-AO5"/>
-                                <exclude reference="vi7-kX-1tQ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -57,10 +57,10 @@
                                 <include reference="0ED-Un-7uN"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="vi7-kX-1tQ"/>
                                 <include reference="Cuf-jE-lhs"/>
                                 <include reference="yJh-Qt-D6V"/>
                                 <include reference="WbO-MD-AO5"/>
-                                <include reference="vi7-kX-1tQ"/>
                             </mask>
                         </variation>
                     </view>

@@ -7,11 +7,11 @@
 //
 
 #import "ViewController.h"
-#import "CCActivityIndicatorView.h"
+#import "CCActivityHUD.h"
 
 @interface ViewController ()
 
-@property (strong, nonatomic) CCActivityIndicatorView *activityView;
+@property (strong, nonatomic) CCActivityHUD *activityHUD;
 
 @end
 
@@ -20,30 +20,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.activityView = [CCActivityIndicatorView new];
-    self.activityView.isTheOnlyActiveView = NO;
-    //self.activityView.alpha = 0.4;
-    //self.activityView.cornerRadius = 20.0;
-    //self.activityView.borderWidth = 3.0;
-    //self.activityView.borderColor= [UIColor greenColor];
-    //self.activityView.backColor = [UIColor redColor];
-    //self.activityView.indicatorColor = [UIColor blueColor];
+    self.activityHUD = [CCActivityHUD new];
+    self.activityHUD.isTheOnlyActiveView = NO;
+    //self.activityHUD.alpha = 0.4;
+    //self.activityHUD.cornerRadius = 20.0;
+    //self.activityHUD.borderWidth = 3.0;
+    //self.activityHUD.borderColor= [UIColor greenColor];
+    //self.activityHUD.backColor = [UIColor redColor];
+    //self.activityHUD.indicatorColor = [UIColor blueColor];
     
-    //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromTop;
-    //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromBottom;
-    //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromLeft;
-    //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeSlideFromRight;
-    //self.activityView.appearAnimationType = CCIndicatorAppearAnimationTypeZoomIn;
+    //self.activityHUD.appearAnimationType = CCActivityHUDAppearAnimationTypeSlideFromTop;
+    //self.activityHUD.appearAnimationType = CCActivityHUDAppearAnimationTypeSlideFromBottom;
+    //self.activityHUD.appearAnimationType = CCActivityHUDAppearAnimationTypeSlideFromLeft;
+    //self.activityHUD.appearAnimationType = CCActivityHUDAppearAnimationTypeSlideFromRight;
+    //self.activityHUD.appearAnimationType = CCActivityHUDAppearAnimationTypeZoomIn;
     
-    //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToTop;
-    //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToBottom;
-    //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToLeft;
-    //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeSlideToRight;
-    //self.activityView.disappearAnimationType = CCIndicatorDisappearAnimationTypeZoomOut;
+    //self.activityHUD.disappearAnimationType = CCActivityHUDDisappearAnimationTypeSlideToTop;
+    //self.activityHUD.disappearAnimationType = CCActivityHUDDisappearAnimationTypeSlideToBottom;
+    //self.activityHUD.disappearAnimationType = CCActivityHUDDisappearAnimationTypeSlideToLeft;
+    //self.activityHUD.disappearAnimationType = CCActivityHUDDisappearAnimationTypeSlideToRight;
+    //self.activityHUD.disappearAnimationType = CCActivityHUDDisappearAnimationTypeZoomOut;
     
-    //self.activityView.backgroundViewType = CCIndicatorBackgroundViewTypeBlur;
-    //self.activityView.backgroundViewType = CCIndicatorBackgroundViewTypeTransparent;
-    //self.activityView.backgroundViewType = CCIndicatorBackgroundViewTypeShadow;
+    //self.activityHUD.backgroundViewType = CCActivityHUDBackgroundViewTypeBlur;
+    //self.activityHUD.backgroundViewType = CCActivityHUDBackgroundViewTypeTransparent;
+    //self.activityHUD.backgroundViewType = CCActivityHUDBackgroundViewTypeShadow;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,20 +52,20 @@
 }
 
 - (IBAction)show:(id)sender {
-    [self.activityView show];
+    [self.activityHUD show];
     
-    //[self.activityView showWithType:CCIndicatorTypeScalingDots];
-    //[self.activityView showWithType:CCIndicatorTypeLeadingDots];
-    //[self.activityView showWithType:CCIndicatorTypeCircle];
-    //[self.activityView showWithType:CCIndicatorTypeArc];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeScalingDots];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeLeadingDots];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeCircle];
+    //[self.activityHUD showWithTypeCCActivityHUDIndicatorTypeArc];
     
-    //[self.activityView showWithGIFName:@"test.gif"];
+    //[self.activityHUD showWithGIFName:@"test.gif"];
 }
 
 - (IBAction)dismiss:(id)sender {
-    [self.activityView dismiss];
+    //[self.activityHUD dismiss];
     
-    //[self.activityView dismissWithText:@"This is a sample dismiss text" delay:0.5];
+    //[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:0.5];
 }
 
 @end

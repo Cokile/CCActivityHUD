@@ -18,7 +18,7 @@
 		B6BC32E61CF533D90099BA6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6BC32E41CF533D90099BA6F /* LaunchScreen.storyboard */; };
 		B6BC32F11CF533D90099BA6F /* CCActivityIndicatorViewSampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32F01CF533D90099BA6F /* CCActivityIndicatorViewSampleTests.m */; };
 		B6BC32FC1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32FB1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.m */; };
-		B6BC33181CF577590099BA6F /* CCActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC33171CF577590099BA6F /* CCActivityIndicatorView.m */; };
+		B6BC33181CF577590099BA6F /* CCActivityHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC33171CF577590099BA6F /* CCActivityHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +43,7 @@
 		B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "CCActivityIndicatorView/UIImage+animatedGIF.m"; sourceTree = SOURCE_ROOT; };
 		B636AE1E1D06A669001D9B5E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B636AE231D06AE4F001D9B5E /* test.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test.gif; sourceTree = "<group>"; };
-		B6BC32D31CF533D90099BA6F /* CCActivityIndicatorViewSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCActivityIndicatorViewSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6BC32D31CF533D90099BA6F /* CCActivityHUDSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCActivityHUDSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BC32D71CF533D90099BA6F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B6BC32D91CF533D90099BA6F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B6BC32DA1CF533D90099BA6F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -53,14 +53,14 @@
 		B6BC32E21CF533D90099BA6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B6BC32E51CF533D90099BA6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B6BC32E71CF533D90099BA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6BC32EC1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCActivityIndicatorViewSampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6BC32EC1CF533D90099BA6F /* CCActivityHUDSample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCActivityHUDSample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BC32F01CF533D90099BA6F /* CCActivityIndicatorViewSampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCActivityIndicatorViewSampleTests.m; sourceTree = "<group>"; };
 		B6BC32F21CF533D90099BA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6BC32F71CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCActivityIndicatorViewSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6BC32F71CF533D90099BA6F /* CCActivityHUDSample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCActivityHUDSample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BC32FB1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCActivityIndicatorViewSampleUITests.m; sourceTree = "<group>"; };
 		B6BC32FD1CF533D90099BA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6BC33161CF577590099BA6F /* CCActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivityIndicatorView.h; path = CCActivityIndicatorView/CCActivityIndicatorView.h; sourceTree = SOURCE_ROOT; };
-		B6BC33171CF577590099BA6F /* CCActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivityIndicatorView.m; path = CCActivityIndicatorView/CCActivityIndicatorView.m; sourceTree = SOURCE_ROOT; };
+		B6BC33161CF577590099BA6F /* CCActivityHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivityHUD.h; path = CCActivityIndicatorView/CCActivityHUD.h; sourceTree = SOURCE_ROOT; };
+		B6BC33171CF577590099BA6F /* CCActivityHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivityHUD.m; path = CCActivityIndicatorView/CCActivityHUD.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,7 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				B636AE1E1D06A669001D9B5E /* ImageIO.framework */,
-				B6BC32D51CF533D90099BA6F /* CCActivityIndicatorViewSample */,
+				B6BC32D51CF533D90099BA6F /* CCActivityHUDSample */,
 				B6BC32EF1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests */,
 				B6BC32FA1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests */,
 				B6BC32D41CF533D90099BA6F /* Products */,
@@ -112,14 +112,14 @@
 		B6BC32D41CF533D90099BA6F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B6BC32D31CF533D90099BA6F /* CCActivityIndicatorViewSample.app */,
-				B6BC32EC1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests.xctest */,
-				B6BC32F71CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.xctest */,
+				B6BC32D31CF533D90099BA6F /* CCActivityHUDSample.app */,
+				B6BC32EC1CF533D90099BA6F /* CCActivityHUDSample.xctest */,
+				B6BC32F71CF533D90099BA6F /* CCActivityHUDSample.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B6BC32D51CF533D90099BA6F /* CCActivityIndicatorViewSample */ = {
+		B6BC32D51CF533D90099BA6F /* CCActivityHUDSample */ = {
 			isa = PBXGroup;
 			children = (
 				B6BC32D91CF533D90099BA6F /* AppDelegate.h */,
@@ -134,6 +134,7 @@
 				B6BC32E71CF533D90099BA6F /* Info.plist */,
 				B6BC32D61CF533D90099BA6F /* Supporting Files */,
 			);
+			name = CCActivityHUDSample;
 			path = CCActivityIndicatorViewSample;
 			sourceTree = "<group>";
 		};
@@ -166,8 +167,8 @@
 		B6BC33091CF533F30099BA6F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B6BC33161CF577590099BA6F /* CCActivityIndicatorView.h */,
-				B6BC33171CF577590099BA6F /* CCActivityIndicatorView.m */,
+				B6BC33161CF577590099BA6F /* CCActivityHUD.h */,
+				B6BC33171CF577590099BA6F /* CCActivityHUD.m */,
 				B636AE1B1D06A42C001D9B5E /* UIImage+animatedGIF.h */,
 				B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */,
 			);
@@ -177,9 +178,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B6BC32D21CF533D90099BA6F /* CCActivityIndicatorViewSample */ = {
+		B6BC32D21CF533D90099BA6F /* CCActivityHUDSample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B6BC33001CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityIndicatorViewSample" */;
+			buildConfigurationList = B6BC33001CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityHUDSample" */;
 			buildPhases = (
 				B6BC32CF1CF533D90099BA6F /* Sources */,
 				B6BC32D01CF533D90099BA6F /* Frameworks */,
@@ -189,14 +190,14 @@
 			);
 			dependencies = (
 			);
-			name = CCActivityIndicatorViewSample;
+			name = CCActivityHUDSample;
 			productName = CCActivityIndicatorViewSample;
-			productReference = B6BC32D31CF533D90099BA6F /* CCActivityIndicatorViewSample.app */;
+			productReference = B6BC32D31CF533D90099BA6F /* CCActivityHUDSample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B6BC32EB1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests */ = {
+		B6BC32EB1CF533D90099BA6F /* CCActivityHUDSampleTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B6BC33031CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityIndicatorViewSampleTests" */;
+			buildConfigurationList = B6BC33031CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityHUDSampleTests" */;
 			buildPhases = (
 				B6BC32E81CF533D90099BA6F /* Sources */,
 				B6BC32E91CF533D90099BA6F /* Frameworks */,
@@ -207,14 +208,14 @@
 			dependencies = (
 				B6BC32EE1CF533D90099BA6F /* PBXTargetDependency */,
 			);
-			name = CCActivityIndicatorViewSampleTests;
+			name = CCActivityHUDSampleTests;
 			productName = CCActivityIndicatorViewSampleTests;
-			productReference = B6BC32EC1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests.xctest */;
+			productReference = B6BC32EC1CF533D90099BA6F /* CCActivityHUDSample.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		B6BC32F61CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests */ = {
+		B6BC32F61CF533D90099BA6F /* CCActivityHUDSampleUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B6BC33061CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityIndicatorViewSampleUITests" */;
+			buildConfigurationList = B6BC33061CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityHUDSampleUITests" */;
 			buildPhases = (
 				B6BC32F31CF533D90099BA6F /* Sources */,
 				B6BC32F41CF533D90099BA6F /* Frameworks */,
@@ -225,9 +226,9 @@
 			dependencies = (
 				B6BC32F91CF533D90099BA6F /* PBXTargetDependency */,
 			);
-			name = CCActivityIndicatorViewSampleUITests;
+			name = CCActivityHUDSampleUITests;
 			productName = CCActivityIndicatorViewSampleUITests;
-			productReference = B6BC32F71CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.xctest */;
+			productReference = B6BC32F71CF533D90099BA6F /* CCActivityHUDSample.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -255,7 +256,7 @@
 					};
 				};
 			};
-			buildConfigurationList = B6BC32CE1CF533D90099BA6F /* Build configuration list for PBXProject "CCActivityIndicatorViewSample" */;
+			buildConfigurationList = B6BC32CE1CF533D90099BA6F /* Build configuration list for PBXProject "CCActivityHUDSample" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -268,9 +269,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B6BC32D21CF533D90099BA6F /* CCActivityIndicatorViewSample */,
-				B6BC32EB1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests */,
-				B6BC32F61CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests */,
+				B6BC32D21CF533D90099BA6F /* CCActivityHUDSample */,
+				B6BC32EB1CF533D90099BA6F /* CCActivityHUDSampleTests */,
+				B6BC32F61CF533D90099BA6F /* CCActivityHUDSampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -312,7 +313,7 @@
 				B6BC32DB1CF533D90099BA6F /* AppDelegate.m in Sources */,
 				B6BC32D81CF533D90099BA6F /* main.m in Sources */,
 				B636AE1D1D06A42C001D9B5E /* UIImage+animatedGIF.m in Sources */,
-				B6BC33181CF577590099BA6F /* CCActivityIndicatorView.m in Sources */,
+				B6BC33181CF577590099BA6F /* CCActivityHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,12 +338,12 @@
 /* Begin PBXTargetDependency section */
 		B6BC32EE1CF533D90099BA6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B6BC32D21CF533D90099BA6F /* CCActivityIndicatorViewSample */;
+			target = B6BC32D21CF533D90099BA6F /* CCActivityHUDSample */;
 			targetProxy = B6BC32ED1CF533D90099BA6F /* PBXContainerItemProxy */;
 		};
 		B6BC32F91CF533D90099BA6F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B6BC32D21CF533D90099BA6F /* CCActivityIndicatorViewSample */;
+			target = B6BC32D21CF533D90099BA6F /* CCActivityHUDSample */;
 			targetProxy = B6BC32F81CF533D90099BA6F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -404,7 +405,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -442,7 +443,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -457,7 +458,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CCActivityHUDSample;
 			};
 			name = Debug;
 		};
@@ -469,7 +470,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CCActivityHUDSample;
 			};
 			name = Release;
 		};
@@ -480,8 +481,8 @@
 				INFOPLIST_FILE = CCActivityIndicatorViewSampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSampleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CCActivityIndicatorViewSample.app/CCActivityIndicatorViewSample";
+				PRODUCT_NAME = CCActivityHUDSample;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CCActivityHUDSample.app/CCActivityHUDSample";
 			};
 			name = Debug;
 		};
@@ -492,8 +493,8 @@
 				INFOPLIST_FILE = CCActivityIndicatorViewSampleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSampleTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CCActivityIndicatorViewSample.app/CCActivityIndicatorViewSample";
+				PRODUCT_NAME = CCActivityHUDSample;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CCActivityHUDSample.app/CCActivityHUDSample";
 			};
 			name = Release;
 		};
@@ -503,7 +504,7 @@
 				INFOPLIST_FILE = CCActivityIndicatorViewSampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CCActivityHUDSample;
 				TEST_TARGET_NAME = CCActivityIndicatorViewSample;
 			};
 			name = Debug;
@@ -514,7 +515,7 @@
 				INFOPLIST_FILE = CCActivityIndicatorViewSampleUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSampleUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = CCActivityHUDSample;
 				TEST_TARGET_NAME = CCActivityIndicatorViewSample;
 			};
 			name = Release;
@@ -522,7 +523,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B6BC32CE1CF533D90099BA6F /* Build configuration list for PBXProject "CCActivityIndicatorViewSample" */ = {
+		B6BC32CE1CF533D90099BA6F /* Build configuration list for PBXProject "CCActivityHUDSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B6BC32FE1CF533D90099BA6F /* Debug */,
@@ -531,7 +532,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B6BC33001CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityIndicatorViewSample" */ = {
+		B6BC33001CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityHUDSample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B6BC33011CF533D90099BA6F /* Debug */,
@@ -540,7 +541,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B6BC33031CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityIndicatorViewSampleTests" */ = {
+		B6BC33031CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityHUDSampleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B6BC33041CF533D90099BA6F /* Debug */,
@@ -549,7 +550,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B6BC33061CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityIndicatorViewSampleUITests" */ = {
+		B6BC33061CF533D90099BA6F /* Build configuration list for PBXNativeTarget "CCActivityHUDSampleUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B6BC33071CF533D90099BA6F /* Debug */,

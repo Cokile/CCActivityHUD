@@ -1,11 +1,11 @@
-#import "CCActivityIndicatorView.h"
+#import "CCActivityHUD.h"
 #import "UIImage+animatedGIF.h"
 
 #define NUMBER_OF_SCALE_DOT 15
 #define NUMBER_OF_LEADING_DOT 3
 #define DURATION_BASE 0.7
 
-@interface CCActivityIndicatorView ()
+@interface CCActivityHUD ()
 
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) CAReplicatorLayer *replicatorLayer;
@@ -14,12 +14,12 @@
 @property (strong, nonatomic) UIImageView *imageView;
 
 @property (strong, nonatomic) UIColor *updatedColor;
-@property CCIndicatorType currentTpye;
+@property CCActivityHUDIndicatorType currentTpye;
 @property BOOL useGIF;
 
 @end
 
-@implementation CCActivityIndicatorView
+@implementation CCActivityHUD
 
 #pragma mark - custom accessors
 - (void)setBackColor:(UIColor *)backColor {
@@ -51,7 +51,7 @@
 }
 
 #pragma mark - public methods - show the view
-- (void)showWithType:(CCIndicatorType)type {
+- (void)showWithType:(CCActivityHUDIndicatorType)type {
     if (!self.superview) {
         [self initializeReplicatorLayer];
         [self initializeIndicatoeLayerWithType:type];
@@ -87,7 +87,7 @@
 }
 
 - (void)show {
-    [self showWithType:CCIndicatorTypeScalingDots];
+    [self showWithType:CCActivityHUDIndicatorTypeScalingDots];
 }
 
 - (void)showWithGIFName:(NSString *)GIFName {
@@ -198,9 +198,9 @@
         
         self.isTheOnlyActiveView = YES;
     
-        self.appearAnimationType = CCIndicatorAppearAnimationTypeFadeIn;
-        self.disappearAnimationType = CCIndicatorDisappearAnimationTypeFadeOut;
-        self.backgroundViewType = CCIndicatorBackgroundViewTypeNone;
+        self.appearAnimationType = CCActivityHUDAppearAnimationTypeFadeIn;
+        self.disappearAnimationType = CCActivityHUDDisappearAnimationTypeFadeOut;
+        self.backgroundViewType = CCActivityHUDBackgroundViewTypeNone;
         
         [self addNotificationObserver];
     }
@@ -225,23 +225,23 @@
     [self.layer addSublayer:self.replicatorLayer];
 }
 
-- (void)initializeIndicatoeLayerWithType:(CCIndicatorType)type {
+- (void)initializeIndicatoeLayerWithType:(CCActivityHUDIndicatorType)type {
     self.replicatorLayer.sublayers = nil;
     
     switch (type) {
-        case CCIndicatorTypeScalingDots:
+        case CCActivityHUDIndicatorTypeScalingDots:
             [self initializeScalingDots];
             break;
             
-        case CCIndicatorTypeLeadingDots:
+        case CCActivityHUDIndicatorTypeLeadingDots:
             [self initializeLeadingDots];
             break;
             
-        case CCIndicatorTypeCircle:
+        case CCActivityHUDIndicatorTypeCircle:
             [self initializeCircle];
             break;
             
-        case CCIndicatorTypeArc:
+        case CCActivityHUDIndicatorTypeArc:
             [self initializeArc];
             break;
     }
@@ -314,19 +314,19 @@
 #pragma mark - background view
 - (void)addBackgroundView {
     switch (self.backgroundViewType) {
-        case CCIndicatorBackgroundViewTypeNone:
+        case CCActivityHUDBackgroundViewTypeNone:
             // do nothing
             break;
         
-        case CCIndicatorBackgroundViewTypeBlur:
+        case CCActivityHUDBackgroundViewTypeBlur:
             [self addBlurBackgroundView];
             break;
             
-        case CCIndicatorBackgroundViewTypeTransparent:
+        case CCActivityHUDBackgroundViewTypeTransparent:
             [self addTransparentBackgroundView];
             break;
             
-        case CCIndicatorBackgroundViewTypeShadow:
+        case CCActivityHUDBackgroundViewTypeShadow:
             [self addShadowBackgroundView];
             break;
     }
@@ -358,27 +358,27 @@
 #pragma mark - appear animation
 - (void)addAppearAnimation {
     switch (self.appearAnimationType) {
-        case CCIndicatorAppearAnimationTypeSlideFromTop:
+        case CCActivityHUDAppearAnimationTypeSlideFromTop:
             [self addSlideFromTopAppearAnimation];
             break;
             
-        case CCIndicatorAppearAnimationTypeSlideFromBottom:
+        case CCActivityHUDAppearAnimationTypeSlideFromBottom:
             [self addSlideFromBottomAppearAnimation];
             break;
             
-        case CCIndicatorAppearAnimationTypeSlideFromLeft:
+        case CCActivityHUDAppearAnimationTypeSlideFromLeft:
             [self addSlideFromLeftAppearAnimation];
             break;
             
-        case CCIndicatorAppearAnimationTypeSlideFromRight:
+        case CCActivityHUDAppearAnimationTypeSlideFromRight:
             [self addSlideFromRightAppearAnimation];
             break;
             
-        case CCIndicatorAppearAnimationTypeZoomIn:
+        case CCActivityHUDAppearAnimationTypeZoomIn:
             [self addZoomInAppearAnimation];
             break;
             
-        case CCIndicatorAppearAnimationTypeFadeIn:
+        case CCActivityHUDAppearAnimationTypeFadeIn:
             [self addFadeInAppearAnimation];
             break;
     }
@@ -481,22 +481,22 @@
 #pragma mark - activity animation
 - (void)addAnimation {
     switch (self.currentTpye) {
-        case CCIndicatorTypeScalingDots:
+        case CCActivityHUDIndicatorTypeScalingDots:
             [self.indicatorCALayer removeAllAnimations];
             [self addScaleAnimation];
             break;
             
-        case CCIndicatorTypeLeadingDots:
+        case CCActivityHUDIndicatorTypeLeadingDots:
             [self.indicatorCALayer removeAllAnimations];
             [self addLeadingAnimation];
             break;
             
-        case CCIndicatorTypeCircle:
+        case CCActivityHUDIndicatorTypeCircle:
             [self.indicatorCAShapeLayer removeAllAnimations];
             [self addCircleAnimation];
             break;
             
-        case CCIndicatorTypeArc:
+        case CCActivityHUDIndicatorTypeArc:
             [self.indicatorCAShapeLayer removeAllAnimations];
             [self addArcAnimation];
             break;
@@ -593,27 +593,27 @@
 #pragma mark - disappeat animation
 - (void)addDisappearAnimationWithDelay:(CGFloat)delay {
     switch (self.disappearAnimationType) {
-        case CCIndicatorDisappearAnimationTypeSlideToTop:
+        case CCActivityHUDDisappearAnimationTypeSlideToTop:
             [self addSlideToTopDissappearAnimationWithDelay:delay];
             break;
             
-        case CCIndicatorDisappearAnimationTypeSlideToBottom:
+        case CCActivityHUDDisappearAnimationTypeSlideToBottom:
             [self addSlideToBottomDissappearAnimationWithDelay:delay];
             break;
             
-        case CCIndicatorDisappearAnimationTypeSlideToLeft:
+        case CCActivityHUDDisappearAnimationTypeSlideToLeft:
             [self addSlideToLeftDissappearAnimationWithDelay:delay];
             break;
             
-        case CCIndicatorDisappearAnimationTypeSlideToRight:
+        case CCActivityHUDDisappearAnimationTypeSlideToRight:
             [self addSlideToRightDissappearAnimationWithDelay:delay];
             break;
             
-        case CCIndicatorDisappearAnimationTypeZoomOut:
+        case CCActivityHUDDisappearAnimationTypeZoomOut:
             [self addZoomOutDisappearAnimationWithDelay:delay];
             break;
             
-        case CCIndicatorDisappearAnimationTypeFadeOut:
+        case CCActivityHUDDisappearAnimationTypeFadeOut:
             [self addFadeOutDisappearAnimationWithDelay:delay];
             break;
     }
