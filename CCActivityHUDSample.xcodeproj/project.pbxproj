@@ -43,6 +43,7 @@
 		B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "CCActivityIndicatorView/UIImage+animatedGIF.m"; sourceTree = SOURCE_ROOT; };
 		B636AE1E1D06A669001D9B5E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B636AE231D06AE4F001D9B5E /* test.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test.gif; sourceTree = "<group>"; };
+		B636AE261D09144D001D9B5E /* Size.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Size.h; path = CCActivityIndicatorView/Size.h; sourceTree = SOURCE_ROOT; };
 		B6BC32D31CF533D90099BA6F /* CCActivityHUDSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCActivityHUDSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BC32D71CF533D90099BA6F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B6BC32D91CF533D90099BA6F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 		B6BC33091CF533F30099BA6F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B636AE261D09144D001D9B5E /* Size.h */,
 				B6BC33161CF577590099BA6F /* CCActivityHUD.h */,
 				B6BC33171CF577590099BA6F /* CCActivityHUD.m */,
 				B636AE1B1D06A42C001D9B5E /* UIImage+animatedGIF.h */,

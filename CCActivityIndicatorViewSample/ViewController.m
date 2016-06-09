@@ -57,13 +57,13 @@
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeScalingDots];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeLeadingDots];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeCircle];
-    //[self.activityHUD showWithTypeCCActivityHUDIndicatorTypeArc];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArc];
     
     //[self.activityHUD showWithGIFName:@"test.gif"];
 }
 
 - (IBAction)dismiss:(id)sender {
-    //[self.activityHUD dismiss];
+    [self.activityHUD dismiss];
     
     //[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:0.5];
 }

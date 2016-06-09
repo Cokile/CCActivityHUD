@@ -1,8 +1,7 @@
 #import "CCActivityHUD.h"
 #import "UIImage+animatedGIF.h"
+#import "Size.h"
 
-#define NUMBER_OF_SCALE_DOT 15
-#define NUMBER_OF_LEADING_DOT 3
 #define DURATION_BASE 0.7
 
 @interface CCActivityHUD ()
@@ -92,7 +91,7 @@
 
 - (void)showWithGIFName:(NSString *)GIFName {
     if (!self.superview) {
-        CGFloat length = self.frame.size.width/5;
+        CGFloat length = ViewFrameWidth/5;
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(length, length, length*3, length*3) ];
         self.imageView.layer.cornerRadius = self.self.cornerRadius;
         UIImage *gif = [UIImage animatedImageWithAnimatedGIFURL:[[NSBundle mainBundle] URLForResource:GIFName withExtension:nil]];
@@ -130,12 +129,11 @@
             }
             
             [UIView animateWithDuration:0.3 animations:^{
-                CGRect bounds = [UIScreen mainScreen].bounds;
-                self.frame = CGRectMake(0, 0, bounds.size.width/2.7, 63);
-                self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+                self.frame = CGRectMake(0, 0, BoundsWidthFor(Screen)/2.7, 63);
+                self.center = BoundsCenterFor(Screen);
             }];
             
-            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+            UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ViewFrameWidth, ViewFrameHeight)];
             textLabel.numberOfLines = 0;
             textLabel.font = [UIFont systemFontOfSize:15];
             textLabel.textColor = [self inverseColorFor:self.backgroundColor];
@@ -175,9 +173,7 @@
     // change the scale to original if the disappear animation is zoom out
     self.transform = CGAffineTransformIdentity;
     
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat boundsWdith = bounds.size.width;
-    CGFloat length = boundsWdith/6;
+    CGFloat length = BoundsWidthFor(Screen)/6;
     self.frame = CGRectMake(-2*length, -2*length, length, length);
     
     [super removeFromSuperview];
@@ -188,9 +184,7 @@
     self = [super init];
     
     if (self) {
-        CGRect bounds = [UIScreen mainScreen].bounds;
-        CGFloat boundsWdith = bounds.size.width;
-        CGFloat length = boundsWdith/6;
+        CGFloat length = BoundsWidthFor(Screen)/6;
         self.frame = CGRectMake(-2*length, -2*length, length, length);
         self.alpha = 0.7;
         self.backgroundColor = [UIColor blackColor];
@@ -219,7 +213,7 @@
     self.layer.sublayers = nil;
     
     self.replicatorLayer = [[CAReplicatorLayer alloc] init];
-    self.replicatorLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    self.replicatorLayer.frame = CGRectMake(0, 0, ViewFrameWidth, ViewFrameHeight);
     self.replicatorLayer.backgroundColor = [UIColor clearColor].CGColor;
     
     [self.layer addSublayer:self.replicatorLayer];
@@ -248,35 +242,35 @@
 }
 
 - (void)initializeScalingDots {
-    CGFloat length = self.frame.size.width*18/200;
+    CGFloat length = ViewFrameWidth*18/200;
     
     self.indicatorCALayer = [[CALayer alloc] init];
     self.indicatorCALayer.backgroundColor = [UIColor whiteColor].CGColor;
     self.indicatorCALayer.frame = CGRectMake(0, 0, length, length);
-    self.indicatorCALayer.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/5);
+    self.indicatorCALayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
     self.indicatorCALayer.cornerRadius = length/2;
     self.indicatorCALayer.transform = CATransform3DMakeScale(0.01, 0.01, 0.01);
     
-    self.replicatorLayer.instanceCount = NUMBER_OF_SCALE_DOT;
+    self.replicatorLayer.instanceCount = 15;
     self.replicatorLayer.instanceDelay = DURATION_BASE*1.2/self.replicatorLayer.instanceCount;
-    CGFloat angle = 2*M_PI/NUMBER_OF_SCALE_DOT;
+    CGFloat angle = 2*M_PI/self.replicatorLayer.instanceCount;
     self.replicatorLayer.instanceTransform = CATransform3DMakeRotation(angle, 0.0, 0.0, 0.1);
     
     [self.replicatorLayer addSublayer:self.indicatorCALayer];
 }
 
 - (void)initializeLeadingDots {
-    CGFloat length = self.frame.size.width*18/200;
+    CGFloat length = ViewFrameWidth*18/200;
 
     self.indicatorCALayer = [[CALayer alloc] init];
     self.indicatorCALayer.backgroundColor = [UIColor whiteColor].CGColor;
     self.indicatorCALayer.frame = CGRectMake(0, 0, length, length);
-    self.indicatorCALayer.position = CGPointMake(self.frame.size.width/2, self.frame.size.height/5);
+    self.indicatorCALayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
     self.indicatorCALayer.cornerRadius = length/2;
     self.indicatorCALayer.shouldRasterize = YES;
-    self.indicatorCALayer.rasterizationScale = [UIScreen mainScreen].scale;
+    self.indicatorCALayer.rasterizationScale = Screen.scale;
     
-    self.replicatorLayer.instanceCount = NUMBER_OF_LEADING_DOT;
+    self.replicatorLayer.instanceCount = 3;
     self.replicatorLayer.instanceDelay = 0.08;
     
     [self.replicatorLayer addSublayer:self.indicatorCALayer];
@@ -286,7 +280,7 @@
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
     self.indicatorCAShapeLayer.strokeColor = [UIColor whiteColor].CGColor;
     self.indicatorCAShapeLayer.fillColor = [UIColor clearColor].CGColor;
-    self.indicatorCAShapeLayer.lineWidth = self.frame.size.width/30;
+    self.indicatorCAShapeLayer.lineWidth = ViewFrameWidth/30;
     
     // Although animation for circle do not rely on self.replicatorLayer,
     // I still add it as a sublayer of self.replicatorLayer instead of self.layer,
@@ -299,9 +293,9 @@
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
     self.indicatorCAShapeLayer.strokeColor = [UIColor whiteColor].CGColor;
     self.indicatorCAShapeLayer.fillColor = [UIColor clearColor].CGColor;
-    self.indicatorCAShapeLayer.lineWidth = self.frame.size.width/24;
+    self.indicatorCAShapeLayer.lineWidth = ViewFrameWidth/24;
     
-    CGFloat length = self.frame.size.width/5;
+    CGFloat length = ViewFrameWidth/5;
     self.indicatorCAShapeLayer.frame = CGRectMake(length, length, length*3, length*3);
     
     // Although animation for arc do not rely on self.replicatorLayer,
@@ -334,7 +328,7 @@
 
 - (void)addBlurBackgroundView {
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    UIVisualEffectView *backgroundView = [[UIVisualEffectView alloc] initWithFrame:BoundsFor(Screen)];
     backgroundView.effect = blurEffect;
     self.backgroundView = backgroundView;
                               
@@ -342,7 +336,7 @@
 }
 
 - (void)addTransparentBackgroundView {
-    self.backgroundView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.backgroundView = [[UIView alloc] initWithFrame:BoundsFor(Screen)];
     self.backgroundView.backgroundColor = [UIColor blackColor];
     self.backgroundView.alpha = self.alpha-.2>0?self.alpha-.2:0.15;
     
@@ -388,8 +382,7 @@
     CGFloat originalAlpha = self.alpha;
     self.alpha = 0.0;
     
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+    self.center = BoundsCenterFor(Screen);
     
     [UIView animateWithDuration:0.35 animations:^{
         self.alpha = originalAlpha;
@@ -401,12 +394,10 @@
 }
 
 - (void)addSlideFromTopAppearAnimation {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
-    self.center = CGPointMake(bounds.size.width/2, -length);
+    self.center = CGPointMake(BoundsCenterXFor(Screen), -ViewFrameWidth);
     
     [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+        self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
             [self addAnimation];
@@ -415,12 +406,10 @@
 }
 
 - (void)addSlideFromBottomAppearAnimation {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
-    self.center = CGPointMake(bounds.size.width/2, bounds.size.height+length);
+    self.center = CGPointMake(BoundsCenterXFor(Screen), BoundsHeightFor(Screen)+ViewFrameWidth);
     
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+        self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
             [self addAnimation];
@@ -429,12 +418,10 @@
 }
 
 - (void)addSlideFromLeftAppearAnimation {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
-    self.center = CGPointMake(-length, bounds.size.height/2);
+    self.center = CGPointMake(-ViewFrameWidth, BoundsCenterYFor(Screen));
     
     [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+        self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
             [self addAnimation];
@@ -443,12 +430,10 @@
 }
 
 - (void)addSlideFromRightAppearAnimation {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
-    self.center = CGPointMake(bounds.size.width+length, bounds.size.height/2);
+    self.center = CGPointMake(BoundsWidthFor(Screen)+ViewFrameWidth, BoundsCenterYFor(Screen));
     
     [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+        self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
         if (finished && !self.useGIF) {
             [self addAnimation];
@@ -457,8 +442,7 @@
 }
 
 - (void)addZoomInAppearAnimation {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    self.center = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+    self.center = BoundsCenterFor(Screen);
     
     self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.001, 0.001);
     [UIView animateWithDuration:0.15 animations:^{
@@ -515,7 +499,7 @@
 }
 
 - (void)addLeadingAnimation {
-    CGFloat radius = self.replicatorLayer.frame.size.width/2 - self.replicatorLayer.frame.size.width/5;
+    CGFloat radius = FrameWidthFor(self.replicatorLayer)/2 - FrameWidthFor(self.replicatorLayer)/5;
     CGFloat x = CGRectGetMidX(self.replicatorLayer.frame);
     CGFloat y = CGRectGetMidY(self.replicatorLayer.frame);
     CGFloat startAngle = -M_PI/2;
@@ -530,7 +514,7 @@
     animation.duration = DURATION_BASE;
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.duration = animation.duration+NUMBER_OF_LEADING_DOT*self.replicatorLayer.instanceDelay+0.06;
+    animationGroup.duration = animation.duration+self.replicatorLayer.instanceCount*self.replicatorLayer.instanceDelay+0.06;
     animationGroup.repeatCount = INFINITY;
     animationGroup.animations = @[animation];
     
@@ -538,7 +522,7 @@
 }
 
 - (void)addCircleAnimation {
-    CGFloat radius = self.replicatorLayer.frame.size.width/2 - self.replicatorLayer.frame.size.width/5;
+    CGFloat radius = FrameWidthFor(self.replicatorLayer)/2 - FrameWidthFor(self.replicatorLayer)/5;
     CGFloat x = CGRectGetMidX(self.replicatorLayer.frame);
     CGFloat y = CGRectGetMidY(self.replicatorLayer.frame);
     
@@ -571,9 +555,9 @@
 }
 
 - (void)addArcAnimation {
-    CGFloat radius = self.frame.size.width/2 - self.frame.size.width/5;
-    CGFloat x = self.indicatorCAShapeLayer.frame.size.width/2;
-    CGFloat y = self.indicatorCAShapeLayer.frame.size.height/2;
+    CGFloat radius = ViewFrameWidth/2 - ViewFrameWidth/5;
+    CGFloat x = FrameWidthFor(self.indicatorCAShapeLayer)/2;
+    CGFloat y = FrameHeightFor(self.indicatorCAShapeLayer)/2;
     
     UIBezierPath *arcPath = [UIBezierPath bezierPath];
     CGFloat startAngle = -M_PI/4;
@@ -631,39 +615,31 @@
 }
 
 - (void)addSlideToTopDissappearAnimationWithDelay:(CGFloat)delay {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
     [UIView animateWithDuration:0.25 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.center = CGPointMake(bounds.size.width/2, -length);
+        self.center = CGPointMake(BoundsCenterXFor(Screen), -ViewFrameWidth);
     } completion:^(BOOL finished) {
          [self removeFromSuperview];
     }];
 }
 - (void)addSlideToBottomDissappearAnimationWithDelay:(CGFloat)delay {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
     [UIView animateWithDuration:0.25 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.center = CGPointMake(bounds.size.width/2, bounds.size.height+length);
+        self.center = CGPointMake(BoundsCenterXFor(Screen), BoundsHeightFor(Screen)+ViewFrameWidth);
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
 }
 
 - (void)addSlideToLeftDissappearAnimationWithDelay:(CGFloat)delay {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
     [UIView animateWithDuration:0.15 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.center = CGPointMake(-length, bounds.size.height/2);
+        self.center = CGPointMake(-ViewFrameWidth, BoundsCenterYFor(Screen));
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
 }
 
 - (void)addSlideToRightDissappearAnimationWithDelay:(CGFloat)delay {
-    CGRect bounds = [UIScreen mainScreen].bounds;
-    CGFloat length = self.frame.size.width;
     [UIView animateWithDuration:0.15 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.center = CGPointMake(bounds.size.width+length, bounds.size.height/2);
+        self.center = CGPointMake(BoundsWidthFor(Screen)+ViewFrameWidth, BoundsCenterYFor(Screen));
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
