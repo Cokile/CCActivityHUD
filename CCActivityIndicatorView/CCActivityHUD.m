@@ -114,7 +114,7 @@
 }
 
 #pragma mark - public methods - dismiss the view
-- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay{
+- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay flip:(BOOL)flip{
     if (self.superview) {
         if (text != nil || text.length != 0) {
             // remove animation or GIF
@@ -125,9 +125,13 @@
                 [self.imageView removeFromSuperview];
             }
             
-            [UIView animateWithDuration:0.3 animations:^{
+            [UIView animateWithDuration:0.5 animations:^{
                 self.frame = CGRectMake(0, 0, BoundsWidthFor(Screen)/2.7, 63);
                 self.center = BoundsCenterFor(Screen);
+                
+                if (flip) {
+                    [UIView transitionWithView:self duration:0.3 options:UIViewAnimationOptionTransitionFlipFromTop animations:nil completion:nil];
+                }
             }];
             
             UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ViewFrameWidth, ViewFrameHeight)];
@@ -150,7 +154,7 @@
 }
 
 - (void)dismiss {
-    [self dismissWithText:nil delay:0.0];
+    [self dismissWithText:nil delay:0.0 flip:NO];
 }
 
 #pragma mark - life cycle
@@ -694,12 +698,6 @@
     UIBezierPath *arcPath = [UIBezierPath bezierPath];
     [arcPath addArcWithCenter:CGPointMake(x, y) radius:radius startAngle:startAngle endAngle:startAngle+span clockwise:YES];
     return arcPath.CGPath;
-}
-
-- (void)bringSublayerToFront:(CALayer *)layer {
-    CALayer *superlayer = layer.superlayer;
-    [layer removeFromSuperlayer];
-    [superlayer insertSublayer:layer atIndex:(unsigned int)[superlayer.sublayers count]];
 }
 
 @end

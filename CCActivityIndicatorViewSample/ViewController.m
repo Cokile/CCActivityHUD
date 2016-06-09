@@ -66,7 +66,7 @@
 - (IBAction)dismiss:(id)sender {
     [self.activityHUD dismiss];
     
-    //[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:0.5];
+    //[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:1.3 flip:YES];
 }
 
 @end
