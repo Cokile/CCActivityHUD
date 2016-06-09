@@ -2,7 +2,6 @@
 #ifndef Size_h
 #define Size_h
 
-// Screen bounds
 #define Screen                    [UIScreen mainScreen]
 
 // Frame

@@ -8,7 +8,6 @@
 
 @property (strong, nonatomic) UIView *backgroundView;
 @property (strong, nonatomic) CAReplicatorLayer *replicatorLayer;
-@property (strong, nonatomic) CALayer *indicatorCALayer;
 @property (strong, nonatomic) CAShapeLayer *indicatorCAShapeLayer;
 @property (strong, nonatomic) UIImageView *imageView;
 
@@ -59,14 +58,12 @@
         
         // change the indicator color if user do not use the default color.
         // You will confused that why not change the indicator color within the relevant setter,
-        // If so, I need to initialize self.indicatorCALayer or self.indicatorCAShapeLayer in the init method,
+        // If so, I need to initialize self.indicatorCAShapeLayer in the init method,
         // However, this will cause a problem (or bug) that the animation not works,
         // Meanwhile, when user use GIF instead of provided animation types,
         // the init method will create two useless instances,
-        // since showing GIF not rely on self.indicatorCALayer or self.indicatorCAShapeLayer
-        if (self.indicatorCALayer && self.updatedColor) {
-            self.indicatorCALayer.backgroundColor = self.updatedColor.CGColor;
-        } else if (self.indicatorCAShapeLayer && self.updatedColor) {
+        // since showing GIF not rely on self.indicatorCAShapeLayer
+        if (self.indicatorCAShapeLayer && self.updatedColor) {
             self.indicatorCAShapeLayer.strokeColor = self.updatedColor.CGColor;
         }
         
@@ -231,12 +228,16 @@
             [self initializeLeadingDots];
             break;
             
-        case CCActivityHUDIndicatorTypeCircle:
-            [self initializeCircle];
+        case CCActivityHUDIndicatorTypeMinorArc:
+            [self initializeMinorArc];
             break;
             
-        case CCActivityHUDIndicatorTypeArc:
-            [self initializeArc];
+        case CCActivityHUDIndicatorTypeDynamicArc:
+            [self initializeDynamicArc];
+            break;
+            
+        case CCActivityHUDIndicatorTypeArcInCircle:
+            [self initializeArcInCircle];
             break;
     }
 }
@@ -244,52 +245,39 @@
 - (void)initializeScalingDots {
     CGFloat length = ViewFrameWidth*18/200;
     
-    self.indicatorCALayer = [[CALayer alloc] init];
-    self.indicatorCALayer.backgroundColor = [UIColor whiteColor].CGColor;
-    self.indicatorCALayer.frame = CGRectMake(0, 0, length, length);
-    self.indicatorCALayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
-    self.indicatorCALayer.cornerRadius = length/2;
-    self.indicatorCALayer.transform = CATransform3DMakeScale(0.01, 0.01, 0.01);
+    self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
+    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
+    self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
+    self.indicatorCAShapeLayer.cornerRadius = length/2;
+    self.indicatorCAShapeLayer.transform = CATransform3DMakeScale(0.01, 0.01, 0.01);
     
     self.replicatorLayer.instanceCount = 15;
     self.replicatorLayer.instanceDelay = DURATION_BASE*1.2/self.replicatorLayer.instanceCount;
     CGFloat angle = 2*M_PI/self.replicatorLayer.instanceCount;
     self.replicatorLayer.instanceTransform = CATransform3DMakeRotation(angle, 0.0, 0.0, 0.1);
     
-    [self.replicatorLayer addSublayer:self.indicatorCALayer];
+    [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
 }
 
 - (void)initializeLeadingDots {
     CGFloat length = ViewFrameWidth*18/200;
 
-    self.indicatorCALayer = [[CALayer alloc] init];
-    self.indicatorCALayer.backgroundColor = [UIColor whiteColor].CGColor;
-    self.indicatorCALayer.frame = CGRectMake(0, 0, length, length);
-    self.indicatorCALayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
-    self.indicatorCALayer.cornerRadius = length/2;
-    self.indicatorCALayer.shouldRasterize = YES;
-    self.indicatorCALayer.rasterizationScale = Screen.scale;
+    self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
+    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
+    self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
+    self.indicatorCAShapeLayer.cornerRadius = length/2;
+    self.indicatorCAShapeLayer.shouldRasterize = YES;
+    self.indicatorCAShapeLayer.rasterizationScale = Screen.scale;
     
     self.replicatorLayer.instanceCount = 3;
     self.replicatorLayer.instanceDelay = 0.08;
     
-    [self.replicatorLayer addSublayer:self.indicatorCALayer];
-}
-
-- (void)initializeCircle {
-    self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
-    self.indicatorCAShapeLayer.strokeColor = [UIColor whiteColor].CGColor;
-    self.indicatorCAShapeLayer.fillColor = [UIColor clearColor].CGColor;
-    self.indicatorCAShapeLayer.lineWidth = ViewFrameWidth/30;
-    
-    // Although animation for circle do not rely on self.replicatorLayer,
-    // I still add it as a sublayer of self.replicatorLayer instead of self.layer,
-    // for more convenient management of layers
-    // when user show other types of indicator with the same CCActivityIndicatorView instance.
     [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
 }
 
-- (void)initializeArc {
+- (void)initializeMinorArc {
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
     self.indicatorCAShapeLayer.strokeColor = [UIColor whiteColor].CGColor;
     self.indicatorCAShapeLayer.fillColor = [UIColor clearColor].CGColor;
@@ -298,11 +286,21 @@
     CGFloat length = ViewFrameWidth/5;
     self.indicatorCAShapeLayer.frame = CGRectMake(length, length, length*3, length*3);
     
-    // Although animation for arc do not rely on self.replicatorLayer,
+    // Although animation for minor arc do not rely on self.replicatorLayer,
     // I still add it as a sublayer of self.replicatorLayer instead of self.layer,
     // for more convenient management of layers
     // when user show other types of indicator with the same CCActivityIndicatorView instance.
     [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
+}
+
+- (void)initializeDynamicArc {
+    // Use the same same indicatorCAShapeLayer in minor arc
+    [self initializeMinorArc];
+}
+
+- (void)initializeArcInCircle {
+    // Use the same same indicatorCAShapeLayer in minor arc
+    [self initializeMinorArc];
 }
 
 #pragma mark - background view
@@ -464,25 +462,26 @@
 
 #pragma mark - activity animation
 - (void)addAnimation {
+    [self.indicatorCAShapeLayer removeAllAnimations];
     switch (self.currentTpye) {
         case CCActivityHUDIndicatorTypeScalingDots:
-            [self.indicatorCALayer removeAllAnimations];
             [self addScaleAnimation];
             break;
             
         case CCActivityHUDIndicatorTypeLeadingDots:
-            [self.indicatorCALayer removeAllAnimations];
             [self addLeadingAnimation];
             break;
             
-        case CCActivityHUDIndicatorTypeCircle:
-            [self.indicatorCAShapeLayer removeAllAnimations];
-            [self addCircleAnimation];
+        case CCActivityHUDIndicatorTypeMinorArc:
+            [self addMinorArcAnimation];
             break;
             
-        case CCActivityHUDIndicatorTypeArc:
-            [self.indicatorCAShapeLayer removeAllAnimations];
-            [self addArcAnimation];
+        case CCActivityHUDIndicatorTypeDynamicArc:
+            [self addDynamicArcAnimation];
+            break;
+            
+        case CCActivityHUDIndicatorTypeArcInCircle:
+            [self addArcInCircleAnimation];
             break;
     }
 }
@@ -495,7 +494,7 @@
     animation.duration = DURATION_BASE*1.2;
     animation.repeatCount = INFINITY;
     
-    [self.indicatorCALayer addAnimation:animation forKey:nil];
+    [self.indicatorCAShapeLayer addAnimation:animation forKey:nil];
 }
 
 - (void)addLeadingAnimation {
@@ -518,51 +517,70 @@
     animationGroup.repeatCount = INFINITY;
     animationGroup.animations = @[animation];
     
-    [self.indicatorCALayer addAnimation:animationGroup forKey:nil];
-}
-
-- (void)addCircleAnimation {
-    CGFloat radius = FrameWidthFor(self.replicatorLayer)/2 - FrameWidthFor(self.replicatorLayer)/5;
-    CGFloat x = CGRectGetMidX(self.replicatorLayer.frame);
-    CGFloat y = CGRectGetMidY(self.replicatorLayer.frame);
-    
-    UIBezierPath *circlePath = [UIBezierPath bezierPath];
-    CGFloat startAngle = -M_PI/2;
-    [circlePath addArcWithCenter:CGPointMake(x, y) radius:radius startAngle:startAngle endAngle:startAngle+2*M_PI clockwise:YES];
-    self.indicatorCAShapeLayer.path = circlePath.CGPath;
-    
-    CABasicAnimation *appearAnimation = [[CABasicAnimation alloc] init];
-    appearAnimation.keyPath = @"strokeEnd";
-    appearAnimation.fromValue = [NSNumber numberWithFloat:0.0];
-    appearAnimation.toValue = [NSNumber numberWithFloat:1.0];
-    appearAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    appearAnimation.duration = DURATION_BASE*1.8;
-    
-    CABasicAnimation *disappearAnimation = [[CABasicAnimation alloc] init];
-    disappearAnimation.keyPath = @"strokeStart";
-    disappearAnimation.beginTime = appearAnimation.duration;
-    disappearAnimation.fromValue = [NSNumber numberWithFloat:0.0];
-    disappearAnimation.toValue = [NSNumber numberWithFloat:1.0];
-    appearAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    disappearAnimation.duration = DURATION_BASE;
-    
-    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.duration = appearAnimation.duration+disappearAnimation.duration;
-    animationGroup.repeatCount = INFINITY;
-    animationGroup.animations = @[appearAnimation, disappearAnimation];
-    
     [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:nil];
 }
 
-- (void)addArcAnimation {
-    CGFloat radius = ViewFrameWidth/2 - ViewFrameWidth/5;
-    CGFloat x = FrameWidthFor(self.indicatorCAShapeLayer)/2;
-    CGFloat y = FrameHeightFor(self.indicatorCAShapeLayer)/2;
+- (void)addMinorArcAnimation {
+    self.indicatorCAShapeLayer.path = [self arcPathWithStartAngle:-M_PI/4 span:M_PI/2];
     
-    UIBezierPath *arcPath = [UIBezierPath bezierPath];
-    CGFloat startAngle = -M_PI/4;
-    [arcPath addArcWithCenter:CGPointMake(x, y) radius:radius startAngle:startAngle endAngle:startAngle+M_PI/2 clockwise:YES];
-    self.indicatorCAShapeLayer.path = arcPath.CGPath;
+    CABasicAnimation *animation = [[CABasicAnimation alloc] init];
+    animation.keyPath = @"transform.rotation.z";
+    animation.fromValue = [NSNumber numberWithFloat:0.0];
+    animation.toValue = [NSNumber numberWithFloat: 2*M_PI];
+    animation.duration = DURATION_BASE*1.5;
+    animation.repeatCount = INFINITY;
+    
+    [self.indicatorCAShapeLayer addAnimation:animation forKey:nil];
+}
+
+- (void)addDynamicArcAnimation {
+    self.indicatorCAShapeLayer.path = [self arcPathWithStartAngle:-M_PI/2 span:2*M_PI];
+    
+    CABasicAnimation *strokeEndAnimation = [[CABasicAnimation alloc] init];
+    strokeEndAnimation.keyPath = @"strokeEnd";
+    strokeEndAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+    strokeEndAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    strokeEndAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    strokeEndAnimation.duration = DURATION_BASE*2;
+    
+    CABasicAnimation *strokeStartAnimation = [[CABasicAnimation alloc] init];
+    strokeStartAnimation.keyPath = @"strokeStart";
+    strokeStartAnimation.beginTime =strokeEndAnimation.duration/4;
+    strokeStartAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+    strokeStartAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    strokeStartAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    strokeStartAnimation.duration = strokeEndAnimation.duration;
+    
+    CABasicAnimation *rotationAnimation = [[CABasicAnimation alloc] init];
+    rotationAnimation.keyPath = @"transform.rotation.z";
+    rotationAnimation.fromValue = [NSNumber numberWithFloat:0.0];
+    rotationAnimation.toValue = [NSNumber numberWithFloat:2*M_PI];
+    rotationAnimation.duration = 2*strokeEndAnimation.duration;
+    rotationAnimation.repeatCount = INFINITY;
+    
+    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+    animationGroup.duration = strokeEndAnimation.duration+strokeStartAnimation.beginTime;
+    animationGroup.repeatCount = INFINITY;
+    animationGroup.animations = @[strokeEndAnimation, strokeStartAnimation];
+    
+    [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:nil];
+    [self.indicatorCAShapeLayer addAnimation:rotationAnimation forKey:nil];
+}
+
+- (void)addArcInCircleAnimation {
+    CAShapeLayer *circleShapeLayer = [[CAShapeLayer alloc] init];
+    circleShapeLayer.strokeColor = self.indicatorCAShapeLayer.strokeColor;
+    circleShapeLayer.fillColor = [UIColor clearColor].CGColor;
+    circleShapeLayer.opacity = self.indicatorCAShapeLayer.opacity-0.8;
+    circleShapeLayer.lineWidth = ViewFrameWidth/24;
+    circleShapeLayer.path = [self arcPathWithStartAngle:-M_PI span:2*M_PI];
+    
+    CGFloat length = ViewFrameWidth/5;
+    circleShapeLayer.frame = CGRectMake(length, length, length*3, length*3);
+    [self.replicatorLayer insertSublayer:circleShapeLayer above:self.indicatorCAShapeLayer];
+    
+    
+    self.indicatorCAShapeLayer.path = [self arcPathWithStartAngle:-M_PI/2 span:M_PI/3];
     
     CABasicAnimation *animation = [[CABasicAnimation alloc] init];
     animation.keyPath = @"transform.rotation.z";
@@ -666,6 +684,22 @@
     CGFloat r,g,b,a;
     [color getRed:&r green:&g blue:&b alpha:&a];
     return [UIColor colorWithRed:1.-r green:1.-g blue:1.-b alpha:a];
+}
+
+- (CGPathRef)arcPathWithStartAngle:(CGFloat)startAngle span:(CGFloat)span {
+    CGFloat radius = ViewFrameWidth/2 - ViewFrameWidth/5;
+    CGFloat x = FrameWidthFor(self.indicatorCAShapeLayer)/2;
+    CGFloat y = FrameHeightFor(self.indicatorCAShapeLayer)/2;
+    
+    UIBezierPath *arcPath = [UIBezierPath bezierPath];
+    [arcPath addArcWithCenter:CGPointMake(x, y) radius:radius startAngle:startAngle endAngle:startAngle+span clockwise:YES];
+    return arcPath.CGPath;
+}
+
+- (void)bringSublayerToFront:(CALayer *)layer {
+    CALayer *superlayer = layer.superlayer;
+    [layer removeFromSuperlayer];
+    [superlayer insertSublayer:layer atIndex:(unsigned int)[superlayer.sublayers count]];
 }
 
 @end

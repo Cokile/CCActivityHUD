@@ -56,8 +56,9 @@
     
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeScalingDots];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeLeadingDots];
-    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeCircle];
-    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArc];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeMinorArc];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeDynamicArc];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArcInCircle];
     
     //[self.activityHUD showWithGIFName:@"test.gif"];
 }
