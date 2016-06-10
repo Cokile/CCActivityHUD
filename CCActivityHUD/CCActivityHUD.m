@@ -115,42 +115,48 @@
 }
 
 #pragma mark - public methods - dismiss the view
-- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay flip:(BOOL)flip{
+- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay success:(BOOL)success {
     if (self.superview) {
+        [self removeAllSubviews];
+        // remove animation or GIF
+        if (self.replicatorLayer != nil) {
+            [self.replicatorLayer removeFromSuperlayer];
+        }
+        if (self.imageView != nil) {
+            [self.imageView removeFromSuperview];
+        }
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.frame = [self originalFrame];
+            self.center = BoundsCenterFor(Screen);
+        }];
+        
+        __block CGFloat length = BoundsWidthFor(Screen)/10;
+        UIImageView *tickCrossImageView = [[UIImageView alloc] initWithFrame:CGRectMake(ViewFrameWidth/2-length/2, length/3, length, length)];
+        tickCrossImageView.image = [UIImage imageNamed:success?@"tick":@"cross"];
+        tickCrossImageView.image = [tickCrossImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        tickCrossImageView.tintColor = [self inverseColorFor:self.backgroundColor];
+        [self addSubview:tickCrossImageView];
+        
+        [UIView transitionWithView:self duration:0.3 options:UIViewAnimationOptionTransitionFlipFromTop animations:nil completion:nil];
+        
         if (text != nil || text.length != 0) {
-            // remove animation or GIF
-            if (self.replicatorLayer != nil) {
-                [self.replicatorLayer removeFromSuperlayer];
-            }
-            if (self.imageView != nil) {
-                [self.imageView removeFromSuperview];
-            }
-            // remove subviews
-            if (self.subviews.count > 0) {
-                for (UIView *sub in self.subviews) {
-                    [sub removeFromSuperview];
-                }
-            }
-            
             [UIView animateWithDuration:0.5 animations:^{
-                self.frame = CGRectMake(0, 0, TEXT_WIDTH, [self heightForText:text]+8);
+                self.frame = CGRectMake(0, 0, TEXT_WIDTH, FrameOriginY(tickCrossImageView)+FrameHeightFor(tickCrossImageView)+8+[self heightForText:text]+4);
                 self.center = BoundsCenterFor(Screen);
+                tickCrossImageView.frame = CGRectMake(ViewFrameWidth/2-length/2, length/3, length, length);
                 
-                UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ViewFrameWidth, ViewFrameHeight)];
+                UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, FrameOriginY(tickCrossImageView)+FrameHeightFor(tickCrossImageView)+8, ViewFrameWidth, [self heightForText:text])];
                 textLabel.numberOfLines = 0;
                 textLabel.font = [UIFont systemFontOfSize:TEXT_FONT_SIZE];
                 textLabel.textColor = [self inverseColorFor:self.backgroundColor];
                 textLabel.textAlignment = NSTextAlignmentCenter;
                 textLabel.text = text;
                 [self addSubview:textLabel];
-                
-                if (flip) {
-                    [UIView transitionWithView:self duration:0.3 options:UIViewAnimationOptionTransitionFlipFromTop animations:nil completion:nil];
-                }
             }];
         }
         
-        [self addDisappearAnimationWithDelay:delay];
+        [self addDisappearAnimationWithDelay:delay+0.7];
         
         if (self.isTheOnlyActiveView) {
             for (UIView *view in self.superview.subviews) {
@@ -161,7 +167,7 @@
 }
 
 - (void)dismiss {
-    [self dismissWithText:nil delay:0.0 flip:NO];
+    [self dismissWithText:nil delay:0 success:YES];
 }
 
 #pragma mark - life cycle
@@ -178,11 +184,12 @@
         [self.imageView removeFromSuperview];
     }
     
+    [self removeAllSubviews];
+    
     // change the scale to original if the disappear animation is zoom out
     self.transform = CGAffineTransformIdentity;
     
-    CGFloat length = BoundsWidthFor(Screen)/6;
-    self.frame = CGRectMake(-2*length, -2*length, length, length);
+    self.frame = [self originalFrame];
     
     [super removeFromSuperview];
 }
@@ -192,8 +199,7 @@
     self = [super init];
     
     if (self) {
-        CGFloat length = BoundsWidthFor(Screen)/6;
-        self.frame = CGRectMake(-2*length, -2*length, length, length);
+        self.frame = [self originalFrame];
         self.alpha = 0.7;
         self.backgroundColor = [UIColor blackColor];
         self.layer.cornerRadius = 5.0;
@@ -691,6 +697,19 @@
 }
 
 #pragma helper methods
+- (CGRect)originalFrame {
+    CGFloat length = BoundsWidthFor(Screen)/6;
+    return CGRectMake(-2*length, -2*length, length, length);
+}
+
+- (void)removeAllSubviews {
+    if (self.subviews.count > 0) {
+        for (UIView *sub in self.subviews) {
+            [sub removeFromSuperview];
+        }
+    }
+}
+
 - (void)communalShowTask {
     [self addOverlay];
     

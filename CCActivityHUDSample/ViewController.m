@@ -62,13 +62,13 @@
     
     //[self.activityHUD showWithGIFName:@"test.gif"];
     
-    //[self.activityHUD showWithText:@"Loading..."];
+    //[self.activityHUD showWithText:@"Now loading..."];
 }
 
 - (IBAction)dismiss:(id)sender {
     [self.activityHUD dismiss];
     
-    //[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:1.3 flip:YES];
+    //[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:0.7 success:NO];
 }
 
 @end

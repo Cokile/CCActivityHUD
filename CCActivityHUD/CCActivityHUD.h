@@ -130,11 +130,10 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
  *
  *  @param text The text to be displayed.
  *  @param delay The amount of time to wait before dismiss the view.
- *  @param flip A boolean indicates whether the view will draw vertically flip animation before displaying text.
+ *  @param success A boolean indicates to display tick or cross
  *
- *         Note: If you set flip to YES, the value of delay should contain 0.8 second for flip animation.
  */
-- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay flip:(BOOL)flip;
+- (void)dismissWithText:(NSString *)text delay:(CGFloat)delay success:(BOOL)success;
 
 /**
  *  Simply dissmiss the view.
