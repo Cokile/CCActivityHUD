@@ -95,6 +95,11 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
  */
 @property CCActivityHUDOverlayType overlayType;
 
+/**
+ *  Set the progress of the task, when the task is completed, the value of progess is 1.
+ */
+@property (nonatomic) CGFloat progress;
+
 
 
 
@@ -124,6 +129,8 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
  *  @param text     The text to be shown.
  */
 - (void)showWithText:(NSString *)text;
+
+- (void)showWithProgress;
 
 /**
  *  Display some text before dissmissing the view.

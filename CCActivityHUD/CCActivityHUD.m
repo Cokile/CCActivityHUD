@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UIColor *updatedColor;
 @property CCActivityHUDIndicatorType currentTpye;
 @property BOOL useIndicator;
+@property BOOL useProgress;
 
 @end
 
@@ -50,6 +51,26 @@
         self.updatedColor = indicatorColor;
 }
 
+- (void)setProgress:(CGFloat)progress {
+    if (self.indicatorCAShapeLayer && self.useProgress) {
+        if (progress >= 1) {
+            self.indicatorCAShapeLayer.strokeEnd = 1;
+        } else if (progress <= 0) {
+            self.indicatorCAShapeLayer.strokeEnd = 0;
+        } else {
+            self.indicatorCAShapeLayer.strokeEnd = progress;
+        }
+    }
+}
+
+- (CGFloat)progress {
+    if (self.indicatorCAShapeLayer && self.useProgress) {
+        return self.indicatorCAShapeLayer.strokeEnd;
+    } else {
+        return 0.0;
+    }
+}
+
 #pragma mark - public methods - show the view
 - (void)showWithType:(CCActivityHUDIndicatorType)type {
     if (!self.superview) {
@@ -57,6 +78,7 @@
         [self initializeIndicatoeLayerWithType:type];
         self.currentTpye = type;
         self.useIndicator = YES;
+        self.useProgress = NO;
         
         // change the indicator color if user do not use the default color.
         // You will confused that why not change the indicator color within the relevant setter,
@@ -88,6 +110,7 @@
         [self addSubview:self.imageView];
         
         self.useIndicator = NO;
+        self.useProgress = NO;
         
         [self communalShowTask];
     }
@@ -109,6 +132,27 @@
         [self addShimmeringEffectForLabel:textLabel];
         
         self.useIndicator = NO;
+        self.useProgress = NO;
+        
+        [self communalShowTask];
+    }
+}
+
+- (void)showWithProgress {
+    if (!self.superview) {
+        [self initializeReplicatorLayer];
+        [self initializeMinorArc];
+        
+        self.indicatorCAShapeLayer.path = [self arcPathWithStartAngle:-M_PI/2 span:2*M_PI];
+        self.indicatorCAShapeLayer.strokeEnd = 0.0;
+        
+        if (self.indicatorCAShapeLayer && self.updatedColor) {
+            self.indicatorCAShapeLayer.strokeColor = self.updatedColor.CGColor;
+        }
+        
+        self.progress = 0.0;
+        self.useIndicator = NO;
+        self.useProgress = YES;
         
         [self communalShowTask];
     }
@@ -696,7 +740,7 @@
     }];
 }
 
-#pragma helper methods
+#pragma mark - helper methods
 - (CGRect)originalFrame {
     CGFloat length = BoundsWidthFor(Screen)/6;
     return CGRectMake(-2*length, -2*length, length, length);
