@@ -31,6 +31,8 @@ Simply add one line to your Podfile:
 pod 'CCActivityHUD'
 ```
 
+__Note__: If you have used `pod 'CCActivityIndicatorView'` in your Podfile, just replace it with the `pod 'CCActivityHUD'` to update the pod.
+
 ### Manually 
 
 Add the all the files in the CCActivityHUD folder to your project.
