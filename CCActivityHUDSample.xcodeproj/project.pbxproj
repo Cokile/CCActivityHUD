@@ -10,6 +10,7 @@
 		B636AE1D1D06A42C001D9B5E /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */; };
 		B636AE1F1D06A669001D9B5E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B636AE1E1D06A669001D9B5E /* ImageIO.framework */; };
 		B636AE241D06AE4F001D9B5E /* test.gif in Resources */ = {isa = PBXBuildFile; fileRef = B636AE231D06AE4F001D9B5E /* test.gif */; };
+		B636AE2E1D0A8749001D9B5E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B636AE2D1D0A8749001D9B5E /* Default-568h@2x.png */; };
 		B6BC32D81CF533D90099BA6F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32D71CF533D90099BA6F /* main.m */; };
 		B6BC32DB1CF533D90099BA6F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32DA1CF533D90099BA6F /* AppDelegate.m */; };
 		B6BC32DE1CF533D90099BA6F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B6BC32DD1CF533D90099BA6F /* ViewController.m */; };
@@ -39,11 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B636AE1B1D06A42C001D9B5E /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "CCActivityIndicatorView/UIImage+animatedGIF.h"; sourceTree = SOURCE_ROOT; };
-		B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "CCActivityIndicatorView/UIImage+animatedGIF.m"; sourceTree = SOURCE_ROOT; };
+		B636AE1B1D06A42C001D9B5E /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "CCActivityHUD/UIImage+animatedGIF.h"; sourceTree = SOURCE_ROOT; };
+		B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+animatedGIF.m"; path = "CCActivityHUD/UIImage+animatedGIF.m"; sourceTree = SOURCE_ROOT; };
 		B636AE1E1D06A669001D9B5E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		B636AE231D06AE4F001D9B5E /* test.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test.gif; sourceTree = "<group>"; };
-		B636AE261D09144D001D9B5E /* Size.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Size.h; path = CCActivityIndicatorView/Size.h; sourceTree = SOURCE_ROOT; };
+		B636AE261D09144D001D9B5E /* Size.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Size.h; path = CCActivityHUD/Size.h; sourceTree = SOURCE_ROOT; };
+		B636AE2D1D0A8749001D9B5E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B6BC32D31CF533D90099BA6F /* CCActivityHUDSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCActivityHUDSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BC32D71CF533D90099BA6F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B6BC32D91CF533D90099BA6F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -60,8 +62,8 @@
 		B6BC32F71CF533D90099BA6F /* CCActivityHUDSample.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCActivityHUDSample.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6BC32FB1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCActivityIndicatorViewSampleUITests.m; sourceTree = "<group>"; };
 		B6BC32FD1CF533D90099BA6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6BC33161CF577590099BA6F /* CCActivityHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivityHUD.h; path = CCActivityIndicatorView/CCActivityHUD.h; sourceTree = SOURCE_ROOT; };
-		B6BC33171CF577590099BA6F /* CCActivityHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivityHUD.m; path = CCActivityIndicatorView/CCActivityHUD.m; sourceTree = SOURCE_ROOT; };
+		B6BC33161CF577590099BA6F /* CCActivityHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCActivityHUD.h; path = CCActivityHUD/CCActivityHUD.h; sourceTree = SOURCE_ROOT; };
+		B6BC33171CF577590099BA6F /* CCActivityHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCActivityHUD.m; path = CCActivityHUD/CCActivityHUD.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		B636AE221D06A9B9001D9B5E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B636AE2D1D0A8749001D9B5E /* Default-568h@2x.png */,
 				B636AE231D06AE4F001D9B5E /* test.gif */,
 			);
 			name = Resources;
@@ -104,8 +107,8 @@
 			children = (
 				B636AE1E1D06A669001D9B5E /* ImageIO.framework */,
 				B6BC32D51CF533D90099BA6F /* CCActivityHUDSample */,
-				B6BC32EF1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests */,
-				B6BC32FA1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests */,
+				B6BC32EF1CF533D90099BA6F /* CCActivityHUDSampleTests */,
+				B6BC32FA1CF533D90099BA6F /* CCActivityHUDSampleUITests */,
 				B6BC32D41CF533D90099BA6F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -135,8 +138,7 @@
 				B6BC32E71CF533D90099BA6F /* Info.plist */,
 				B6BC32D61CF533D90099BA6F /* Supporting Files */,
 			);
-			name = CCActivityHUDSample;
-			path = CCActivityIndicatorViewSample;
+			path = CCActivityHUDSample;
 			sourceTree = "<group>";
 		};
 		B6BC32D61CF533D90099BA6F /* Supporting Files */ = {
@@ -147,22 +149,22 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B6BC32EF1CF533D90099BA6F /* CCActivityIndicatorViewSampleTests */ = {
+		B6BC32EF1CF533D90099BA6F /* CCActivityHUDSampleTests */ = {
 			isa = PBXGroup;
 			children = (
 				B6BC32F01CF533D90099BA6F /* CCActivityIndicatorViewSampleTests.m */,
 				B6BC32F21CF533D90099BA6F /* Info.plist */,
 			);
-			path = CCActivityIndicatorViewSampleTests;
+			path = CCActivityHUDSampleTests;
 			sourceTree = "<group>";
 		};
-		B6BC32FA1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests */ = {
+		B6BC32FA1CF533D90099BA6F /* CCActivityHUDSampleUITests */ = {
 			isa = PBXGroup;
 			children = (
 				B6BC32FB1CF533D90099BA6F /* CCActivityIndicatorViewSampleUITests.m */,
 				B6BC32FD1CF533D90099BA6F /* Info.plist */,
 			);
-			path = CCActivityIndicatorViewSampleUITests;
+			path = CCActivityHUDSampleUITests;
 			sourceTree = "<group>";
 		};
 		B6BC33091CF533F30099BA6F /* Classes */ = {
@@ -175,7 +177,8 @@
 				B636AE1C1D06A42C001D9B5E /* UIImage+animatedGIF.m */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
+			path = CCActivityHUD;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -286,6 +289,7 @@
 				B6BC32E61CF533D90099BA6F /* LaunchScreen.storyboard in Resources */,
 				B6BC32E31CF533D90099BA6F /* Assets.xcassets in Resources */,
 				B636AE241D06AE4F001D9B5E /* test.gif in Resources */,
+				B636AE2E1D0A8749001D9B5E /* Default-568h@2x.png in Resources */,
 				B6BC32E11CF533D90099BA6F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -456,7 +460,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = CCActivityIndicatorViewSample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CCActivityHUDSample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSample;
@@ -468,7 +472,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = CCActivityIndicatorViewSample/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/CCActivityHUDSample/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Cokile.CCActivityIndicatorViewSample;
