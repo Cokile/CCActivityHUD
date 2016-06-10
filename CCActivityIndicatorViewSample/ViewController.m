@@ -41,9 +41,9 @@
     //self.activityHUD.disappearAnimationType = CCActivityHUDDisappearAnimationTypeSlideToRight;
     //self.activityHUD.disappearAnimationType = CCActivityHUDDisappearAnimationTypeZoomOut;
     
-    //self.activityHUD.backgroundViewType = CCActivityHUDBackgroundViewTypeBlur;
-    //self.activityHUD.backgroundViewType = CCActivityHUDBackgroundViewTypeTransparent;
-    //self.activityHUD.backgroundViewType = CCActivityHUDBackgroundViewTypeShadow;
+    //self.activityHUD.overlayType = CCActivityHUDOverlayTypeBlur;
+    //self.activityHUD.overlayType = CCActivityHUDOverlayTypeTransparent;
+    //self.activityHUD.overlayType = CCActivityHUDOverlayTypeShadow;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -61,6 +61,8 @@
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArcInCircle];
     
     //[self.activityHUD showWithGIFName:@"test.gif"];
+    
+    //[self.activityHUD showWithText:@"Loading..."];
 }
 
 - (IBAction)dismiss:(id)sender {

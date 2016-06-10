@@ -27,11 +27,11 @@ typedef NS_ENUM(NSInteger, CCActivityHUDDisappearAnimationType) {
     CCActivityHUDDisappearAnimationTypeFadeOut
 };
 
-typedef NS_ENUM(NSInteger, CCActivityHUDBackgroundViewType) {
-    CCActivityHUDBackgroundViewTypeNone,
-    CCActivityHUDBackgroundViewTypeBlur,
-    CCActivityHUDBackgroundViewTypeTransparent,
-    CCActivityHUDBackgroundViewTypeShadow
+typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
+    CCActivityHUDOverlayTypeNone,
+    CCActivityHUDOverlayTypeBlur,
+    CCActivityHUDOverlayTypeTransparent,
+    CCActivityHUDOverlayTypeShadow
 };
 
 
@@ -93,14 +93,14 @@ typedef NS_ENUM(NSInteger, CCActivityHUDBackgroundViewType) {
 /**
  *  Set the type of the background view.
  */
-@property CCActivityHUDBackgroundViewType backgroundViewType;
+@property CCActivityHUDOverlayType overlayType;
 
 
 
 
 #pragma mark - public methods
 /**
- *  Show an activity indicator in the center of the screen with a specific type.
+ *  Show a HUD in the center of the screen with a specific indicator animation type.
  *
  *  @param type Type for the activity indicator to be shown.
  */
@@ -112,11 +112,18 @@ typedef NS_ENUM(NSInteger, CCActivityHUDBackgroundViewType) {
 - (void)show;
 
 /**
- *  Show with a GIF image.
+ *  Show a HUD in the center of the screen with a GIF image.
  *
  *  @param GIFName The GIF's name to be shown.
  */
 - (void)showWithGIFName:(NSString *)GIFName;
+
+/**
+ *  Show a HUD in the center of the screen with text.
+ *
+ *  @param text     The text to be shown.
+ */
+- (void)showWithText:(NSString *)text;
 
 /**
  *  Display some text before dissmissing the view.
