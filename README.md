@@ -1,8 +1,13 @@
-## CCActivityIndicatorView
+## CCActivityHUD
 
 [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Cokile/CCActivityIndicatorView/blob/master/Licence)
 [![](https://img.shields.io/github/release/Cokile/CCActivityIndicatorView.svg)](https://github.com/Cokile/CCActivityIndicatorView/releases)
-[![](http://img.shields.io/cocoapods/v/CCActivityIndicatorView.svg)](http://cocoapods.org/pods/CCActivityIndicatorView)
+
+From v2.0.0, I rename it from __CCActivityIndicatorView__ to __CCActivityHUD__. if you have forked the project bofore I rename it, you should run the command below to make a Pull Request correctly.
+
+```
+git remote set-url origin git@github.com:Cokile/CCActivityHUD.git
+```
 
 
 
@@ -14,6 +19,8 @@
 <img src=Captures/capture4.gif width=210 height=372>
 <img src=Captures/capture5.gif width=210 height=372>
 
+
+
 ## Installation
 
 ### Use Cocoapods
@@ -21,12 +28,12 @@
 Simply add one line to your Podfile:
 
 ```
-pod 'CCActivityIndicatorView'
+pod 'CCActivityHUD'
 ```
 
 ### Manually 
 
-Add the .h, .m files in the CCActivityIndicatorView folder to your project.
+Add the all the files in the CCActivityHUD folder to your project.
 
 Add `ImageIO.framework` to your target.
 
@@ -37,65 +44,71 @@ Add `ImageIO.framework` to your target.
 ```objective-c
 #import "CCActivityIndicatorView.h"
 
-self.myactivityIndicatorView = [CCActivityIndicatorView new];
+self.activityHUD = [CCActivityIndicatorView new];
 
-// Show with the default type
-// The 1st capture
-[self.myactivityIndicatorView show];
+// Show with the default type.
+[self.myactivityHUD show];
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	// Your task code here
+	dispatch_async(dispatch_get_main_queue(), ^{
+    	// When the task has completed.
+        [self.activityHUD dismiss];
+        });
+    });
 ```
 
-Or you can specify the type to show
+#### More options
+
+- Instead of using `show` to show the default indicator animation type,  you can specify the type to show (To see what tpyes you can use, see Indicator animation type section below).
 
 ```objective-c
-self.myactivityIndicatorView = [CCActivityIndicatorView new];
-
-// CCActivityIndicatorView with type CCIndicatorTypeScalingDots
-// The 1st capture
-[self.myactivityIndicatorView showWithType:CCIndicatorTypeScalingDots];
-
-// CCActivityIndicatorView with type CCIndicatorTypeLeadingDots
-// The 2nd capture
-[self.myactivityIndicatorView showWithType:CCIndicatorTypeLeadingDots];
-
-// CCActivityIndicatorView with type CCIndicatorTypeCircle
-// The 3rd capture
-[self.myactivityIndicatorView showWithType:CCIndicatorTypeCircle];
-
-// CCActivityIndicatorView with type CCIndicatorTypeArc
-// The 4th capture
-[self.myactivityIndicatorView showWithType:CCIndicatorTypeArc];
+[self.activityHUD showWithType:CCActivityHUDIndicatorTypeDynamicArc];
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	// Your task code here
+	dispatch_async(dispatch_get_main_queue(), ^{
+    	// When the task has completed.
+        [self.activityHUD dismiss];
+        });
+    });
 ```
 
-Or you can even use your own GIF file
+__Note:__ You should not use `showWithType:` within `viewDidLoad`, The Animation will not work! Instead, show it within `viewWillAppear` or `viewDidAppear`.
+
+- Do not like the provided indicator animation?  `CCActivityHUD` supports GIF. Just grab a GIF you like and show with it.
 
 ```objective-c
-self.myactivityIndicatorView = [CCActivityIndicatorView new];
-
-// Show with GIF
-// The 5th capture
-[self.myactivityIndicatorView showWithGIFName:@"test.gif"];
+[self.activityHUD showWithGIFName:@"test.gif"];
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	// Your task code here
+	dispatch_async(dispatch_get_main_queue(), ^{
+    	// When the task has completed.
+        [self.activityHUD dismiss];
+        });
+    });
 ```
 
-Then when some tasks have completed,  simply use
-
-```
-[self.myactivityIndicatorView dismiss];
-```
-
-Or you can display some text before dismiss
+- Just want to show some text to users?  `CCActivityHUD`  also supports showing text with shimmering visual effect.
 
 ```objective-c
-// The 1st capture
-[self.myactivityIndicatorView dismissWithText:@"This is a sample dismiss text" delay:0.5];
+[self.activityHUD showWithText:@"Now loading..."];
+dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+	// Your task code here
+	dispatch_async(dispatch_get_main_queue(), ^{
+    	// When the task has completed.
+        [self.activityHUD dismiss];
+        });
+    });
 ```
 
+- `CCActivityHUD` also support progress. Use `showWithProgress` and perform your task code. In the call back method, update UI in the main thread by  `self.activityHUD.progress = completedTaskAmount/totalTaskAmount`, When all the tasks have completed, use`[self.activityHUD dismiss]`.
 
 
-__Note:__
+- Last but not least, you sometimes need to show some text to users as a feedback rather than simply dismiss a HUD. `CCActivityHUD` also support it.
 
-You should not show `CCActivityIndicatorView` within `viewDidLoad`, The Animation will not work!
-
-Instead, show it within `viewWillAppear` or `viewDidAppear`.
+```objective-c
+// Set success to NO will show a cross, and vice versa, YES means showing a tick.
+[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:0.7 success:NO]
+```
 
 
 
@@ -107,31 +120,31 @@ Instead, show it within `viewWillAppear` or `viewDidAppear`.
 // Set public properties before showing it.
 
 // Set the backgrond color. The default color is black.
-self.myactivityIndicatorView.backColor = <#UIColor#>;
+self.activityHUD.backColor = <#UIColor#>;
 
 // Set the background border color. The default background color is black.
-self.myactivityIndicatorView.borderColor = <#UIColor#>;
+self.activityHUD.borderColor = <#UIColor#>;
 
 // Set the backgrond border width. THe default value is 0.
-self.myactivityIndicatorView.borderWidth = <#CGFloat#>;
+self.activityHUD.borderWidth = <#CGFloat#>;
 
-// Set the background corner radius. The default value is 10.0;
-self.myactivityIndicatorView.cornerRadius = <#CGFloat#>;
+// Set the background corner radius. The default value is 5.0;
+self.activityHUD.cornerRadius = <#CGFloat#>;
 
 // Set the indicator color. The default color is white.
-self.myactivityIndicatorView.indicatorColor = <#UIColor#>;
+self.activityHUD.indicatorColor = <#UIColor#>;
 
 // Set the boolean value that indicates whether the ohter UIViews are user-interactable. The default value is YES.
-self.myactivityIndicatorView.isTheOnlyActiveView = <#BOOL#>;
+self.activityHUD.isTheOnlyActiveView = <#BOOL#>;
 
 // Set the appear animation type.
-self.myactivityIndicatorView.appearAnimationType = <#CCIndicatorAppearAnimationType#>;
+self.activityHUD.appearAnimationType = <#CCActivityHUDAppearAnimationType#>;
 
 //  Set the disappear animation type.
-self.myactivityIndicatorView.disappearAnimationType = <#CCIndicatorDisappearAnimationType#>;
+self.activityHUD.disappearAnimationType = <#CCActivityHUDAppearAnimationType#>;
 
 // Set the background view type
-self.myactivityIndicatorView.backgroundViewType = <#CCIndicatorBackgroundViewType#>;
+self.activityHUD.overlayType = <#CCActivityHUDOverlayType#>;
 ```
 
 ### Animation Type
@@ -139,11 +152,12 @@ self.myactivityIndicatorView.backgroundViewType = <#CCIndicatorBackgroundViewTyp
 #### Indicator animation type
 
 ```objective-c
-typedef NS_ENUM(NSInteger, CCIndicatorType) {
-    CCIndicatorTypeScalingDots, // Default type
-    CCIndicatorTypeLeadingDots,
-    CCIndicatorTypeCircle,
-    CCIndicatorTypeArc
+typedef NS_ENUM(NSInteger, CCActivityHUDIndicatorType) {
+    CCActivityHUDIndicatorTypeScalingDots, // Default type
+    CCActivityHUDIndicatorTypeLeadingDots,
+    CCActivityHUDIndicatorTypeMinorArc,
+    CCActivityHUDIndicatorTypeDynamicArc,
+    CCActivityHUDIndicatorTypeArcInCircle
 };
 ```
 #### Appear animation type
@@ -171,14 +185,14 @@ typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
 };
 ```
 
-#### Background view type
+#### Overlay type
 
 ```objective-c
-typedef NS_ENUM(NSInteger, CCIndicatorBackgroundViewType) {
-    CCIndicatorBackgroundViewTypeNone, // Default type
-    CCIndicatorBackgroundViewTypeBlur,
-    CCIndicatorBackgroundViewTypeTransparent,
-    CCIndicatorBackgroundViewTypeShadow
+typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
+    CCActivityHUDOverlayTypeNone, // Default type
+    CCActivityHUDOverlayTypeBlur,
+    CCActivityHUDOverlayTypeTransparent,
+    CCActivityHUDOverlayTypeShadow
 };
 ```
 
@@ -192,7 +206,7 @@ iOS 8.0 or later
 
 ## Acknowledgement
 
-[uiimage-from-animated-gif](https://github.com/mayoff/uiimage-from-animated-gif) : A UIImage category that loads animated GIFs.
+[uiimage-from-animated-gif](https://github.com/mayoff/uiimage-from-animated-gif) : A UIImage category that loads animated GIFs. It provides me with the awesome API to integrate GIF into `CCActivityHUD`.
 
 
 
@@ -201,6 +215,4 @@ iOS 8.0 or later
 * More types of animation
 
 
-
-Any Pull Requests are welcome.
-
+Any Pull Requests are welcome. 
