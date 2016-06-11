@@ -116,7 +116,7 @@
     }
 }
 
-- (void)showWithText:(NSString *)text {
+- (void)showWithText:(NSString *)text shimmering:(BOOL)shimmering{
     if (!self.superview) {
         CGFloat height = [self heightForText:text]+8;
         self.frame = CGRectMake(0, -height, TEXT_WIDTH, height);
@@ -129,7 +129,9 @@
         textLabel.text = text;
         [self addSubview:textLabel];
         
-        [self addShimmeringEffectForLabel:textLabel];
+        if (shimmering) {
+            [self addShimmeringEffectForLabel:textLabel];
+        }
         
         self.useIndicator = NO;
         self.useProgress = NO;

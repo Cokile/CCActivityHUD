@@ -61,7 +61,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 #### More options
 
-- Instead of using `show` to show the default indicator animation type,  you can specify the type to show (To see what tpyes you can use, see Indicator animation type section below).
+- Instead of using `show` to show the default indicator animation type,  you can specify the type to show (To see what tpyes you can use, see [Indicator animation type section](https://github.com/Cokile/CCActivityHUD#indicator-animation-type)).
 
 ```objective-c
 [self.activityHUD showWithType:CCActivityHUDIndicatorTypeDynamicArc];
@@ -92,7 +92,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 - Just want to show some text to users?  `CCActivityHUD`  also supports showing text with shimmering visual effect.
 
 ```objective-c
-[self.activityHUD showWithText:@"Now loading..."];
+[self.activityHUD showWithText:@"Now loading..." shimmering:YES];
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 	// Your task code here
 	dispatch_async(dispatch_get_main_queue(), ^{

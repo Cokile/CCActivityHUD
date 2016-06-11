@@ -62,7 +62,7 @@
     
     //[self.activityHUD showWithGIFName:@"test.gif"];
     
-    //[self.activityHUD showWithText:@"Now loading..."];
+    //[self.activityHUD showWithText:@"Now loading..." shimmering:YES];
 }
 
 - (IBAction)dismiss:(id)sender {

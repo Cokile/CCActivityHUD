@@ -127,8 +127,9 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
  *  Show a HUD in the center of the screen with text.
  *
  *  @param text     The text to be shown.
+ *  @param shimmering A boolean indicates whether apply a shimmering effect to the text.
  */
-- (void)showWithText:(NSString *)text;
+- (void)showWithText:(NSString *)text shimmering:(BOOL)shimmering;
 
 - (void)showWithProgress;
 
