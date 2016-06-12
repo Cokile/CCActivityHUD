@@ -31,11 +31,11 @@ Simply add one line to your Podfile:
 pod 'CCActivityHUD'
 ```
 
-__Note__: If you have used `pod 'CCActivityIndicatorView'` in your Podfile, just replace it with the `pod 'CCActivityHUD'` to update the pod.
+__Note__: If you have used `pod 'CCActivityIndicatorView'` in your Podfile, just replace it with  `pod 'CCActivityHUD'` to update the pod.
 
 ### Manually 
 
-Add the all the files in the CCActivityHUD folder to your project.
+Add all the files in the CCActivityHUD folder to your project.
 
 Add `ImageIO.framework` to your target.
 
@@ -76,7 +76,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 __Note:__ You should not use `showWithType:` within `viewDidLoad`, The Animation will not work! Instead, show it within `viewWillAppear` or `viewDidAppear`.
 
-- Do not like the provided indicator animation?  `CCActivityHUD` supports GIF. Just grab a GIF you like and show with it.
+- Do not like the provided indicator animation?  `CCActivityHUD` supports GIF too. Just grab a GIF you like and show with it.
 
 ```objective-c
 [self.activityHUD showWithGIFName:@"test.gif"];
@@ -89,7 +89,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     });
 ```
 
-- Just want to show some text to users?  `CCActivityHUD`  also supports showing text with shimmering visual effect.
+- Or just want to show some text to users?  `CCActivityHUD`  also supports showing text, even with shimmering visual effect.
 
 ```objective-c
 [self.activityHUD showWithText:@"Now loading..." shimmering:YES];
@@ -105,10 +105,11 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 - `CCActivityHUD` also support progress. Use `showWithProgress` and perform your task code. In the call back method, update UI in the main thread by  `self.activityHUD.progress = completedTaskAmount/totalTaskAmount`, When all the tasks have completed, use`[self.activityHUD dismiss]`.
 
 
-- Last but not least, you sometimes need to show some text to users as a feedback rather than simply dismiss a HUD. `CCActivityHUD` also support it.
+- Last but not least, you sometimes need to show some text to users as a feedback when a task has completed rather than simply dismiss a HUD. `CCActivityHUD` also support it.
 
 ```objective-c
 // Set success to NO will show a cross, and vice versa, YES means showing a tick.
+// If you set the text to nil, self.activityHUD will only show a tick or cross according to the success parameter.
 [self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:0.7 success:NO]
 ```
 
@@ -136,7 +137,7 @@ self.activityHUD.cornerRadius = <#CGFloat#>;
 // Set the indicator color. The default color is white.
 self.activityHUD.indicatorColor = <#UIColor#>;
 
-// Set the boolean value that indicates whether the ohter UIViews are user-interactable. The default value is YES.
+// Set the boolean value that indicates whether ohter UIViews are user-interactable. The default value is YES.
 self.activityHUD.isTheOnlyActiveView = <#BOOL#>;
 
 // Set the appear animation type.
@@ -145,7 +146,7 @@ self.activityHUD.appearAnimationType = <#CCActivityHUDAppearAnimationType#>;
 //  Set the disappear animation type.
 self.activityHUD.disappearAnimationType = <#CCActivityHUDAppearAnimationType#>;
 
-// Set the background view type
+// Set the overlay type
 self.activityHUD.overlayType = <#CCActivityHUDOverlayType#>;
 ```
 
@@ -159,31 +160,32 @@ typedef NS_ENUM(NSInteger, CCActivityHUDIndicatorType) {
     CCActivityHUDIndicatorTypeLeadingDots,
     CCActivityHUDIndicatorTypeMinorArc,
     CCActivityHUDIndicatorTypeDynamicArc,
-    CCActivityHUDIndicatorTypeArcInCircle
+    CCActivityHUDIndicatorTypeArcInCircle,
+    CCActivityHUDIndicatorTypeSpringBall
 };
 ```
 #### Appear animation type
 
 ```objective-c
-typedef NS_ENUM(NSInteger, CCIndicatorAppearAnimationType) {
-    CCIndicatorAppearAnimationTypeSlideFromTop,
-    CCIndicatorAppearAnimationTypeSlideFromBottom,
-    CCIndicatorAppearAnimationTypeSlideFromLeft,
-    CCIndicatorAppearAnimationTypeSlideFromRight,
-    CCIndicatorAppearAnimationTypeZoomIn,
-    CCIndicatorAppearAnimationTypeFadeIn // Default type
+typedef NS_ENUM(NSInteger, CCActivityHUDAppearAnimationType) {
+    CCActivityHUDAppearAnimationTypeSlideFromTop,
+    CCActivityHUDAppearAnimationTypeSlideFromBottom,
+    CCActivityHUDAppearAnimationTypeSlideFromLeft,
+    CCActivityHUDAppearAnimationTypeSlideFromRight,
+    CCActivityHUDAppearAnimationTypeZoomIn,
+    CCActivityHUDAppearAnimationTypeFadeIn // Default type
 };
 ```
 #### Disappear animation type
 
 ```objective-c
-typedef NS_ENUM(NSInteger, CCIndicatorDisappearAnimationType) {
-    CCIndicatorDisappearAnimationTypeSlideToTop,
-    CCIndicatorDisappearAnimationTypeSlideToBottom,
-    CCIndicatorDisappearAnimationTypeSlideToLeft,
-    CCIndicatorDisappearAnimationTypeSlideToRight,
-  	CCIndicatorDisappearAnimationTypeZoomOut,
-    CCIndicatorDisappearAnimationTypeFadeOut // Default type
+typedef NS_ENUM(NSInteger, CCActivityHUDDisappearAnimationType) {
+    CCActivityHUDDisappearAnimationTypeSlideToTop,
+    CCActivityHUDDisappearAnimationTypeSlideToBottom,
+    CCActivityHUDDisappearAnimationTypeSlideToLeft,
+    CCActivityHUDDisappearAnimationTypeSlideToRight,
+    CCActivityHUDDisappearAnimationTypeZoomOut,
+    CCActivityHUDDisappearAnimationTypeFadeOut // Default type
 };
 ```
 
@@ -208,7 +210,7 @@ iOS 8.0 or later
 
 ## Acknowledgement
 
-[uiimage-from-animated-gif](https://github.com/mayoff/uiimage-from-animated-gif) : A UIImage category that loads animated GIFs. It provides me with the awesome API to integrate GIF into `CCActivityHUD`.
+[uiimage-from-animated-gif](https://github.com/mayoff/uiimage-from-animated-gif) : A UIImage category that loads animated GIFs. It provides me with the awesome API to integrate GIF into `CCActivityHUD` with few efforts.
 
 
 

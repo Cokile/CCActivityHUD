@@ -325,7 +325,7 @@
 }
 
 - (void)initializeLeadingDots {
-    CGFloat length = ViewFrameWidth*18/200;
+    CGFloat length = ViewFrameWidth*25/200;
 
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
     self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
@@ -335,8 +335,8 @@
     self.indicatorCAShapeLayer.shouldRasterize = YES;
     self.indicatorCAShapeLayer.rasterizationScale = Screen.scale;
     
-    self.replicatorLayer.instanceCount = 3;
-    self.replicatorLayer.instanceDelay = 0.08;
+    self.replicatorLayer.instanceCount = 5;
+    self.replicatorLayer.instanceDelay = 0.1;
     
     [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
 }
@@ -584,16 +584,29 @@
     UIBezierPath *bezierPath = [UIBezierPath bezierPath];
     [bezierPath addArcWithCenter:CGPointMake(x, y) radius:radius startAngle:startAngle endAngle:startAngle+M_PI*2 clockwise:YES];
     
-    CAKeyframeAnimation *animation = [[CAKeyframeAnimation alloc] init];
-    animation.keyPath = @"position";
-    animation.path = bezierPath.CGPath;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.duration = DURATION_BASE;
+    CAKeyframeAnimation *leadingAnimation = [[CAKeyframeAnimation alloc] init];
+    leadingAnimation.keyPath = @"position";
+    leadingAnimation.path = bezierPath.CGPath;
+    leadingAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    leadingAnimation.duration = DURATION_BASE*1.5+self.replicatorLayer.instanceCount*self.replicatorLayer.instanceDelay;
+    
+    CABasicAnimation *scaleDownAnimation = [[CABasicAnimation alloc] init];
+    scaleDownAnimation.keyPath = @"transform.scale";
+    scaleDownAnimation.fromValue = [NSNumber numberWithFloat:1.0];
+    scaleDownAnimation.toValue = [NSNumber numberWithFloat:0.3];
+    scaleDownAnimation.duration = leadingAnimation.duration*5/12;
+    
+    CABasicAnimation *scaleUpAnimation = [[CABasicAnimation alloc] init];
+    scaleUpAnimation.keyPath = @"transform.scale";
+    scaleUpAnimation.beginTime = scaleDownAnimation.duration;
+    scaleUpAnimation.duration = leadingAnimation.duration-scaleDownAnimation.duration;
+    scaleUpAnimation.fromValue = [NSNumber numberWithFloat:0.3];
+    scaleUpAnimation.toValue = [NSNumber numberWithFloat:1.0];
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.duration = animation.duration+self.replicatorLayer.instanceCount*self.replicatorLayer.instanceDelay+0.06;
+    animationGroup.duration = leadingAnimation.duration+self.replicatorLayer.instanceCount*self.replicatorLayer.instanceDelay;;
     animationGroup.repeatCount = INFINITY;
-    animationGroup.animations = @[animation];
+    animationGroup.animations = @[leadingAnimation, scaleDownAnimation, scaleUpAnimation];
     
     [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:nil];
 }
