@@ -3,7 +3,7 @@
 #import "Size.h"
 
 #define DURATION_BASE 0.7
-#define TEXT_WIDTH BoundsWidthFor(Screen)/2.5
+#define TEXT_WIDTH BoundsWidthFor(Screen)/2.8
 #define TEXT_FONT_SIZE 14
 
 @interface CCActivityHUD ()
@@ -231,6 +231,7 @@
     }
     
     [self removeAllSubviews];
+    self.layer.sublayers = nil;
     
     // change the scale to original if the disappear animation is zoom out
     self.transform = CGAffineTransformIdentity;
@@ -270,8 +271,6 @@
 }
 
 - (void)initializeReplicatorLayer {
-    self.layer.sublayers = nil;
-    
     self.replicatorLayer = [[CAReplicatorLayer alloc] init];
     self.replicatorLayer.frame = CGRectMake(0, 0, ViewFrameWidth, ViewFrameHeight);
     self.replicatorLayer.backgroundColor = [UIColor clearColor].CGColor;
@@ -280,8 +279,6 @@
 }
 
 - (void)initializeIndicatoeLayerWithType:(CCActivityHUDIndicatorType)type {
-    self.replicatorLayer.sublayers = nil;
-    
     switch (type) {
         case CCActivityHUDIndicatorTypeScalingDots:
             [self initializeScalingDots];
@@ -584,7 +581,17 @@
 }
 
 - (void)addMinorArcAnimation {
+    CAShapeLayer *oppositeArc = [[CAShapeLayer alloc] init];
+    oppositeArc.strokeColor = [UIColor whiteColor].CGColor;
+    oppositeArc.fillColor = [UIColor clearColor].CGColor;
+    oppositeArc.lineWidth = ViewFrameWidth/24;
+    
+    CGFloat length = ViewFrameWidth/5;
+    oppositeArc.frame = CGRectMake(length, length, length*3, length*3);
+    [self.replicatorLayer addSublayer:oppositeArc];
+    
     self.indicatorCAShapeLayer.path = [self arcPathWithStartAngle:-M_PI/4 span:M_PI/2];
+    oppositeArc.path = [self arcPathWithStartAngle:M_PI*3/4 span:M_PI/2];
     
     CABasicAnimation *animation = [[CABasicAnimation alloc] init];
     animation.keyPath = @"transform.rotation.z";
@@ -594,6 +601,7 @@
     animation.repeatCount = INFINITY;
     
     [self.indicatorCAShapeLayer addAnimation:animation forKey:nil];
+    [oppositeArc addAnimation:animation forKey:nil];
 }
 
 - (void)addDynamicArcAnimation {
