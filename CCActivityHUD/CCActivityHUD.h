@@ -6,7 +6,8 @@ typedef NS_ENUM(NSInteger, CCActivityHUDIndicatorType) {
     CCActivityHUDIndicatorTypeLeadingDots,
     CCActivityHUDIndicatorTypeMinorArc,
     CCActivityHUDIndicatorTypeDynamicArc,
-    CCActivityHUDIndicatorTypeArcInCircle
+    CCActivityHUDIndicatorTypeArcInCircle,
+    CCActivityHUDIndicatorTypeSpringBall
 };
 
 typedef NS_ENUM(NSInteger, CCActivityHUDAppearAnimationType) {

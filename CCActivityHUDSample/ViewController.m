@@ -59,6 +59,7 @@
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeMinorArc];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeDynamicArc];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArcInCircle];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeSpringBall];
     
     //[self.activityHUD showWithGIFName:@"test.gif"];
     

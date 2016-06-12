@@ -299,6 +299,10 @@
         case CCActivityHUDIndicatorTypeArcInCircle:
             [self initializeArcInCircle];
             break;
+            
+        case CCActivityHUDIndicatorTypeSpringBall:
+            [self initializeSpringBall];
+            break;
     }
 }
 
@@ -361,6 +365,16 @@
 - (void)initializeArcInCircle {
     // Use the same same indicatorCAShapeLayer in minor arc
     [self initializeMinorArc];
+}
+
+- (void)initializeSpringBall {
+    CGFloat length = ViewFrameWidth*38/200;
+    
+    self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
+    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
+    self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
+    self.indicatorCAShapeLayer.cornerRadius = length/2;
 }
 
 #pragma mark - background view
@@ -543,6 +557,10 @@
         case CCActivityHUDIndicatorTypeArcInCircle:
             [self addArcInCircleAnimation];
             break;
+            
+        case CCActivityHUDIndicatorTypeSpringBall:
+            [self addSpringBallAnimation];
+            break;
     }
 }
 
@@ -663,7 +681,46 @@
     [self.indicatorCAShapeLayer addAnimation:animation forKey:nil];
 }
 
-#pragma mark - disappeat animation
+- (void)addSpringBallAnimation {
+    [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
+    
+    CABasicAnimation *fallAnimation = [[CABasicAnimation alloc] init];
+    fallAnimation.keyPath = @"position.y";
+    fallAnimation.fromValue = [NSNumber numberWithFloat:ViewFrameHeight/5];
+    fallAnimation.toValue = [NSNumber numberWithFloat:ViewFrameHeight*4/5];
+    fallAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+    fallAnimation.duration = DURATION_BASE;
+    
+    CABasicAnimation *fallScaleAnimation = [[CABasicAnimation alloc] init];
+    fallScaleAnimation.keyPath  = @"transform.scale";
+    fallScaleAnimation.fromValue = [NSNumber numberWithFloat:1.0];
+    fallScaleAnimation.toValue = [NSNumber numberWithFloat:0.5];
+    fallScaleAnimation.duration = fallAnimation.duration;;
+    
+    CABasicAnimation *springBackAnimation = [[CABasicAnimation alloc] init];
+    springBackAnimation.keyPath = @"position.y";
+    springBackAnimation.beginTime =fallAnimation.duration;
+    springBackAnimation.fromValue = [NSNumber numberWithFloat:ViewFrameHeight*4/5];
+    springBackAnimation.toValue = [NSNumber numberWithFloat:ViewFrameHeight/5];
+    springBackAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    springBackAnimation.duration = fallAnimation.duration;
+    
+    CABasicAnimation *springBackScaleAnimation = [[CABasicAnimation alloc] init];
+    springBackScaleAnimation.keyPath  = @"transform.scale";
+    springBackScaleAnimation.beginTime = springBackAnimation.beginTime;
+    springBackScaleAnimation.fromValue = [NSNumber numberWithFloat:0.5];
+    springBackScaleAnimation.toValue = [NSNumber numberWithFloat:1];
+    springBackScaleAnimation.duration = springBackAnimation.duration;
+   
+    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+    animationGroup.duration = fallAnimation.duration+springBackAnimation.duration;
+    animationGroup.repeatCount = INFINITY;
+    animationGroup.animations = @[fallAnimation, fallScaleAnimation,springBackAnimation, springBackScaleAnimation];
+    
+    [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:nil];
+}
+
+#pragma mark - disappear animation
 - (void)addDisappearAnimationWithDelay:(CGFloat)delay {
     switch (self.disappearAnimationType) {
         case CCActivityHUDDisappearAnimationTypeSlideToTop:
