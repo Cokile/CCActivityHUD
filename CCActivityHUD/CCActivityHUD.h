@@ -118,6 +118,15 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
 - (void)show;
 
 /**
+ *  Show with the user's custom shape and animation
+ *
+ *  @param shape     The custom indicator shape. The block use a CAShapeLayer object and a CAReplicatorLayer object to draw the indicator shpae.
+ *  @param animation The custom indicator animation. The CAAnimationGroup will apply to the shape.
+ */
+- (void)showWithShape:(void (^)(CAShapeLayer *, CAReplicatorLayer *))shape
+            animationGroup:(void (^)(CAAnimationGroup *))animation;
+
+/**
  *  Show a HUD in the center of the screen with a GIF image.
  *
  *  @param GIFName The GIF's name to be shown.
@@ -132,6 +141,9 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
  */
 - (void)showWithText:(NSString *)text shimmering:(BOOL)shimmering;
 
+/**
+ *  Show a HUD with a circle progress bar.
+ */
 - (void)showWithProgress;
 
 /**

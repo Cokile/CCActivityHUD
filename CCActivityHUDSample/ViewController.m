@@ -61,6 +61,32 @@
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArcInCircle];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeSpringBall];
     
+    /*
+    [self.activityHUD showWithShape:^(CAShapeLayer *shapeLayer, CAReplicatorLayer *replicatorLayer) {
+        shapeLayer.frame = CGRectMake(0, 0, 20, 20);
+        shapeLayer.position = CGPointMake(self.activityHUD.frame.size.width/2, self.activityHUD.frame.size.height/2);
+        shapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+        shapeLayer.cornerRadius = 10;
+    } animation:^(CAAnimationGroup *animationGroup) {
+        CABasicAnimation *animation1 = [[CABasicAnimation alloc] init];
+        animation1.keyPath  = @"transform.scale";
+        animation1.fromValue = [NSNumber numberWithFloat:1.0];
+        animation1.toValue = [NSNumber numberWithFloat:0.5];
+        animation1.duration = 2.0;
+        
+        CABasicAnimation *animation2 = [[CABasicAnimation alloc] init];
+        animation2.keyPath  = @"transform.scale";
+        animation2.beginTime = 2.0;
+        animation2.fromValue = [NSNumber numberWithFloat:0.5];
+        animation2.toValue = [NSNumber numberWithFloat:1.0];
+        animation2.duration = 2.0;
+        
+        animationGroup.duration = 4.0;
+        animationGroup.repeatCount = INFINITY;
+        animationGroup.animations = @[animation1, animation2];
+    }];
+   */
+    
     //[self.activityHUD showWithGIFName:@"test.gif"];
     
     //[self.activityHUD showWithText:@"Now loading..." shimmering:YES];

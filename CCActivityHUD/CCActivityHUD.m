@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) UIColor *updatedColor;
 @property CCActivityHUDIndicatorType currentTpye;
-@property BOOL useIndicator;
+@property BOOL useProvidedIndicator;
 @property BOOL useProgress;
 
 @end
@@ -77,7 +77,7 @@
         [self initializeReplicatorLayer];
         [self initializeIndicatoeLayerWithType:type];
         self.currentTpye = type;
-        self.useIndicator = YES;
+        self.useProvidedIndicator = YES;
         self.useProgress = NO;
         
         // change the indicator color if user do not use the default color.
@@ -99,6 +99,31 @@
     [self showWithType:CCActivityHUDIndicatorTypeScalingDots];
 }
 
+- (void)showWithShape:(void (^)(CAShapeLayer *, CAReplicatorLayer *))shape animationGroup:(void (^)(CAAnimationGroup *))animation {
+    if (!self.superview) {
+        [self initializeReplicatorLayer];
+        self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
+        self.currentTpye = -1;
+        self.useProvidedIndicator = NO;
+        self.useProgress = NO;
+        
+        if (shape != nil) {
+            shape(self.indicatorCAShapeLayer, self.replicatorLayer);
+        }
+        
+        [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
+        
+        [self communalShowTask];
+        
+        CAAnimationGroup *animationGroup = [[CAAnimationGroup alloc] init];
+        if (animation != nil) {
+            animation(animationGroup);
+        }
+        
+        [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:@"customAnimationGroup"];
+    }
+}
+
 - (void)showWithGIFName:(NSString *)GIFName {
     if (!self.superview) {
         CGFloat length = ViewFrameWidth/5;
@@ -109,7 +134,7 @@
         
         [self addSubview:self.imageView];
         
-        self.useIndicator = NO;
+        self.useProvidedIndicator = NO;
         self.useProgress = NO;
         
         [self communalShowTask];
@@ -133,7 +158,7 @@
             [self addShimmeringEffectForLabel:textLabel];
         }
         
-        self.useIndicator = NO;
+        self.useProvidedIndicator = NO;
         self.useProgress = NO;
         
         [self communalShowTask];
@@ -153,7 +178,7 @@
         }
         
         self.progress = 0.0;
-        self.useIndicator = NO;
+        self.useProvidedIndicator = NO;
         self.useProgress = YES;
         
         [self communalShowTask];
@@ -459,7 +484,7 @@
     [UIView animateWithDuration:0.35 animations:^{
         self.alpha = originalAlpha;
     } completion:^(BOOL finished) {
-        if (finished && self.useIndicator) {
+        if (finished && self.useProvidedIndicator) {
             [self addAnimation];
         }
     }];
@@ -471,7 +496,7 @@
     [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
-        if (finished && self.useIndicator) {
+        if (finished && self.useProvidedIndicator) {
             [self addAnimation];
         }
     }];
@@ -483,7 +508,7 @@
     [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
-        if (finished && self.useIndicator) {
+        if (finished && self.useProvidedIndicator) {
             [self addAnimation];
         }
     }];
@@ -495,7 +520,7 @@
     [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
-        if (finished && self.useIndicator) {
+        if (finished && self.useProvidedIndicator) {
             [self addAnimation];
         }
     }];
@@ -507,7 +532,7 @@
     [UIView animateWithDuration:0.4 delay:0.0 usingSpringWithDamping:0.6 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = BoundsCenterFor(Screen);
     } completion:^(BOOL finished) {
-        if (finished && self.useIndicator) {
+        if (finished && self.useProvidedIndicator) {
             [self addAnimation];
         }
     }];
@@ -526,7 +551,7 @@
             [UIView animateWithDuration:0.1 animations:^{
                 self.transform = CGAffineTransformIdentity;
                 
-                if (finished && self.useIndicator) {
+                if (finished && self.useProvidedIndicator) {
                     [self addAnimation];
                 }
             }];

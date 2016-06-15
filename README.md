@@ -74,7 +74,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     });
 ```
 
-__Note:__ You should not use `showWithType:` within `viewDidLoad`, The Animation will not work! Instead, show it within `viewWillAppear` or `viewDidAppear`.
+__Note:__ You should not call `showWithType:` within `viewDidLoad`, The Animation will not work! Instead, show it within `viewWillAppear` or `viewDidAppear`.
 
 - Do not like the provided indicator animation?  `CCActivityHUD` supports GIF too. Just grab a GIF you like and show with it.
 
@@ -188,7 +188,6 @@ typedef NS_ENUM(NSInteger, CCActivityHUDDisappearAnimationType) {
     CCActivityHUDDisappearAnimationTypeFadeOut // Default type
 };
 ```
-
 #### Overlay type
 
 ```objective-c
@@ -199,6 +198,41 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
     CCActivityHUDOverlayTypeShadow
 };
 ```
+#### Custom indicator animation
+
+From v.2.1.1, You can customize the indicator shape and indicator animation.
+
+```objective-c
+[self.activityHUD showWithShape:^(CAShapeLayer *shapeLayer, CAReplicatorLayer *layer) {
+        shapeLayer.frame = CGRectMake(0, 0, 20, 20);
+        shapeLayer.position = CGPointMake(self.activityHUD.frame.size.width/2, self.activityHUD.frame.size.height/2);
+        shapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+        shapeLayer.cornerRadius = 10;
+    } animationGroup:^(CAAnimationGroup *animationGroup) {
+        CABasicAnimation *animation1 = [[CABasicAnimation alloc] init];
+        animation1.keyPath  = @"transform.scale";
+        animation1.fromValue = [NSNumber numberWithFloat:1.0];
+        animation1.toValue = [NSNumber numberWithFloat:0.5];
+        animation1.duration = 2.0;
+        
+        CABasicAnimation *animation2 = [[CABasicAnimation alloc] init];
+        animation2.keyPath  = @"transform.scale";
+        animation2.beginTime = 2.0;
+        animation2.fromValue = [NSNumber numberWithFloat:0.5];
+        animation2.toValue = [NSNumber numberWithFloat:1.0];
+        animation2.duration = 2.0;
+        
+        animationGroup.duration = 4.0;
+        animationGroup.repeatCount = INFINITY;
+        animationGroup.animations = @[animation1, animation2];
+    }];
+```
+
+* `shapeLayer` is used to draw indicator shape. You can use it with `UIBezierPath` draw more complicated shape. For more details about `CAShapeLayer` and `UIBezierPath` you can visit [ CAShapeLayer Class Reference](https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CAShapeLayer_class/) and [UIBezierPath Class Reference](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIBezierPath_class/).
+* `replicatorLayer` can creates a specified number of copies of `shapeLayer`. It is the superlayer of `shapeLayer`. For more details about `CAReplicatorLayer` you can visit [CAReplicatorLayer Class Reference](https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CAReplicatorLayer_class/).
+* `animationGroup` is the animation to be applied to `shapeLayer`. For more details about `CAAnimationGroup` you can visit [CAAnimationGroup Class Reference](https://developer.apple.com/library/mac/documentation/GraphicsImaging/Reference/CAAnimationGroup_class/).
+
+__Note:__ You should also not call `showWithShape: AnimationGroup:` within `viewDidLoad`, The Animation will not work! Instead, show it within `viewWillAppear` or `viewDidAppear`.
 
 
 
@@ -219,4 +253,4 @@ iOS 8.0 or later
 * More types of animation
 
 
-Any Pull Requests are welcome. 
+Any Pull Requests and issues are welcome. 
