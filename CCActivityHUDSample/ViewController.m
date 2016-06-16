@@ -60,6 +60,7 @@
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeDynamicArc];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArcInCircle];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeSpringBall];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeScalingBars];
     
     /*
     [self.activityHUD showWithShape:^(CAShapeLayer *shapeLayer, CAReplicatorLayer *replicatorLayer) {

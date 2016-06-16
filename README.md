@@ -161,7 +161,8 @@ typedef NS_ENUM(NSInteger, CCActivityHUDIndicatorType) {
     CCActivityHUDIndicatorTypeMinorArc,
     CCActivityHUDIndicatorTypeDynamicArc,
     CCActivityHUDIndicatorTypeArcInCircle,
-    CCActivityHUDIndicatorTypeSpringBall
+    CCActivityHUDIndicatorTypeSpringBall,
+    CCActivityHUDIndicatorTypeScalingBars
 };
 ```
 #### Appear animation type

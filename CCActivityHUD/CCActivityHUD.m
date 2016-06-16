@@ -328,6 +328,10 @@
         case CCActivityHUDIndicatorTypeSpringBall:
             [self initializeSpringBall];
             break;
+            
+        case CCActivityHUDIndicatorTypeScalingBars:
+            [self initializeScalingBars];
+            break;
     }
 }
 
@@ -400,6 +404,19 @@
     self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
     self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
     self.indicatorCAShapeLayer.cornerRadius = length/2;
+}
+
+- (void)initializeScalingBars {
+    self.replicatorLayer.instanceCount = 5;
+    
+    self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
+    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    CGFloat padding = 10;
+    self.indicatorCAShapeLayer.frame = CGRectMake(padding, ViewFrameHeight/4,(ViewFrameWidth-padding*2)*2/3/self.replicatorLayer.instanceCount, ViewFrameHeight/2);
+    self.indicatorCAShapeLayer.cornerRadius = FrameWidthFor(self.indicatorCAShapeLayer)/2;
+    
+    CGFloat distance = (ViewFrameWidth-padding*2)/3/(self.replicatorLayer.instanceCount-1)+FrameWidthFor(self.indicatorCAShapeLayer);
+    self.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(distance, 0.0, 0.0);
 }
 
 #pragma mark - background view
@@ -564,11 +581,11 @@
     [self.indicatorCAShapeLayer removeAllAnimations];
     switch (self.currentTpye) {
         case CCActivityHUDIndicatorTypeScalingDots:
-            [self addScaleAnimation];
+            [self addScalingDotsAnimation];
             break;
             
         case CCActivityHUDIndicatorTypeLeadingDots:
-            [self addLeadingAnimation];
+            [self addLeadingDotsAnimation];
             break;
             
         case CCActivityHUDIndicatorTypeMinorArc:
@@ -586,21 +603,18 @@
         case CCActivityHUDIndicatorTypeSpringBall:
             [self addSpringBallAnimation];
             break;
+            
+        case CCActivityHUDIndicatorTypeScalingBars:
+            [self addScalingBarsAnimation];
+            break;
     }
 }
 
-- (void)addScaleAnimation {
-    CABasicAnimation *animation = [[CABasicAnimation alloc] init];
-    animation.keyPath  = @"transform.scale";
-    animation.fromValue = [NSNumber numberWithFloat:1.0];
-    animation.toValue = [NSNumber numberWithFloat:0.1];
-    animation.duration = DURATION_BASE*1.2;
-    animation.repeatCount = INFINITY;
-    
-    [self.indicatorCAShapeLayer addAnimation:animation forKey:nil];
+- (void)addScalingDotsAnimation {
+    [self.indicatorCAShapeLayer addAnimation:[self scaleAnimationFrom:1.0 to:0.1 duration:DURATION_BASE*1.2 repeatTime:INFINITY] forKey:nil];
 }
 
-- (void)addLeadingAnimation {
+- (void)addLeadingDotsAnimation {
     CGFloat radius = FrameWidthFor(self.replicatorLayer)/2 - FrameWidthFor(self.replicatorLayer)/5;
     CGFloat x = CGRectGetMidX(self.replicatorLayer.frame);
     CGFloat y = CGRectGetMidY(self.replicatorLayer.frame);
@@ -613,20 +627,12 @@
     leadingAnimation.keyPath = @"position";
     leadingAnimation.path = bezierPath.CGPath;
     leadingAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    leadingAnimation.duration = DURATION_BASE*1.5+self.replicatorLayer.instanceCount*self.replicatorLayer.instanceDelay;
+    leadingAnimation.duration = DURATION_BASE+self.replicatorLayer.instanceCount*self.replicatorLayer.instanceDelay;
     
-    CABasicAnimation *scaleDownAnimation = [[CABasicAnimation alloc] init];
-    scaleDownAnimation.keyPath = @"transform.scale";
-    scaleDownAnimation.fromValue = [NSNumber numberWithFloat:1.0];
-    scaleDownAnimation.toValue = [NSNumber numberWithFloat:0.3];
-    scaleDownAnimation.duration = leadingAnimation.duration*5/12;
+    CABasicAnimation *scaleDownAnimation = [self scaleAnimationFrom:1.0 to:0.3 duration:leadingAnimation.duration*5/12 repeatTime:0];
     
-    CABasicAnimation *scaleUpAnimation = [[CABasicAnimation alloc] init];
-    scaleUpAnimation.keyPath = @"transform.scale";
+    CABasicAnimation *scaleUpAnimation = [self scaleAnimationFrom:0.3 to:1.0 duration:leadingAnimation.duration-scaleDownAnimation.duration repeatTime:0];
     scaleUpAnimation.beginTime = scaleDownAnimation.duration;
-    scaleUpAnimation.duration = leadingAnimation.duration-scaleDownAnimation.duration;
-    scaleUpAnimation.fromValue = [NSNumber numberWithFloat:0.3];
-    scaleUpAnimation.toValue = [NSNumber numberWithFloat:1.0];
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
     animationGroup.duration = leadingAnimation.duration+self.replicatorLayer.instanceCount*self.replicatorLayer.instanceDelay;;
@@ -729,11 +735,7 @@
     fallAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     fallAnimation.duration = DURATION_BASE;
     
-    CABasicAnimation *fallScaleAnimation = [[CABasicAnimation alloc] init];
-    fallScaleAnimation.keyPath  = @"transform.scale";
-    fallScaleAnimation.fromValue = [NSNumber numberWithFloat:1.0];
-    fallScaleAnimation.toValue = [NSNumber numberWithFloat:0.5];
-    fallScaleAnimation.duration = fallAnimation.duration;;
+    CABasicAnimation * fallScaleAnimation = [self scaleAnimationFrom:1.0 to:0.5 duration:fallAnimation.duration repeatTime:0];
     
     CABasicAnimation *springBackAnimation = [[CABasicAnimation alloc] init];
     springBackAnimation.keyPath = @"position.y";
@@ -743,17 +745,29 @@
     springBackAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
     springBackAnimation.duration = fallAnimation.duration;
     
-    CABasicAnimation *springBackScaleAnimation = [[CABasicAnimation alloc] init];
-    springBackScaleAnimation.keyPath  = @"transform.scale";
+    CABasicAnimation *springBackScaleAnimation = [self scaleAnimationFrom:0.5 to:1.0 duration:springBackAnimation.duration repeatTime:0];
     springBackScaleAnimation.beginTime = springBackAnimation.beginTime;
-    springBackScaleAnimation.fromValue = [NSNumber numberWithFloat:0.5];
-    springBackScaleAnimation.toValue = [NSNumber numberWithFloat:1];
-    springBackScaleAnimation.duration = springBackAnimation.duration;
    
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
     animationGroup.duration = fallAnimation.duration+springBackAnimation.duration;
     animationGroup.repeatCount = INFINITY;
     animationGroup.animations = @[fallAnimation, fallScaleAnimation,springBackAnimation, springBackScaleAnimation];
+    
+    [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:nil];
+}
+
+- (void)addScalingBarsAnimation {
+    [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
+    self.replicatorLayer.instanceDelay = DURATION_BASE/6;
+    
+    CABasicAnimation *scaleUpAnimation = [self scaleAnimationFrom:1.0 to:1.2 duration:self.replicatorLayer.instanceDelay repeatTime:0];
+    CABasicAnimation *scaleDownAnimation = [self scaleAnimationFrom:1.2 to:1.0 duration:self.replicatorLayer.instanceDelay repeatTime:0];
+    scaleDownAnimation.beginTime = scaleUpAnimation.duration;
+    
+    CAAnimationGroup *animationGroup = [[CAAnimationGroup alloc] init];
+    animationGroup.duration = (scaleUpAnimation.duration+scaleDownAnimation.duration)+(self.replicatorLayer.instanceCount-1)*self.replicatorLayer.instanceDelay;
+    animationGroup.repeatCount = INFINITY;
+    animationGroup.animations = @[scaleUpAnimation, scaleDownAnimation];
     
     [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:nil];
 }
@@ -920,6 +934,16 @@
     animation.duration  = 0.007*TEXT_WIDTH;
     
     [gradientMask addAnimation:animation forKey:nil];
+}
+
+- (CABasicAnimation *)scaleAnimationFrom:(CGFloat)fromValue to:(CGFloat)toValue  duration:(CFTimeInterval)duration repeatTime:(CGFloat)repeat {
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    animation.fromValue = @(fromValue);
+    animation.toValue = @(toValue);
+    animation.duration = duration;
+    animation.repeatCount = repeat;
+    
+    return animation;
 }
 
 @end
