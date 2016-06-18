@@ -142,6 +142,15 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
  */
 - (void)showWithText:(NSString *)text shimmering:(BOOL)shimmering;
 
+
+/**
+ *  Update the text shown by showWithText:shimmering: method.
+ *
+ *  @param text The text to be updated.
+ *  @param shimmering A boolean indicates whether apply a shimmering effect to the text.
+ */
+- (void)updateText:(NSString *)text shimmering:(BOOL)shimmering;
+
 /**
  *  Show a HUD with a circle progress bar.
  */

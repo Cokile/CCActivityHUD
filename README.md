@@ -56,7 +56,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     	// When the task has completed.
         [self.activityHUD dismiss];
         });
-    });
+});
 ```
 
 #### More options
@@ -71,7 +71,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     	// When the task has completed.
         [self.activityHUD dismiss];
         });
-    });
+});
 ```
 
 __Note:__ You should not call `showWithType:` within `viewDidLoad`, The Animation will not work! Instead, show it within `viewWillAppear` or `viewDidAppear`.
@@ -86,22 +86,28 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     	// When the task has completed.
         [self.activityHUD dismiss];
         });
-    });
+});
 ```
 
-- Or just want to show some text to users?  `CCActivityHUD`  also supports showing text, even with shimmering visual effect.
+- Or just want to show some text to users?  `CCActivityHUD`  also supports showing text, even with shimmering visual effect. More over, you can also update the text to tell user the current state of the task.
 
 ```objective-c
 [self.activityHUD showWithText:@"Now loading..." shimmering:YES];
 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-	// Your task code here
+	// Your tasks code here.
+    // ...
+    dispatch_async(dispatch_get_main_queue(), ^{
+    	// When part of the task has completed.
+        [self.activityHUD updateWithText:@"step #1 completed" shimmering:YES];
+        });
+    // You tasks code here.
+    // ...
 	dispatch_async(dispatch_get_main_queue(), ^{
-    	// When the task has completed.
+    	// When all the tasks have completed.
         [self.activityHUD dismiss];
         });
-    });
+});
 ```
-
 - `CCActivityHUD` also support progress. Use `showWithProgress` and perform your task code. In the call back method, update UI in the main thread by  `self.activityHUD.progress = completedTaskAmount/totalTaskAmount`, When all the tasks have completed, use`[self.activityHUD dismiss]`.
 
 
@@ -205,28 +211,28 @@ From v.2.1.1, You can customize the indicator shape and indicator animation.
 
 ```objective-c
 [self.activityHUD showWithShape:^(CAShapeLayer *shapeLayer, CAReplicatorLayer *layer) {
-        shapeLayer.frame = CGRectMake(0, 0, 20, 20);
-        shapeLayer.position = CGPointMake(self.activityHUD.frame.size.width/2, self.activityHUD.frame.size.height/2);
-        shapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
-        shapeLayer.cornerRadius = 10;
-    } animationGroup:^(CAAnimationGroup *animationGroup) {
-        CABasicAnimation *animation1 = [[CABasicAnimation alloc] init];
-        animation1.keyPath  = @"transform.scale";
-        animation1.fromValue = [NSNumber numberWithFloat:1.0];
-        animation1.toValue = [NSNumber numberWithFloat:0.5];
-        animation1.duration = 2.0;
-        
-        CABasicAnimation *animation2 = [[CABasicAnimation alloc] init];
-        animation2.keyPath  = @"transform.scale";
-        animation2.beginTime = 2.0;
-        animation2.fromValue = [NSNumber numberWithFloat:0.5];
-        animation2.toValue = [NSNumber numberWithFloat:1.0];
-        animation2.duration = 2.0;
-        
-        animationGroup.duration = 4.0;
-        animationGroup.repeatCount = INFINITY;
-        animationGroup.animations = @[animation1, animation2];
-    }];
+    shapeLayer.frame = CGRectMake(0, 0, 20, 20);
+    shapeLayer.position = CGPointMake(self.activityHUD.frame.size.width/2, self.activityHUD.frame.size.height/2);
+    shapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    shapeLayer.cornerRadius = 10;
+} animationGroup:^(CAAnimationGroup *animationGroup) {
+    CABasicAnimation *animation1 = [[CABasicAnimation alloc] init];
+    animation1.keyPath  = @"transform.scale";
+    animation1.fromValue = [NSNumber numberWithFloat:1.0];
+    animation1.toValue = [NSNumber numberWithFloat:0.5];
+    animation1.duration = 2.0;
+    
+    CABasicAnimation *animation2 = [[CABasicAnimation alloc] init];
+    animation2.keyPath  = @"transform.scale";
+    animation2.beginTime = 2.0;
+    animation2.fromValue = [NSNumber numberWithFloat:0.5];
+    animation2.toValue = [NSNumber numberWithFloat:1.0];
+    animation2.duration = 2.0;
+    
+    animationGroup.duration = 4.0;
+    animationGroup.repeatCount = INFINITY;
+    animationGroup.animations = @[animation1, animation2];
+}];
 ```
 
 * `shapeLayer` is used to draw indicator shape. You can use it with `UIBezierPath` draw more complicated shape. For more details about `CAShapeLayer` and `UIBezierPath` you can visit [ CAShapeLayer Class Reference](https://developer.apple.com/library/ios/documentation/GraphicsImaging/Reference/CAShapeLayer_class/) and [UIBezierPath Class Reference](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIBezierPath_class/).

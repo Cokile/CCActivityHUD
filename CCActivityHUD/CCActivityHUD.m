@@ -146,7 +146,7 @@
         CGFloat height = [self heightForText:text]+8;
         self.frame = CGRectMake(0, -height, TEXT_WIDTH, height);
         
-        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ViewFrameWidth, ViewFrameHeight)];
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:self.bounds];
         textLabel.numberOfLines = 0;
         textLabel.font = [UIFont systemFontOfSize:TEXT_FONT_SIZE];
         textLabel.textColor = [self inverseColorFor:self.backgroundColor];
@@ -162,6 +162,31 @@
         self.useProgress = NO;
         
         [self communalShowTask];
+    }
+}
+
+- (void)updateText:(NSString *)text shimmering:(BOOL)shimmering {
+    if (self.superview) {
+        [self removeAllSubviews];
+        
+        self.frame = CGRectMake(0, 0, TEXT_WIDTH, [self heightForText:text]+8);
+        self.center = BoundsCenterFor(Screen);
+        
+        // addShimmeringEffectForLabel: invoked within showWithText:shimmering: will affect the layer of the UILabel
+        // So I can not use the same UILabel
+        UILabel *textLabel = [[UILabel alloc] initWithFrame:self.bounds];
+        textLabel.numberOfLines = 0;
+        textLabel.font = [UIFont systemFontOfSize:TEXT_FONT_SIZE];
+        textLabel.textColor = [self inverseColorFor:self.backgroundColor];
+        textLabel.textAlignment = NSTextAlignmentCenter;
+        textLabel.text = text;
+        [self addSubview:textLabel];
+        
+        if (shimmering) {
+            [self addShimmeringEffectForLabel:textLabel];
+        }
+        
+        [UIView transitionWithView:self duration:0.3 options:UIViewAnimationOptionTransitionFlipFromLeft animations:nil completion:nil];
     }
 }
 
