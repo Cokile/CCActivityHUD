@@ -42,8 +42,6 @@ github "Cokile/CCActivityHUD"
 
 Add all the files in the CCActivityHUD folder to your project.
 
-Add `ImageIO.framework` to your target.
-
 
 
 ## Easy to use 
@@ -81,7 +79,7 @@ dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 
 __Note:__ You should not call `showWithType:` within `viewDidLoad`, The Animation will not work! Instead, show it within `viewWillAppear` or `viewDidAppear`.
 
-- Do not like the provided indicator animation?  `CCActivityHUD` supports GIF too. Just grab a GIF you like and show with it.
+- Do not like the provided indicator animation?  `CCActivityHUD` supports GIF too. Just grab a GIF you like and show with it. __(Remember to add `ImageIO.framework` to your target)__
 
 ```objective-c
 [self.activityHUD showWithGIFName:@"test.gif"];
