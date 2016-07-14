@@ -357,6 +357,10 @@
         case CCActivityHUDIndicatorTypeScalingBars:
             [self initializeScalingBars];
             break;
+        
+        case CCActivityHUDIndicatorTypeTriangleCircle:
+            [self initializeTriangleCircle];
+            break;
     }
 }
 
@@ -442,6 +446,18 @@
     
     CGFloat distance = (ViewFrameWidth-padding*2)/3/(self.replicatorLayer.instanceCount-1)+FrameWidthFor(self.indicatorCAShapeLayer);
     self.replicatorLayer.instanceTransform = CATransform3DMakeTranslation(distance, 0.0, 0.0);
+}
+
+- (void)initializeTriangleCircle {
+    CGFloat length = ViewFrameWidth*25/200;
+    
+    self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
+    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
+    self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
+    self.indicatorCAShapeLayer.cornerRadius = length/2;
+    self.indicatorCAShapeLayer.shouldRasterize = YES;
+    self.indicatorCAShapeLayer.rasterizationScale = Screen.scale;
 }
 
 #pragma mark - background view
@@ -632,6 +648,10 @@
         case CCActivityHUDIndicatorTypeScalingBars:
             [self addScalingBarsAnimation];
             break;
+            
+        case CCActivityHUDIndicatorTypeTriangleCircle:
+            [self addTriangleCircleAnimation];
+            break;
     }
 }
 
@@ -668,10 +688,7 @@
 }
 
 - (void)addMinorArcAnimation {
-    CAShapeLayer *oppositeArc = [[CAShapeLayer alloc] init];
-    oppositeArc.strokeColor = [UIColor whiteColor].CGColor;
-    oppositeArc.fillColor = [UIColor clearColor].CGColor;
-    oppositeArc.lineWidth = ViewFrameWidth/24;
+    CAShapeLayer *oppositeArc = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.indicatorCAShapeLayer]];
     
     CGFloat length = ViewFrameWidth/5;
     oppositeArc.frame = CGRectMake(length, length, length*3, length*3);
@@ -795,6 +812,30 @@
     animationGroup.animations = @[scaleUpAnimation, scaleDownAnimation];
     
     [self.indicatorCAShapeLayer addAnimation:animationGroup forKey:nil];
+}
+
+- (void)addTriangleCircleAnimation {
+    CGPoint topPoint = self.indicatorCAShapeLayer.position;
+    CGPoint leftPoint = CGPointMake(topPoint.x-ViewFrameHeight*3*sqrt(3)/20, topPoint.y+ViewFrameHeight*9/20);
+    CGPoint rightPoint = CGPointMake(topPoint.x+ViewFrameHeight*3*sqrt(3)/20, topPoint.y+ViewFrameHeight*9/20);
+    
+    [self.replicatorLayer addSublayer:self.indicatorCAShapeLayer];
+    
+    CAShapeLayer *leftCircle = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.indicatorCAShapeLayer]];
+    leftCircle.position = leftPoint;
+    [self.replicatorLayer addSublayer:leftCircle];
+    
+    CAShapeLayer *rightCircle = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:self.indicatorCAShapeLayer]];
+    rightCircle.position = rightPoint;
+    [self.replicatorLayer addSublayer:rightCircle];
+    
+    NSArray *vertexs = @[[NSValue valueWithCGPoint:topPoint],
+                         [NSValue valueWithCGPoint:leftPoint],
+                         [NSValue valueWithCGPoint:rightPoint]];
+    
+    [self.indicatorCAShapeLayer addAnimation:[self keyFrameAnimationWithPath:[self trianglePathWithStartPoint:topPoint vertexs:vertexs] duration:DURATION_BASE*3] forKey:nil];
+    [rightCircle addAnimation:[self keyFrameAnimationWithPath:[self trianglePathWithStartPoint:leftPoint vertexs:vertexs] duration:DURATION_BASE*3] forKey:nil];
+    [leftCircle addAnimation:[self keyFrameAnimationWithPath:[self trianglePathWithStartPoint:rightPoint vertexs:vertexs] duration:DURATION_BASE*3] forKey:nil];
 }
 
 #pragma mark - disappear animation
@@ -967,6 +1008,42 @@
     animation.toValue = @(toValue);
     animation.duration = duration;
     animation.repeatCount = repeat;
+    
+    return animation;
+}
+
+- (UIBezierPath *)trianglePathWithStartPoint:(CGPoint)startPoint vertexs:(NSArray *)vertexs {
+    CGPoint topPoint  = [[vertexs objectAtIndex:0] CGPointValue];
+    CGPoint leftPoint  = [[vertexs objectAtIndex:1] CGPointValue];
+    CGPoint rightPoint  = [[vertexs objectAtIndex:2] CGPointValue];
+    
+    UIBezierPath *path = [UIBezierPath bezierPath];
+    
+    if (CGPointEqualToPoint(startPoint, topPoint) ) {
+        [path moveToPoint:startPoint];
+        [path addLineToPoint:rightPoint];
+        [path addLineToPoint:leftPoint];
+    } else if (CGPointEqualToPoint(startPoint, leftPoint)) {
+        [path moveToPoint:startPoint];
+        [path addLineToPoint:topPoint];
+        [path addLineToPoint:rightPoint];
+    } else {
+        [path moveToPoint:startPoint];
+        [path addLineToPoint:leftPoint];
+        [path addLineToPoint:topPoint];
+    }
+    
+    [path closePath];
+    
+    return path;
+}
+
+- (CAKeyframeAnimation *)keyFrameAnimationWithPath:(UIBezierPath *)path duration:(NSTimeInterval)duration {
+    CAKeyframeAnimation *animation = [[CAKeyframeAnimation alloc] init];
+    animation.keyPath = @"position";
+    animation.path = path.CGPath;
+    animation.duration = duration;
+    animation.repeatCount = INFINITY;
     
     return animation;
 }

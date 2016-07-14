@@ -1,7 +1,9 @@
 ## CCActivityHUD
 
-[![](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Cokile/CCActivityIndicatorView/blob/master/Licence)
-[![](https://img.shields.io/github/release/Cokile/CCActivityIndicatorView.svg)](https://github.com/Cokile/CCActivityIndicatorView/releases)
+[![](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Cokile/CCActivityHUD/blob/master/Licence)
+[![](https://img.shields.io/github/release/Cokile/CCActivityHUD.svg)](https://github.com/Cokile/CCActivityHUD/releases)
+[![](https://img.shields.io/cocoapods/v/CCActivityHUD.svg)](https://img.shields.io/cocoapods/v/CCActivityHUD.svg)
+[![](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 From v2.0.0, I rename it from __CCActivityIndicatorView__ to __CCActivityHUD__. if you have forked the project bofore I rename it, you should run the command below to make a Pull Request correctly.
 
@@ -18,20 +20,23 @@ git remote set-url origin git@github.com:Cokile/CCActivityHUD.git
 <img src=Captures/capture3.gif width=210 height=372>
 <img src=Captures/capture4.gif width=210 height=372>
 <img src=Captures/capture5.gif width=210 height=372>
-
-
+<img src=Captures/capture6.gif width=210 height=372>
 
 ## Installation
 
-### Use Cocoapods
+### Cocoapods
 
-Simply add one line to your Podfile:
-
-```
+```ruby
 pod 'CCActivityHUD'
 ```
 
 __Note__: If you have used `pod 'CCActivityIndicatorView'` in your Podfile, just replace it with  `pod 'CCActivityHUD'` to update the pod.
+
+### Carthage
+
+```ruby
+github "Cokile/CCActivityHUD"
+```
 
 ### Manually 
 
@@ -44,7 +49,7 @@ Add `ImageIO.framework` to your target.
 ## Easy to use 
 
 ```objective-c
-#import "CCActivityIndicatorView.h"
+#import <CCActivityHUD/CCActivityHUD.h>
 
 self.activityHUD = [CCActivityIndicatorView new];
 
@@ -168,7 +173,8 @@ typedef NS_ENUM(NSInteger, CCActivityHUDIndicatorType) {
     CCActivityHUDIndicatorTypeDynamicArc,
     CCActivityHUDIndicatorTypeArcInCircle,
     CCActivityHUDIndicatorTypeSpringBall,
-    CCActivityHUDIndicatorTypeScalingBars
+    CCActivityHUDIndicatorTypeScalingBars,
+	CCActivityHUDIndicatorTypeTriangleCircle
 };
 ```
 #### Appear animation type

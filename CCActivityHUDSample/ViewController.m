@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "CCActivityHUD.h"
+#import <CCActivityHUD/CCActivityHUD.h>
 
 @interface ViewController ()
 
@@ -61,6 +61,7 @@
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeArcInCircle];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeSpringBall];
     //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeScalingBars];
+    //[self.activityHUD showWithType:CCActivityHUDIndicatorTypeTriangleCircle];
     
     /*
     [self.activityHUD showWithShape:^(CAShapeLayer *shapeLayer, CAReplicatorLayer *replicatorLayer) {
