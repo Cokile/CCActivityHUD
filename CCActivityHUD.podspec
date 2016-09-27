@@ -9,5 +9,6 @@ Pod::Spec.new do |spec|
   spec.source                = {:git => 'https://github.com/Cokile/CCActivityHUD.git', :tag => 'v2.1.6'}
   spec.source_files          = 'CCActivityHUD/*.{h,m}'
   spec.resources             = 'CCActivityHUD/*.png'
+  spec.frameworks             = 'ImageIO'
   spec.requires_arc          = true
 end

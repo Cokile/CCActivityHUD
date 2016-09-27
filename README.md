@@ -5,10 +5,10 @@
 [![](https://img.shields.io/cocoapods/v/CCActivityHUD.svg)](https://img.shields.io/cocoapods/v/CCActivityHUD.svg)
 [![](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-From v2.0.0, I rename it from __CCActivityIndicatorView__ to __CCActivityHUD__. if you have forked the project bofore I rename it, you should run the command below to make a Pull Request correctly.
+From v2.0.0, I rename it from __CCActivityIndicatorView__ to __CCActivityHUD__. if you have forked the project before I rename it, you should run the command below to make a Pull Request correctly.
 
 ```
-git remote set-url origin git@github.com:Cokile/CCActivityHUD.git
+git remote set-url upstream git@github.com:Cokile/CCActivityHUD.git
 ```
 
 
@@ -249,7 +249,8 @@ __Note:__ You should also not call `showWithShape: AnimationGroup:` within `view
 
 ## Requirement
 
-iOS 8.0 or later
+- iOS 8.0 or later
+- ARC
 
 
 
