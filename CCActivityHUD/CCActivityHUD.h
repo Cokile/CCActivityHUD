@@ -91,7 +91,7 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
 /**
  *  Set the animation about how the activity indicator to disappear from the screen.
  */
-@property CCActivityHUDAppearAnimationType disappearAnimationType;
+@property CCActivityHUDDisappearAnimationType disappearAnimationType;
 
 /**
  *  Set the type of the background view.
