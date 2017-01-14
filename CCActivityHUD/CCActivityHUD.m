@@ -13,7 +13,6 @@
 @property (strong, nonatomic) CAShapeLayer *indicatorCAShapeLayer;
 @property (strong, nonatomic) UIImageView *imageView;
 
-@property (strong, nonatomic) UIColor *updatedColor;
 @property CCActivityHUDIndicatorType currentTpye;
 @property BOOL useProvidedIndicator;
 @property BOOL useProgress;
@@ -47,10 +46,6 @@
     }
 }
 
-- (void)setIndicatorColor:(UIColor *)indicatorColor {
-        self.updatedColor = indicatorColor;
-}
-
 - (void)setProgress:(CGFloat)progress {
     if (self.indicatorCAShapeLayer && self.useProgress) {
         if (progress >= 1) {
@@ -79,18 +74,7 @@
         self.currentTpye = type;
         self.useProvidedIndicator = YES;
         self.useProgress = NO;
-        
-        // change the indicator color if user do not use the default color.
-        // You will confused that why not change the indicator color within the relevant setter,
-        // If so, I need to initialize self.indicatorCAShapeLayer in the init method,
-        // However, this will cause a problem (or bug) that the animation not works,
-        // Meanwhile, when user use GIF instead of provided animation types,
-        // the init method will create two useless instances,
-        // since showing GIF not rely on self.indicatorCAShapeLayer
-        if (self.indicatorCAShapeLayer && self.updatedColor) {
-            self.indicatorCAShapeLayer.strokeColor = self.updatedColor.CGColor;
-        }
-        
+      
         [self communalShowTask];
     }
 }
@@ -198,9 +182,7 @@
         self.indicatorCAShapeLayer.path = [self arcPathWithStartAngle:-M_PI/2 span:2*M_PI];
         self.indicatorCAShapeLayer.strokeEnd = 0.0;
         
-        if (self.indicatorCAShapeLayer && self.updatedColor) {
-            self.indicatorCAShapeLayer.strokeColor = self.updatedColor.CGColor;
-        }
+        self.indicatorCAShapeLayer.strokeColor = self.indicatorColor.CGColor;
         
         self.progress = 0.0;
         self.useProvidedIndicator = NO;
@@ -302,6 +284,8 @@
         self.layer.cornerRadius = 5.0;
         
         self.isTheOnlyActiveView = YES;
+      
+        self.indicatorColor = [UIColor whiteColor];
     
         self.appearAnimationType = CCActivityHUDAppearAnimationTypeFadeIn;
         self.disappearAnimationType = CCActivityHUDDisappearAnimationTypeFadeOut;
@@ -368,7 +352,7 @@
     CGFloat length = ViewFrameWidth*18/200;
     
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
-    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.backgroundColor = self.indicatorColor.CGColor;
     self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
     self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
     self.indicatorCAShapeLayer.cornerRadius = length/2;
@@ -386,7 +370,7 @@
     CGFloat length = ViewFrameWidth*25/200;
 
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
-    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.backgroundColor = self.indicatorColor.CGColor;
     self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
     self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
     self.indicatorCAShapeLayer.cornerRadius = length/2;
@@ -401,7 +385,7 @@
 
 - (void)initializeMinorArc {
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
-    self.indicatorCAShapeLayer.strokeColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.strokeColor = self.indicatorColor.CGColor;
     self.indicatorCAShapeLayer.fillColor = [UIColor clearColor].CGColor;
     self.indicatorCAShapeLayer.lineWidth = ViewFrameWidth/24;
     
@@ -429,7 +413,7 @@
     CGFloat length = ViewFrameWidth*38/200;
     
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
-    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.backgroundColor = self.indicatorColor.CGColor;
     self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
     self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
     self.indicatorCAShapeLayer.cornerRadius = length/2;
@@ -439,7 +423,7 @@
     self.replicatorLayer.instanceCount = 5;
     
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
-    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.backgroundColor = self.indicatorColor.CGColor;
     CGFloat padding = 10;
     self.indicatorCAShapeLayer.frame = CGRectMake(padding, ViewFrameHeight/4,(ViewFrameWidth-padding*2)*2/3/self.replicatorLayer.instanceCount, ViewFrameHeight/2);
     self.indicatorCAShapeLayer.cornerRadius = FrameWidthFor(self.indicatorCAShapeLayer)/2;
@@ -452,7 +436,7 @@
     CGFloat length = ViewFrameWidth*25/200;
     
     self.indicatorCAShapeLayer = [[CAShapeLayer alloc] init];
-    self.indicatorCAShapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+    self.indicatorCAShapeLayer.backgroundColor = self.indicatorColor.CGColor;
     self.indicatorCAShapeLayer.frame = CGRectMake(0, 0, length, length);
     self.indicatorCAShapeLayer.position = CGPointMake(ViewFrameWidth/2, ViewFrameHeight/5);
     self.indicatorCAShapeLayer.cornerRadius = length/2;
