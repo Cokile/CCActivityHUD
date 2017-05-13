@@ -290,6 +290,7 @@
         self.appearAnimationType = CCActivityHUDAppearAnimationTypeFadeIn;
         self.disappearAnimationType = CCActivityHUDDisappearAnimationTypeFadeOut;
         self.overlay = CCActivityHUDOverlayTypeNone;
+        self.blurType = UIBlurEffectStyleExtraLight;
         
         [self addNotificationObserver];
     }
@@ -466,7 +467,7 @@
 }
 
 - (void)addBlurOverlay {
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:self.blurType];
     UIVisualEffectView *overlayView = [[UIVisualEffectView alloc] initWithFrame:BoundsFor(Screen)];
     overlayView.effect = blurEffect;
     self.overlay = overlayView;

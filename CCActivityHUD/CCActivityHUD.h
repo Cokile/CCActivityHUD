@@ -99,6 +99,11 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
 @property CCActivityHUDOverlayType overlayType;
 
 /**
+ *  Set the type of the blur background view.
+ */
+@property UIBlurEffectStyle blurType;
+
+/**
  *  Set the progress of the task, when the task is completed, the value of progess is 1.
  */
 @property (nonatomic) CGFloat progress;
