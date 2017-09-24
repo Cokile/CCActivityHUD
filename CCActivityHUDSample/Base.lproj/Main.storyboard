@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,53 +18,36 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iw1-x4-hbg">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Dismiss"/>
-                                <connections>
-                                    <action selector="dismiss:" destination="BYZ-38-t0r" eventType="touchUpInside" id="K94-ZN-gRe"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ED-Un-7uN">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <rect key="frame" x="169" y="508" width="38" height="30"/>
                                 <state key="normal" title="Show"/>
                                 <connections>
                                     <action selector="show:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hel-rr-Yvg"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="0ED-Un-7uN" firstAttribute="centerX" secondItem="iw1-x4-hbg" secondAttribute="centerX" id="Cuf-jE-lhs"/>
-                            <constraint firstItem="iw1-x4-hbg" firstAttribute="top" secondItem="0ED-Un-7uN" secondAttribute="bottom" constant="19" id="WbO-MD-AO5"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="iw1-x4-hbg" secondAttribute="bottom" constant="80" id="vi7-kX-1tQ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0ED-Un-7uN" secondAttribute="bottom" constant="129" id="Gqs-LO-lQP"/>
                             <constraint firstItem="0ED-Un-7uN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="yJh-Qt-D6V"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="iw1-x4-hbg"/>
                                 <exclude reference="0ED-Un-7uN"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="vi7-kX-1tQ"/>
-                                <exclude reference="Cuf-jE-lhs"/>
                                 <exclude reference="yJh-Qt-D6V"/>
-                                <exclude reference="WbO-MD-AO5"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="iw1-x4-hbg"/>
                                 <include reference="0ED-Un-7uN"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="vi7-kX-1tQ"/>
-                                <include reference="Cuf-jE-lhs"/>
                                 <include reference="yJh-Qt-D6V"/>
-                                <include reference="WbO-MD-AO5"/>
                             </mask>
                         </variation>
                     </view>

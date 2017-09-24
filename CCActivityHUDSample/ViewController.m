@@ -12,6 +12,7 @@
 @interface ViewController ()
 
 @property (strong, nonatomic) CCActivityHUD *activityHUD;
+@property (strong, nonatomic) NSTimer * timer;
 
 @end
 
@@ -21,7 +22,6 @@
     [super viewDidLoad];
     
     self.activityHUD = [CCActivityHUD new];
-    self.activityHUD.isTheOnlyActiveView = NO;
     //self.activityHUD.alpha = 0.4;
     //self.activityHUD.cornerRadius = 20.0;
     //self.activityHUD.borderWidth = 3.0;
@@ -92,9 +92,17 @@
     //[self.activityHUD showWithGIFName:@"test.gif"];
     
     //[self.activityHUD showWithText:@"Now loading..." shimmering:YES];
+    
+    [self startTimer];
 }
 
-- (IBAction)dismiss:(id)sender {
+- (void)startTimer {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:3 repeats:FALSE block:^(NSTimer * _Nonnull timer) {
+        [self dismiss];
+    }];
+}
+
+- (void)dismiss {
     [self.activityHUD dismiss];
     
     //[self.activityHUD dismissWithText:@"This is a sample dismiss text" delay:0.7 success:NO];

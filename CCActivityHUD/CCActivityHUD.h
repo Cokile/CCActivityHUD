@@ -77,13 +77,6 @@ typedef NS_ENUM(NSInteger, CCActivityHUDOverlayType) {
 @property (strong, nonatomic) UIColor *indicatorColor;
 
 /**
- *  A boolean value indicates whether the ohter UIViews are user-interactable.
- 
-    The default value is YES.
- */
-@property (nonatomic) BOOL isTheOnlyActiveView;
-
-/**
  *  Set the animation about how the activity indicator to appear to the screen.
  */
 @property CCActivityHUDAppearAnimationType appearAnimationType;

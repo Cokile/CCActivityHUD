@@ -146,9 +146,6 @@ self.activityHUD.cornerRadius = <#CGFloat#>;
 // Set the indicator color. The default color is white.
 self.activityHUD.indicatorColor = <#UIColor#>;
 
-// Set the boolean value that indicates whether ohter UIViews are user-interactable. The default value is YES.
-self.activityHUD.isTheOnlyActiveView = <#BOOL#>;
-
 // Set the appear animation type.
 self.activityHUD.appearAnimationType = <#CCActivityHUDAppearAnimationType#>;
 

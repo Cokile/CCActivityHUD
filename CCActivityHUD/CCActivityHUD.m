@@ -236,12 +236,6 @@
         }
         
         [self addDisappearAnimationWithDelay:delay+0.7];
-        
-        if (self.isTheOnlyActiveView) {
-            for (UIView *view in self.superview.subviews) {
-                view.userInteractionEnabled = YES;
-            }
-        }
     }
 }
 
@@ -284,8 +278,6 @@
         self.backgroundColor = [UIColor blackColor];
         self.layer.cornerRadius = 5.0;
         
-        self.isTheOnlyActiveView = YES;
-      
         self.indicatorColor = [UIColor whiteColor];
     
         self.appearAnimationType = CCActivityHUDAppearAnimationTypeFadeIn;
@@ -936,12 +928,6 @@
     self.window.hidden = FALSE;
     
     [self addAppearAnimation];
-    
-    if (self.isTheOnlyActiveView) {
-        for (UIView *view in self.superview.subviews) {
-            view.userInteractionEnabled = NO;
-        }
-    }
 }
 
 - (void)communalDismissTask {
