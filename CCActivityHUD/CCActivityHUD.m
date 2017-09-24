@@ -8,6 +8,7 @@
 
 @interface CCActivityHUD ()
 
+@property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UIView *overlay;
 @property (strong, nonatomic) CAReplicatorLayer *replicatorLayer;
 @property (strong, nonatomic) CAShapeLayer *indicatorCAShapeLayer;
@@ -291,6 +292,11 @@
         self.disappearAnimationType = CCActivityHUDDisappearAnimationTypeFadeOut;
         self.overlay = CCActivityHUDOverlayTypeNone;
         
+        self.window =[[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+        self.window.windowLevel = UIWindowLevelStatusBar;
+        self.window.backgroundColor = [UIColor clearColor];
+        self.window.hidden = TRUE;
+      
         [self addNotificationObserver];
     }
     
@@ -858,7 +864,7 @@
         self.alpha = 0.0;
     } completion:^(BOOL finished) {
         self.alpha = originalAlpha;
-        [self removeFromSuperview];
+        [self communalDismissTask];
     }];
 }
 
@@ -866,14 +872,14 @@
     [UIView animateWithDuration:0.25 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(BoundsCenterXFor(Screen), -ViewFrameHeight);
     } completion:^(BOOL finished) {
-         [self removeFromSuperview];
+         [self communalDismissTask];
     }];
 }
 - (void)addSlideToBottomDissappearAnimationWithDelay:(CGFloat)delay {
     [UIView animateWithDuration:0.25 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(BoundsCenterXFor(Screen), BoundsHeightFor(Screen)+ViewFrameHeight);
     } completion:^(BOOL finished) {
-        [self removeFromSuperview];
+        [self communalDismissTask];
     }];
 }
 
@@ -881,7 +887,7 @@
     [UIView animateWithDuration:0.15 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(-ViewFrameWidth, BoundsCenterYFor(Screen));
     } completion:^(BOOL finished) {
-        [self removeFromSuperview];
+        [self communalDismissTask];
     }];
 }
 
@@ -889,7 +895,7 @@
     [UIView animateWithDuration:0.15 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.center = CGPointMake(BoundsWidthFor(Screen)+ViewFrameWidth, BoundsCenterYFor(Screen));
     } completion:^(BOOL finished) {
-        [self removeFromSuperview];
+        [self communalDismissTask];
     }];
 }
 
@@ -903,7 +909,7 @@
             [UIView animateWithDuration:0.1 animations:^{
                 self.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.01, 0.01);;
                 
-                [self removeFromSuperview];
+                [self communalDismissTask];
             }];
         }];
     }];
@@ -926,8 +932,8 @@
 - (void)communalShowTask {
     [self addOverlay];
     
-    [[[UIApplication sharedApplication].windows lastObject] addSubview:self];
-    [self.superview bringSubviewToFront:self];
+    [self.window addSubview:self];
+    self.window.hidden = FALSE;
     
     [self addAppearAnimation];
     
@@ -936,6 +942,11 @@
             view.userInteractionEnabled = NO;
         }
     }
+}
+
+- (void)communalDismissTask {
+    self.window.hidden = TRUE;
+    [self removeFromSuperview];
 }
 
 - (UIColor *)inverseColorFor:(UIColor *)color {
